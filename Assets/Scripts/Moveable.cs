@@ -9,7 +9,6 @@ public class Moveable : MonoBehaviour {
 	public float speedCap;
 
 	private Vector2 target;
-	private float speed; // current speed
 	private bool moving = false;
 	private Rigidbody2D rb;
 
@@ -21,7 +20,6 @@ public class Moveable : MonoBehaviour {
 		stop();
 		Debug.Log(gameObject + " moving to " + where);
 		target = where;
-		speed = 0f;
 		moving = true;
 	}
 
