@@ -12,12 +12,11 @@ public class Selectable : MonoBehaviour {
 		}
 	}
 
-	void OnMouseUp() {
-		Debug.Log(gameObject + " was selected");
+	public void Select() {
 		selectionSprite.SetActive(selected = true);
 	}
 
-	void Deselect() {
+	public void Deselect() {
 		selectionSprite.SetActive(selected = false);
 	}
 }
