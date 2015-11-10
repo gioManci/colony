@@ -35,7 +35,7 @@ public class MouseMonitor : MonoBehaviour {
 			dragging = false;
 			var dragEndPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			var dragSpan = (dragEndPos - dragStartPos).magnitude;
-			Debug.Log("dragSpan = " + dragSpan);
+			Debug.Log($"dragSpan = {dragSpan}");
 			if (dragSpan < MinDragSpan && OnLeftClick != null)
 				OnLeftClick(new Click(dragStartPos));
 			else if (OnDrag != null)

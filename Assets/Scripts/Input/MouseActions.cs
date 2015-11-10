@@ -54,14 +54,14 @@ public class MouseActions : MonoBehaviour {
 	}
 	
 	private void dragSelect(Drag drag) {
-		Debug.Log("drag select (rect = " + drag.SpanRect + ")");
+		Debug.Log($"drag select (rect = {drag.SpanRect})");
 
 		if (!Input.GetKey(KeyCode.LeftShift))
 			deselectAll();
 
 		foreach (Selectable obj in selectables) {
 			var go = obj.gameObject;
-			Debug.Log("object in position " +go.transform.position);
+			Debug.Log($"object in position {go.transform.position}");
 			if (drag.SpanRect.Contains(go.transform.position))
 				obj.Select();
 		}

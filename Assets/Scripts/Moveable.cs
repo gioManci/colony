@@ -23,7 +23,7 @@ public class Moveable : MonoBehaviour {
 
 	public void Move(Vector2 where) {
 		stop();
-		Debug.Log(gameObject + " moving to " + where);
+		Debug.Log($"{gameObject} moving to {where}");
 		target = where;
 		moving = true;
 	}
