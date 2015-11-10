@@ -14,6 +14,11 @@ public class Moveable : MonoBehaviour {
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
+		MouseActions.Instance.AddMoveable(this);
+	}
+
+	void OnDestroy() {
+		MouseActions.Instance.RemoveMoveable(this);
 	}
 
 	public void Move(Vector2 where) {

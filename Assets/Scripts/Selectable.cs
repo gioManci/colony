@@ -12,11 +12,24 @@ public class Selectable : MonoBehaviour {
 		}
 	}
 
+	void Start() {
+		MouseActions.Instance.AddSelectable(this);
+	}
+
+	void OnDestroy() {
+		MouseActions.Instance.RemoveSelectable(this);
+	}
+
 	public void Select() {
 		selectionSprite.SetActive(selected = true);
 	}
 
 	public void Deselect() {
 		selectionSprite.SetActive(selected = false);
+	}
+
+	public void SelectToggle() {
+		if (selected) Deselect();
+		else Select();
 	}
 }
