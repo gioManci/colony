@@ -69,10 +69,20 @@ public class MouseActions : MonoBehaviour {
 
 	private void moveSelectedUnits(Click click) {
 		// Move each selected moveable object
+		int i = 0, offset = 0;
 		foreach (Moveable obj in moveables) {
 			Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
-			if (sel != null && sel.IsSelected)
-				obj.Move(click.Pos);
+			if (sel != null && sel.IsSelected) {
+				var pos = click.Pos;
+				pos.x += offset;
+				obj.Move(pos);
+				++i;
+				if (i % 2 == 0) {
+					offset += i;
+				} else {
+					offset -= i;
+				}
+			}
 		}
 	}
 

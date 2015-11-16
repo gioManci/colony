@@ -3,17 +3,16 @@ using System.Collections;
 
 public class Moveable : MonoBehaviour {
 	const float TargetDistanceDelta = 0.5f;
-	const float SpeedIncrement = 0.3f;
+	const float SpeedIncrement = 0.5f;
 
 	// These are set via Unity, unit-wise
 	public float speedCap;
 
-	private Vector2 target;
+	private Vector2 target, origin, direction;
 	private bool moving = false;
-	private Rigidbody2D rb;
+	private float speed, lastSpeed;
 
 	void Start() {
-		rb = GetComponent<Rigidbody2D>();
 		MouseActions.Instance.AddMoveable(this);
 	}
 
@@ -25,23 +24,43 @@ public class Moveable : MonoBehaviour {
 		stop();
 		Debug.Log($"{gameObject} moving to {where}");
 		target = where;
+		origin = transform.position;
+		direction = ((Vector2)target - (Vector2)origin).normalized;
 		moving = true;
 	}
 
-	void FixedUpdate() {
+	void Update() {
 		if (moving) {
 			// Accelerate till speedCap
-			if (rb.velocity.magnitude < speedCap)
-				rb.AddForce(target - (Vector2)transform.position);
+			if (speed < speedCap) {
+				speed += SpeedIncrement;
+				if (speed > speedCap)
+					speed = speedCap;
+			}
+			lastSpeed = speed;
+//			Debug.Log($"Moving: {moving}; Speed: {speed}; distance: {Vector2.Distance(target, (Vector2)transform.position)}");
+			transform.position = (Vector2)transform.position + direction * speed * Time.deltaTime;
 			// TODO: rotate
 			// Stop when target is approached
-			if (Vector2.Distance(target, (Vector2)transform.position) < TargetDistanceDelta)
+			if (distance() < TargetDistanceDelta)
 				stop();
-		}
+		} else stop();
 	}
 
 	private void stop() {
-		rb.velocity = new Vector2(0, 0);
+		lastSpeed = speed = 0f;
 		moving = false;
+	}
+
+	private float distance() {
+		return Vector2.Distance(target, (Vector2)transform.position);
+	}
+
+	void OnTriggerStay2D(Collider2D other) {
+		if (moving && other.gameObject.GetComponent<Moveable>().moving) 
+			return;
+		var d = (Vector2)transform.position - (Vector2)other.gameObject.transform.position;
+		transform.position = (Vector2)transform.position + d * Mathf.Max(SpeedIncrement, lastSpeed) * Time.deltaTime;
+		stop();
 	}
 }
