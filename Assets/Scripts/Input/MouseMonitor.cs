@@ -4,16 +4,20 @@ using System;
 using InputEvents;
 
 public class MouseMonitor : MonoBehaviour {
-	enum MouseBtn : int { Left = 0, Right = 1, Middle = 2 };
 
+	public Texture2D selectTexture;
+	public static Rect selection = new Rect();
+
+	// Threshold above which the mouse input is considered
+	// a "drag" rather than a "click"
 	private const float MinDragSpan = 2f;
 
 	private bool dragging = false;
 	private Vector2 dragStartPos;
-	private GameObject target;
 
+	// Callbacks
 	public static event Action<Click> OnLeftClick, OnRightClick;
-	public static event Action<Drag> OnDrag;
+	public static event Action<Drag> OnDrag, OnDragEnd;
 
 	// Make this class a singleton
 	public static MouseMonitor Instance { get; private set; }
@@ -27,32 +31,57 @@ public class MouseMonitor : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetMouseButtonDown((int)MouseBtn.Left)) {
+		if (Input.GetMouseButtonDown(0)) {
 			dragging = true;
-			dragStartPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			dragStartPos = (Vector2)Input.mousePosition;
 
-		} else if (dragging && Input.GetMouseButtonUp((int)MouseBtn.Left)) {
+		} else if (Input.GetMouseButtonUp(0)) {
 			dragging = false;
-			var dragEndPos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			var dragEndPos = (Vector2)Input.mousePosition;
 			var dragSpan = (dragEndPos - dragStartPos).magnitude;
-			Debug.Log($"dragSpan = {dragSpan}");
+
+			if (selection.width < 0) {
+				selection.x += selection.width;
+				selection.width = -selection.width;
+			}
+			if (selection.height < 0) {
+				selection.y += selection.height;
+				selection.height = -selection.height;
+			}
+
 			if (dragSpan < MinDragSpan && OnLeftClick != null)
-				OnLeftClick(new Click(dragStartPos));
-			else if (OnDrag != null)
-				OnDrag(new Drag(dragStartPos, dragEndPos));
+				OnLeftClick(new Click(
+					Camera.main.ScreenToWorldPoint(dragStartPos)));
+			else if (OnDragEnd != null)
+				OnDragEnd(new Drag(
+					Camera.main.ScreenToWorldPoint(dragStartPos),
+					Camera.main.ScreenToWorldPoint(dragEndPos)));
 
-		} else if (Input.GetMouseButtonDown((int)MouseBtn.Right)) {
-			/// DEBUG
-			Debug.Log("Move");
-			if (target != null)
-				GameObject.Destroy(target);
-			target = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			target.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-			target.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			///
-
+		} else if (Input.GetMouseButtonDown(1)) {
 			if (OnRightClick != null)
 				OnRightClick(new Click(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
 		}
+
+		if (dragging) {
+			var spos = ScreenToRectPoint(dragStartPos);
+			var epos = ScreenToRectPoint(Input.mousePosition);
+			selection = new Rect(spos.x, spos.y, epos.x - spos.x, epos.y - spos.y);
+			if (OnDrag != null)
+				OnDrag(new Drag(
+					Camera.main.ScreenToWorldPoint(dragStartPos),
+					Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+		}
+	}
+
+	void OnGUI() {
+		// Draw the selection rectangle
+		if (dragging) {
+			GUI.color = new Color(1, 1, 1, 0.5f);
+			GUI.DrawTexture(selection, selectTexture);
+		}
+	}
+
+	public static Vector2 ScreenToRectPoint(Vector2 pt) {
+		return new Vector2(pt.x, Screen.height - pt.y);
 	}
 }
