@@ -18,8 +18,12 @@ public class MouseMonitor : MonoBehaviour {
 			// Move each selected moveable object
 			foreach (Moveable obj in GetComponentsInChildren<Moveable>()) {
 				Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
-				if (sel != null && sel.IsSelected)
-					obj.Move(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                if (sel != null && sel.IsSelected)
+                {
+                    WorkerBeeBrain brain = obj.GetComponent<WorkerBeeBrain>();
+                    brain.DoMove(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    //obj.Move();
+                }
 			}
 		}
 	}

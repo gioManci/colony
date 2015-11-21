@@ -1,0 +1,40 @@
+********************************************************************************
+*                   Saturday, November 21, 2015 11:22:52 AM                    *
+********************************************************************************
+smcs.exe version: 1.5.3.0
+Platform: Windows
+Target assembly: Assembly-CSharp.dll
+Project directory: C:\Users\Matteo\Documents\GitHub\colony
+Unity directory: C:/Program Files/Unity/Editor/Data
+Compiler: Version6Mono
+
+- Compilation -----------------------------------------------
+
+Process: C:\Users\Matteo\Documents\GitHub\colony\mcs.exe
+Arguments: -sdk:2 -r:"C:/Program Files/Unity/Editor/Data\Mono/lib/mono/2.0/System.Core.dll" @Temp/UnityTempFile-33fdbd6b3729b7b4c861f438e87c9f4e
+Exit code: 0
+Elapsed time: 1.60 sec
+
+- Compiler output:
+
+- Compiler errors:
+********************************************************************************
+*                   Saturday, November 21, 2015 11:26:43 AM                    *
+********************************************************************************
+smcs.exe version: 1.5.3.0
+Platform: Windows
+Target assembly: Assembly-CSharp.dll
+Project directory: C:\Users\Matteo\Documents\GitHub\colony
+Unity directory: C:/Program Files/Unity/Editor/Data
+Compiler: Version6Mono
+
+- Compilation -----------------------------------------------
+
+Process: C:\Users\Matteo\Documents\GitHub\colony\mcs.exe
+Arguments: -sdk:2 -r:"C:/Program Files/Unity/Editor/Data\Mono/lib/mono/2.0/System.Core.dll" @Temp/UnityTempFile-6a79888c2d04d054d9f474e8cef2a664
+Exit code: 0
+Elapsed time: 1.57 sec
+
+- Compiler output:
+
+- Compiler errors:
