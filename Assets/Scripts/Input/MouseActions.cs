@@ -91,6 +91,7 @@ public class MouseActions : MonoBehaviour {
 				angle = 2*Mathf.PI * i / max_i;
 				pos.x += radius * Mathf.Cos(angle);
 				pos.y += radius * Mathf.Sin(angle);
+				Debug.Log($"obj: {obj}; angle={angle}, pos:{pos}");
 				obj.Move(pos);
 			}
 		}

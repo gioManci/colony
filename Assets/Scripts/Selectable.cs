@@ -7,9 +7,7 @@ public class Selectable : MonoBehaviour {
 	private bool selected;
 
 	public bool IsSelected {
-		get {
-			return selected;
-		}
+		get { return selected; }
 	}
 
 	void Start() {
