@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Colony.Tasks;
+using Colony;
 
 namespace Colony.Input {
 	
@@ -9,7 +10,7 @@ using Input = UnityEngine.Input;
 public class MouseActions : MonoBehaviour {
 
 	private HashSet<Selectable> selectables = new HashSet<Selectable>();
-	private HashSet<Moveable> moveables = new HashSet<Moveable>();
+	private HashSet<Controllable> controllables = new HashSet<Controllable>();
 	
 	private GameObject moveTarget;
 
@@ -37,12 +38,12 @@ public class MouseActions : MonoBehaviour {
 		selectables.Remove(obj);
 	}
 
-	public void AddMoveable(Moveable obj) {
-		moveables.Add(obj);
+	public void AddControllable(Controllable obj) {
+		controllables.Add(obj);
 	}
 
-	public void RemoveMoveable(Moveable obj) {
-		moveables.Remove(obj);
+	public void RemoveControllable(Controllable obj) {
+		controllables.Remove(obj);
 	}
 
 	private void clickSelect(Click click) {
@@ -80,7 +81,7 @@ public class MouseActions : MonoBehaviour {
 		moveTarget.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		
 		// Move each selected moveable object
-		foreach (Moveable obj in moveables) {
+		foreach (Controllable obj in controllables) {
 			Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
 			if (sel != null && sel.IsSelected) {
 				WorkerBeeBrain brain = obj.GetComponent<WorkerBeeBrain>();
