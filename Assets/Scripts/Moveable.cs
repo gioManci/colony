@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using Colony.Input;
+
+namespace Colony {
 
 public class Moveable : MonoBehaviour {
 	// Distance from target considered 'acceptable' to stop at
@@ -64,4 +67,6 @@ public class Moveable : MonoBehaviour {
 		transform.position = (Vector2)transform.position + d * Mathf.Max(speedCap * SpeedIncrement, lastSpeed) * Time.deltaTime;
 		stop();
 	}
+}
+
 }

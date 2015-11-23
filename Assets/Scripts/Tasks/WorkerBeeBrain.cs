@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using Colony.Tasks.BasicTasks;
+using Colony.Tasks.ComplexTasks;
+
+namespace Colony.Tasks {
 
 public class WorkerBeeBrain : MonoBehaviour
 {
@@ -40,4 +44,6 @@ public class WorkerBeeBrain : MonoBehaviour
     {
 
     }
+}
+
 }

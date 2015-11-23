@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+
+namespace Colony.Input {
+
+using Input = UnityEngine.Input;
 
 public class CameraController : MonoBehaviour {
 
@@ -56,4 +60,6 @@ public class CameraController : MonoBehaviour {
 		}
 		return 0f;
 	}
+}
+
 }

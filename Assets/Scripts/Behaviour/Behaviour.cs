@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+
+namespace Colony.Behaviour {
 
 public abstract class Behaviour
 {
@@ -22,4 +24,6 @@ public abstract class Behaviour
     }
 
     public abstract Vector2 Compute();
+}
+
 }

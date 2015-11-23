@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
-using InputEvents;
+
+namespace Colony.Input {
+
+using Input = UnityEngine.Input;
 
 public class MouseMonitor : MonoBehaviour {
 
@@ -84,4 +87,6 @@ public class MouseMonitor : MonoBehaviour {
 	public static Vector2 ScreenToRectPoint(Vector2 pt) {
 		return new Vector2(pt.x, Screen.height - pt.y);
 	}
+}
+
 }

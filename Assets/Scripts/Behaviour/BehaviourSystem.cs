@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
+
+namespace Colony.Behaviour {
 
 public class BehaviourSystem
 {
@@ -72,4 +74,6 @@ public class BehaviourSystem
 
         return true;
     }
+}
+
 }

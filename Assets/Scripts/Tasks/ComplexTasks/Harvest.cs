@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
+using Colony.Tasks;
+
+namespace Colony.Tasks.ComplexTasks {
 
 public class Harvest : ComplexTask
 {
@@ -27,4 +30,6 @@ public class Harvest : ComplexTask
     {
         throw new NotImplementedException();
     }
+}
+
 }

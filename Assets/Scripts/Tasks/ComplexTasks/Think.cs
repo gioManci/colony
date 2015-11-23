@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
+
+namespace Colony.Tasks.ComplexTasks {
 
 public class Think : ComplexTask
 {
@@ -35,4 +37,6 @@ public class Think : ComplexTask
         }
         return false;
     }
+}
+
 }

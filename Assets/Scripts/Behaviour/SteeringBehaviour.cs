@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Colony.Behaviour.Behaviours;
+
+namespace Colony.Behaviour {
 
 public class SteeringBehaviour : MonoBehaviour
 {
@@ -48,4 +51,6 @@ public class SteeringBehaviour : MonoBehaviour
     {
         behaviourSystem.RemoveBehaviour(BehaviourType.Seek);
     }
+}
+
 }

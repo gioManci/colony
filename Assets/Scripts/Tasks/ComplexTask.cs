@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System;
+
+namespace Colony.Tasks {
 
 /// <summary>
 /// Abstract class that describes a complex task. A complex task is a task that needs other subtasks to 
@@ -69,4 +71,6 @@ public abstract class ComplexTask : Task
         }
         subtasks.Clear();
     }
+}
+
 }

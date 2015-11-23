@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
-using InputEvents;
+using Colony.Tasks;
+
+namespace Colony.Input {
+	
+using Input = UnityEngine.Input;
 
 public class MouseActions : MonoBehaviour {
 
@@ -89,4 +93,6 @@ public class MouseActions : MonoBehaviour {
 		foreach (Selectable s in selectables)
 			s.Deselect();
 	}
+}
+
 }

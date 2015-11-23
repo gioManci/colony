@@ -2,6 +2,8 @@
 using System.Collections;
 using System;
 
+namespace Colony.Behaviour.Behaviours {
+
 public class Seek : Behaviour
 {
     private Vector2 target;
@@ -21,4 +23,6 @@ public class Seek : Behaviour
         Vector2 desiredVelocity = distanceVector.normalized * 2.0f;
         return desiredVelocity - rigidbody.velocity;
     }
+}
+
 }

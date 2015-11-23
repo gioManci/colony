@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+
+namespace Colony.Tasks {
 
 /// <summary>
 /// Basic abstract class that describes a Task.
@@ -108,5 +110,7 @@ public abstract class Task
             status = Status.Inactive;
         }
     }
+
+}
 
 }

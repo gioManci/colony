@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using Colony.Input;
+
+namespace Colony {
 
 public class Selectable : MonoBehaviour {
 	// The sprite of the selection wheel
@@ -30,4 +33,6 @@ public class Selectable : MonoBehaviour {
 		if (selected) Deselect();
 		else Select();
 	}
+}
+
 }

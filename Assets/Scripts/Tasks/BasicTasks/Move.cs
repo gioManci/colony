@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
+using Colony.Tasks;
+using Colony.Behaviour;
+
+namespace Colony.Tasks.BasicTasks {
 
 public class Move : Task
 {
@@ -40,4 +44,6 @@ public class Move : Task
     {
         steering.StopSeek();
     }
+}
+
 }

@@ -1,4 +1,8 @@
-﻿public enum BehaviourType
+namespace Colony.Behaviour {
+
+public enum BehaviourType
 {
     Seek
+}
+
 }
