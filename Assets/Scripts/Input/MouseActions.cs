@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using InputEvents;
 
@@ -76,23 +76,11 @@ public class MouseActions : MonoBehaviour {
 		moveTarget.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		
 		// Move each selected moveable object
-		int i = 0, max_i = 6;
-		float radius = 1f, angle = 0f;
 		foreach (Moveable obj in moveables) {
 			Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
 			if (sel != null && sel.IsSelected) {
-				// Dispose in circle around the target
-				var pos = click.pos;
-				if (++i > max_i) {
-					max_i *= 2;
-					radius += 1;
-					i = 0;
-				}
-				angle = 2*Mathf.PI * i / max_i;
-				pos.x += radius * Mathf.Cos(angle);
-				pos.y += radius * Mathf.Sin(angle);
-				Debug.Log($"obj: {obj}; angle={angle}, pos:{pos}");
-				obj.Move(pos);
+				WorkerBeeBrain brain = obj.GetComponent<WorkerBeeBrain>();
+				brain.DoMove(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 			}
 		}
 	}
