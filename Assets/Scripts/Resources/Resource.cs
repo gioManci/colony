@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace Colony.Resources {
 
-public class Resource : MonoBehaviour {
+public abstract class Resource {
+		protected Resource(){}
+}
 
-	// Use this for initialization
-	void Start() {
-	
-	}
-	
-	// Update is called once per frame
-	void Update() {
-	
-	}
 }
