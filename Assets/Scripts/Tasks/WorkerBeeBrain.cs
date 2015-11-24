@@ -11,39 +11,40 @@ public class WorkerBeeBrain : MonoBehaviour
 
 	void Start ()
 	{
-        brain = new Think(gameObject);
+		brain = new Think(gameObject);
 	}
 	
 	void Update ()
 	{
-        brain?.Process();
+		if (brain != null)
+			brain.Process();
 	}
 
-    public void DoMove(Vector2 position)
-    {
-        brain.RemoveAllSubtasks();
-        brain.AddSubtask(new Move(gameObject, position));
-    }
+	public void DoMove(Vector2 position)
+	{
+		brain.RemoveAllSubtasks();
+		brain.AddSubtask(new Move(gameObject, position));
+	}
 
-    public void DoHarvest(GameObject resource)
-    {
+	public void DoHarvest(GameObject resource)
+	{
 
-    }
+	}
 
-    public void DoBuild()
-    {
+	public void DoBuild()
+	{
 
-    }
+	}
 
-    public void DoRepair()
-    {
+	public void DoRepair()
+	{
 
-    }
+	}
 
-    public void DoAttack()
-    {
+	public void DoAttack()
+	{
 
-    }
+	}
 }
 
 }
