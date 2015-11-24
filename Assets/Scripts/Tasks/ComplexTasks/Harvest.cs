@@ -2,34 +2,43 @@ using UnityEngine;
 using System.Collections;
 using System;
 using Colony.Tasks;
+using Colony.Tasks.BasicTasks;
 
-namespace Colony.Tasks.ComplexTasks {
-
-public class Harvest : ComplexTask
+namespace Colony.Tasks.ComplexTasks
 {
-    public Harvest(GameObject owner) : base(owner, TaskType.Harvest)
-    {
-    }
 
-    public override void Activate()
+    public class Harvest : ComplexTask
     {
-        throw new NotImplementedException();
-    }
+        private GameObject resource;
 
-    public override void OnMessage()
-    {
-        throw new NotImplementedException();
-    }
+        public Harvest(GameObject agent, GameObject resource) : base(agent, TaskType.Harvest)
+        {
+            this.resource = resource;
+        }
 
-    public override Status Process()
-    {
-        throw new NotImplementedException();
-    }
+        public override void Activate()
+        {
+            status = Status.Active;
+            if (agent.transform.position != resource.transform.position)
+            {
+                AddSubtask(new Move(agent, resource.transform.position));
+            }
+        }
 
-    public override void Terminate()
-    {
-        throw new NotImplementedException();
+        public override void OnMessage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Status Process()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Terminate()
+        {
+            throw new NotImplementedException();
+        }
     }
-}
 
 }

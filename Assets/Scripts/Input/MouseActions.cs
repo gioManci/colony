@@ -52,15 +52,16 @@ public class MouseActions : MonoBehaviour {
 		
 		// Find out if some Selectable was hit by click
 		RaycastHit2D hit = Physics2D.Raycast(click.pos, Vector2.zero);
-		Selectable sel = hit.collider?.gameObject?.GetComponentInChildren<Selectable>();
-		// If so, select it
-		if (sel != null)
-			sel.SelectToggle();
+		var collider = hit.collider;
+		if (collider != null && collider.gameObject != null) {
+			Selectable sel = collider.gameObject.GetComponentInChildren<Selectable>();
+			// If so, select it
+			if (sel != null)
+				sel.SelectToggle();
+		}
 	}
 	
 	private void dragSelect(Drag drag) {
-		Debug.Log($"drag select (rect = {drag.spanRect})");
-
 		if (!Input.GetKey(KeyCode.LeftShift))
 			deselectAll();
 
