@@ -1,29 +1,44 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Colony.Behaviour {
-
-public abstract class Behaviour
+namespace Colony.Behaviour
 {
-    protected BehaviourType type;
 
-    protected GameObject actor;
-
-    public BehaviourType Type
+    public abstract class Behaviour
     {
-        get
+        private BehaviourType type;
+
+        protected GameObject agent;
+        protected float weight;
+
+        public BehaviourType Type
         {
-            return type;
+            get
+            {
+                return type;
+            }
         }
-    }
 
-    public Behaviour(GameObject actor, BehaviourType behaviourType)
-    {
-        this.actor = actor;
-        type = behaviourType;
-    }
+        public float Weight
+        {
+            get
+            {
+                return weight;
+            }
+            set
+            {
+                weight = value;
+            }
+        }
 
-    public abstract Vector2 Compute();
-}
+        public Behaviour(GameObject actor, BehaviourType behaviourType, float weight)
+        {
+            this.agent = actor;
+            type = behaviourType;
+            this.weight = weight;
+        }
+
+        public abstract Vector2 Compute();
+    }
 
 }

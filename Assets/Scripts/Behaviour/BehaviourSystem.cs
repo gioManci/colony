@@ -2,78 +2,159 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace Colony.Behaviour {
-
-public class BehaviourSystem
+namespace Colony.Behaviour
 {
-    private Behaviour[] behaviours;
-
-	public BehaviourSystem()
-	{
-        int behavioursNumber = Enum.GetValues(typeof(BehaviourType)).Length;
-        behaviours = new Behaviour[behavioursNumber];
-	}
-
-    public void AddBehaviour(Behaviour behaviour)
+    /// <summary>
+    /// Represents a steering behaviours systems. Allows to plug in different behaviours and calculate the
+    /// resulting force applied to an object due to them.
+    /// </summary>
+    public class BehaviourSystem
     {
-        behaviours[(int)behaviour.Type] = behaviour;
-    }
+        private Behaviour[] behaviours;
+        private List<GameObject> neighbors;
+        private int neighborUsers;
 
-    public void RemoveBehaviour(BehaviourType behaviourType)
-    {
-        behaviours[(int)behaviourType] = null;
-    }
+        //
+        private GameObject owner;
+        //
 
-    public Vector2 CalculateResultingForce()
-    {
-        Vector2 force, resultingForce = Vector2.zero;
-
-        foreach (Behaviour behaviour in behaviours)
+        /// <summary>
+        /// The number of behaviours in the list needing the neighbors vector to compute its force.
+        /// </summary>
+        public int NeighborUsers
         {
-            if (behaviour != null)
+            get
             {
-                force = behaviour.Compute();
-                if (!TryAddForce(ref resultingForce, force))
+                return neighborUsers;
+            }
+            set
+            {
+                if (value < 0)
                 {
-                    return resultingForce;
+                    neighborUsers = 0;
+                }
+                else
+                {
+                    neighborUsers = value;
                 }
             }
         }
 
-        return resultingForce;
+        /// <summary>
+        /// Gets the last updated list of neighbors.
+        /// </summary>
+        public List<GameObject> Neighbors
+        {
+            get
+            {
+                return neighbors;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new behaviour system.
+        /// </summary>
+        public BehaviourSystem( GameObject owner)
+        {
+            int behavioursNumber = Enum.GetValues(typeof(BehaviourType)).Length;
+            behaviours = new Behaviour[behavioursNumber];
+            neighbors = new List<GameObject>();
+            NeighborUsers = 0;
+
+            this.owner = owner;
+        }
+
+        /// <summary>
+        /// Adds the behaviour to the list of behaviours to compute. It overwrites an existing one of the
+        /// same type, if any.
+        /// </summary>
+        /// <param name="behaviour">The behaviour to add.</param>
+        public void AddBehaviour(Behaviour behaviour)
+        {
+            behaviours[(int)behaviour.Type] = behaviour;
+        }
+
+        /// <summary>
+        /// Removes from the list the behaviour specified by behaviourType. If no behaviour of such type exists,
+        /// nothing happens.
+        /// </summary>
+        /// <param name="behaviourType">The type of the behaviour to remove.</param>
+        public void RemoveBehaviour(BehaviourType behaviourType)
+        {
+            behaviours[(int)behaviourType] = null;
+        }
+
+        /// <summary>
+        /// Returns the resulting force applied to this agent by evaluating all the active behaviours.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 CalculateResultingForce()
+        {
+            Vector2 force, resultingForce = Vector2.zero;
+
+            if (NeighborUsers > 0)
+            {
+                UpdateNeighbors();
+            }
+
+            foreach (Behaviour behaviour in behaviours)
+            {
+                if (behaviour != null)
+                {
+                    force = behaviour.Compute() * behaviour.Weight;
+                    if (!TryAddForce(ref resultingForce, force))
+                    {
+                        return resultingForce;
+                    }
+                }
+            }
+
+            return resultingForce;
+        }
+
+        /// <summary>
+        /// Tries to add the current force to the cumulative one. If the cumulative force has already reached
+        /// the maxiumum amount, it returns false. Else it adds the current force clamping it if it exceeds
+        /// the maximum amount.
+        /// </summary>
+        /// <param name="cumulativeForce">The cumulative force to be applied to the object.</param>
+        /// <param name="currentForce">The current force to be added.</param>
+        /// <returns>False if the cumulative force has reached the maximum amount possible.</returns>
+        private bool TryAddForce(ref Vector2 cumulativeForce, Vector2 currentForce)
+        {
+            //TODO: 5.0f is the maximum force that can be applied to the object. Substitute with constant.
+            float forceGap = 5.0f - cumulativeForce.magnitude;
+
+            //If the cumulative force exceeds the maximum that can be applied, return false.
+            if (forceGap <= 0)
+            {
+                return false;
+            }
+
+            //If the current force to be applied is within the gap, simply adds it. Else, clamps it to the max.
+            if (currentForce.magnitude < forceGap)
+            {
+                cumulativeForce += currentForce;
+            }
+            else
+            {
+                cumulativeForce += currentForce.normalized * forceGap;
+            }
+
+            return true;
+        }
+
+        private void UpdateNeighbors()
+        {
+            neighbors.Clear();
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Bee"))
+            {
+                Vector2 distance = obj.transform.position - owner.transform.position;
+                if (obj != owner && distance.sqrMagnitude < 1.0f)
+                {
+                    neighbors.Add(obj);
+                }
+            }
+        }
     }
-
-    /// <summary>
-    /// Tries to add the current force to the cumulative one. If the cumulative force has already reached
-    /// the maxiumum amount, it returns false. Else it adds the current force clamping it if it exceeds
-    /// the maximum amount.
-    /// </summary>
-    /// <param name="cumulativeForce">The cumulative force to be applied to the object.</param>
-    /// <param name="currentForce">The current force to be added.</param>
-    /// <returns>False if the cumulative force has reached the maximum amount possible.</returns>
-    private bool TryAddForce(ref Vector2 cumulativeForce, Vector2 currentForce)
-    {
-        //TODO: 5.0f is the maximum force that can be applied to the object. Substitute with constant.
-        float forceGap = 5.0f - cumulativeForce.magnitude;
-
-        //If the cumulative force exceeds the maximum that can be applied, return false.
-        if (forceGap <= 0)
-        {
-            return false;
-        }
-
-        //If the current force to be applied is within the gap, simply adds it. Else, clamps it to the max.
-        if (currentForce.magnitude < forceGap)
-        {
-            cumulativeForce += currentForce;
-        }
-        else
-        {
-            cumulativeForce += currentForce.normalized * forceGap;
-        }
-
-        return true;
-    }
-}
-
 }

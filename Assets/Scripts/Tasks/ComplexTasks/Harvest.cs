@@ -19,6 +19,19 @@ namespace Colony.Tasks.ComplexTasks
         public override void Activate()
         {
             status = Status.Active;
+            RemoveAllSubtasks();
+            if (true)
+            {
+
+            }
+            if (true)
+            {
+                AddSubtask(new Move(agent, new Vector2(0, 0)));
+            }
+            if (true)
+            {
+                AddSubtask(new Extract(agent, resource));
+            }
             if (agent.transform.position != resource.transform.position)
             {
                 AddSubtask(new Move(agent, resource.transform.position));

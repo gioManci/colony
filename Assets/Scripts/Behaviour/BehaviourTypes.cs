@@ -1,8 +1,13 @@
-namespace Colony.Behaviour {
-
-public enum BehaviourType
+namespace Colony.Behaviour
 {
-    Seek
-}
+
+    public enum BehaviourType
+    {
+        Seek,
+        Arrive,
+        Separation,
+        Alignment,
+        Cohesion
+    }
 
 }

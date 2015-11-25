@@ -1,13 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Colony.Tasks {
-
-public enum TaskType
+namespace Colony.Tasks
 {
-    Think,
-    Move,
-    Harvest
-}
+
+    public enum TaskType
+    {
+        Deposit,
+        Extract,
+        Think,
+        Move,
+        Harvest
+    }
 
 }
