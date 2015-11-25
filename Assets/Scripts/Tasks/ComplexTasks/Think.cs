@@ -1,42 +1,63 @@
 using UnityEngine;
-using System.Collections;
 using System;
 
-namespace Colony.Tasks.ComplexTasks {
-
-public class Think : ComplexTask
+namespace Colony.Tasks.ComplexTasks
 {
-    public Think(GameObject owner) : base(owner, TaskType.Think) { }
-
-    public override void Activate()
+    /// <summary>
+    /// Represents the root task of any brain. All the tasks assigned to an agent are subtasks of this one.
+    /// When no task is assigned to an agent, this is the only one in the tasks hierarchy.
+    /// </summary>
+    public class Think : ComplexTask
     {
-        status = Status.Active;
-    }
+        /// <summary>
+        /// Creates a new Think task specifying tha agent to which it belongs.
+        /// </summary>
+        /// <param name="agent">The agent that owns this task.</param>
+        public Think(GameObject agent) : base(agent, TaskType.Think) { }
 
-    public override void OnMessage()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Status Process()
-    {
-        ActivateIfInactive();
-
-        ProcessSubtasks();
-
-        return status;
-    }
-
-    public override void Terminate() { }
-
-    public bool IsCurrentSubtask(TaskType taskType)
-    {
-        if (subtasks.Count > 0)
+        /// <summary>
+        /// Sets the current task to active.
+        /// </summary>
+        public override void Activate()
         {
-            return subtasks.Peek().Type == taskType;
+            status = Status.Active;
         }
-        return false;
-    }
-}
 
+        public override void OnMessage()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Tries to execute this task and returns the status.
+        /// </summary>
+        /// <returns>The status of this task.</returns>
+        public override Status Process()
+        {
+            ActivateIfInactive();
+
+            ProcessSubtasks();
+
+            return status;
+        }
+
+        /// <summary>
+        /// Terminates this task [Has no effect on this task]
+        /// </summary>
+        public override void Terminate() { }
+
+        /// <summary>
+        /// Returns whether the current subtask of this task is of type taskType.
+        /// </summary>
+        /// <param name="taskType">The task type to check.</param>
+        /// <returns>True if the current subtask is of type taskType, false otherwise.</returns>
+        public bool IsCurrentSubtask(TaskType taskType)
+        {
+            if (subtasks.Count > 0)
+            {
+                return subtasks.Peek().Type == taskType;
+            }
+            return false;
+        }
+    }
 }

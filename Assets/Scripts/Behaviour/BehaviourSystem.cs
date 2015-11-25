@@ -14,9 +14,8 @@ namespace Colony.Behaviour
         private List<GameObject> neighbors;
         private int neighborUsers;
 
-        //
+        //TODO: This variable should be removed to decouple the behaviour system from the game objects.
         private GameObject owner;
-        //
 
         /// <summary>
         /// The number of behaviours in the list needing the neighbors vector to compute its force.
@@ -54,13 +53,14 @@ namespace Colony.Behaviour
         /// <summary>
         /// Creates a new behaviour system.
         /// </summary>
-        public BehaviourSystem( GameObject owner)
+        public BehaviourSystem(/*TODO: This parameter should be removed*/ GameObject owner)
         {
             int behavioursNumber = Enum.GetValues(typeof(BehaviourType)).Length;
             behaviours = new Behaviour[behavioursNumber];
             neighbors = new List<GameObject>();
             NeighborUsers = 0;
 
+            //TODO: This variable should be removed.
             this.owner = owner;
         }
 
@@ -144,6 +144,7 @@ namespace Colony.Behaviour
             return true;
         }
 
+        //TODO: Searching the neighbors should be moved outside this class. This function should only ask for them.
         private void UpdateNeighbors()
         {
             neighbors.Clear();

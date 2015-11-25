@@ -14,9 +14,9 @@ namespace Colony.Behaviour
         {
             behaviourSystem = new BehaviourSystem(gameObject);
             rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
-            StartSeparation();
-            StartAlignment();
-            StartCohesion();
+
+            //TODO: This should be moved outside this class
+            StartFlocking();
         }
 
         void Update()
@@ -103,6 +103,20 @@ namespace Colony.Behaviour
         {
             behaviourSystem.RemoveBehaviour(BehaviourType.Cohesion);
             behaviourSystem.NeighborUsers--;
+        }
+
+        public void StartFlocking()
+        {
+            StartSeparation();
+            StartAlignment();
+            StartCohesion();
+        }
+
+        public void StopFlocking()
+        {
+            StopSeparation();
+            StopAlignment();
+            StopCohesion();
         }
     }
 }

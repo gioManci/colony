@@ -1,9 +1,8 @@
-using UnityEngine;
-using System.Collections;
-
 namespace Colony.Tasks
 {
-
+    /// <summary>
+    /// Identifies the possible types of tasks.
+    /// </summary>
     public enum TaskType
     {
         Deposit,
