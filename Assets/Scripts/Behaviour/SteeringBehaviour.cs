@@ -23,7 +23,7 @@ namespace Colony.Behaviour
         {
             Vector2 forceToApply = behaviourSystem.CalculateResultingForce();
 
-            if (forceToApply.sqrMagnitude < 0.001)
+            if (forceToApply.sqrMagnitude < 0.1)
             {
                 rigidbody2d.velocity *= 0.5f;
             }
@@ -71,7 +71,7 @@ namespace Colony.Behaviour
 
         public void StartSeparation()
         {
-            behaviourSystem.AddBehaviour(new Separation(gameObject, behaviourSystem, 0.01f));
+            behaviourSystem.AddBehaviour(new Separation(gameObject, behaviourSystem, 0.1f));
             behaviourSystem.NeighborUsers++;
         }
 
