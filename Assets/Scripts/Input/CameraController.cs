@@ -10,8 +10,8 @@ public class CameraController : MonoBehaviour {
 	enum Direction { UP, RIGHT, DOWN, LEFT };
 
 	// TODO: make this adjustable by player?
-	private const float ARROW_SPEED = 8f;
-	private const float MOUSE_SPEED_MAX = 16f;
+	public float arrowSpeed = 8f;
+	public float mouseSpeedMax = 16f;
 	// If cursor moves past this threshold (near the screen boundaries),
 	// camera will start moving in that direction. Both values are in
 	// percentual values of the corresponding dimension.
@@ -22,13 +22,13 @@ public class CameraController : MonoBehaviour {
 	void Update() {
 		/// Arrows movements ///
 		if (Input.GetKey(KeyCode.UpArrow)) 
-			transform.Translate(Vector2.up * ARROW_SPEED * Time.deltaTime, Space.World);
+			transform.Translate(Vector2.up * arrowSpeed * Time.deltaTime, Space.World);
 		if (Input.GetKey(KeyCode.DownArrow))
-		         transform.Translate(Vector2.down * ARROW_SPEED * Time.deltaTime, Space.World);
+		         transform.Translate(Vector2.down * arrowSpeed * Time.deltaTime, Space.World);
 		if (Input.GetKey(KeyCode.LeftArrow)) 
-			transform.Translate(Vector2.left * ARROW_SPEED * Time.deltaTime, Space.World);
+			transform.Translate(Vector2.left * arrowSpeed * Time.deltaTime, Space.World);
 		if (Input.GetKey(KeyCode.RightArrow))
-			transform.Translate(Vector2.right * ARROW_SPEED * Time.deltaTime, Space.World);
+			transform.Translate(Vector2.right * arrowSpeed * Time.deltaTime, Space.World);
 
 		/// Mouse movements ///
 		var pos = Input.mousePosition;
@@ -46,16 +46,16 @@ public class CameraController : MonoBehaviour {
 	private float calcSpeed(Vector2 pos, Direction dir) {
 		switch (dir) {
 		case Direction.UP:
-			return MOUSE_SPEED_MAX * (pos.y - Screen.height * (1 - VERT_SCREEN_THRESHOLD))
+			return mouseSpeedMax * (pos.y - Screen.height * (1 - VERT_SCREEN_THRESHOLD))
 				/ (Screen.height * VERT_SCREEN_THRESHOLD);
 		case Direction.DOWN:
-			return MOUSE_SPEED_MAX * (Screen.height * VERT_SCREEN_THRESHOLD - pos.y)
+			return mouseSpeedMax * (Screen.height * VERT_SCREEN_THRESHOLD - pos.y)
 				/ (Screen.height * VERT_SCREEN_THRESHOLD);
 		case Direction.LEFT:
-			return MOUSE_SPEED_MAX * (Screen.width * HORIZ_SCREEN_THRESHOLD - pos.x) 
+			return mouseSpeedMax * (Screen.width * HORIZ_SCREEN_THRESHOLD - pos.x) 
 				/ (Screen.width * HORIZ_SCREEN_THRESHOLD);
 		case Direction.RIGHT:
-			return MOUSE_SPEED_MAX * (pos.x - Screen.width * (1 - HORIZ_SCREEN_THRESHOLD)) 
+			return mouseSpeedMax * (pos.x - Screen.width * (1 - HORIZ_SCREEN_THRESHOLD)) 
 				/ (Screen.width * HORIZ_SCREEN_THRESHOLD);
 		}
 		return 0f;

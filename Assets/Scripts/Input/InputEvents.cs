@@ -8,7 +8,7 @@ public struct Click {
 	public Click(Vector2 pos) {
 		this.pos = pos;
 	}
-	public readonly Vector2 pos; 
+	public readonly Vector2 pos;  
 }
 
 // Represents a mouse drag

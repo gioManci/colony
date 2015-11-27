@@ -7,8 +7,11 @@ namespace Colony.Input {
 	
 using Input = UnityEngine.Input;
 
+// Implements all the actions performed when an event is caught
+// by MouseMonitor.
 public class MouseActions : MonoBehaviour {
 
+	private HashSet<Selectable> selected = new HashSet<Selectable>();
 	private HashSet<Selectable> selectables = new HashSet<Selectable>();
 	private HashSet<Controllable> controllables = new HashSet<Controllable>();
 	
@@ -24,7 +27,7 @@ public class MouseActions : MonoBehaviour {
 			Instance = this;
 			MouseMonitor.OnLeftClick += clickSelect;
 			MouseMonitor.OnDrag += dragSelect;
-			MouseMonitor.OnRightClick += moveSelectedUnits;
+			MouseMonitor.OnRightClick += dispatchRightClick;
 		} else {
 			GameObject.Destroy(this);
 		}
@@ -51,13 +54,20 @@ public class MouseActions : MonoBehaviour {
 			deselectAll();
 		
 		// Find out if some Selectable was hit by click
-		RaycastHit2D hit = Physics2D.Raycast(click.pos, Vector2.zero);
-		var collider = hit.collider;
-		if (collider != null && collider.gameObject != null) {
-			Selectable sel = collider.gameObject.GetComponentInChildren<Selectable>();
+		var obj = Utils.GetObjectAt(click.pos);
+		if (obj != null) {
+			Selectable sel = obj.GetComponentInChildren<Selectable>();
 			// If so, select it
-			if (sel != null)
+			if (sel != null) {
 				sel.SelectToggle();
+				// If unit is controllable, add it to selected list.
+				if (obj.GetComponentInChildren<Controllable>() != null) {
+					if (sel.IsSelected)
+						selected.Add(sel);
+					else
+						selected.Remove(sel);
+				}
+			}
 		}
 	}
 	
@@ -73,27 +83,47 @@ public class MouseActions : MonoBehaviour {
 		}
 	}
 
-	private void moveSelectedUnits(Click click) {
+	private void dispatchRightClick(Click click) {
+		if (selected.Count > 0) {
+			// Check if click was on an interactable unit (resource, etc)
+			var obj = Utils.GetObjectAt(click.pos);
+			if (obj != null) {
+				// TODO
+				moveSelectedUnits(click.pos);
+			} else {
+				moveSelectedUnits(click.pos);
+			}
+		} else {
+			moveSelectedUnits(click.pos);
+		}
+	}
+
+	private void moveSelectedUnits(Vector2 pos) {
 		// Draw a point on move target
 		if (moveTarget != null)
 			GameObject.Destroy(moveTarget);
 		moveTarget = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 		moveTarget.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-		moveTarget.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		moveTarget.transform.position = pos;
 		
 		// Move each selected moveable object
 		foreach (Controllable obj in controllables) {
 			Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
 			if (sel != null && sel.IsSelected) {
 				WorkerBeeBrain brain = obj.GetComponent<WorkerBeeBrain>();
-				brain.DoMove(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+				brain.DoMove(pos);
 			}
 		}
 	}
 
 	private void deselectAll() {
-		foreach (Selectable s in selectables)
-			s.Deselect();
+		foreach (Selectable s in selectables) {
+			Debug.Log(s);
+			if (s == null)
+				selectables.Remove(s);
+			else
+				s.Deselect();
+		}
 	}
 }
 
