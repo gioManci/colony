@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour {
 	// TODO: make this adjustable by player?
 	public float arrowSpeed = 8f;
 	public float mouseSpeedMax = 16f;
+
 	// If cursor moves past this threshold (near the screen boundaries),
 	// camera will start moving in that direction. Both values are in
 	// percentual values of the corresponding dimension.
