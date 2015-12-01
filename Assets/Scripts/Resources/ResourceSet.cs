@@ -17,6 +17,9 @@ public class ResourceSet {
 		return this;
 	}
 	
+	// Subtract `amt` resources from this resource set (for each
+	// resource in this set) and return the amount of resources
+	// subtracted.
 	public static ResourceSet operator -(ResourceSet rs, int amt) {
 		var newrs = new ResourceSet(rs);
 		for (int i = 0; i < newrs.Length; ++i) {

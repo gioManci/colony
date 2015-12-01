@@ -29,9 +29,10 @@ public class Selectable : MonoBehaviour {
 		selectionSprite.SetActive(selected = false);
 	}
 
-	public void SelectToggle() {
+	public bool SelectToggle() {
 		if (selected) Deselect();
 		else Select();
+		return selected;
 	}
 }
 
