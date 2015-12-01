@@ -21,7 +21,7 @@ namespace Colony.Behaviour.Behaviours
 
             float distance = distanceVector.magnitude;
 
-            if (distance > 0)
+            if (distance > 0.5)
             {
                 float speed = distance / deceleration;
 

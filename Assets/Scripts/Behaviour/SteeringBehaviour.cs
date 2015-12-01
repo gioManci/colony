@@ -21,31 +21,32 @@ namespace Colony.Behaviour
 
         void Update()
         {
+            Debug.DrawRay(gameObject.transform.position, gameObject.transform.up, Color.green);
+            Debug.DrawRay(gameObject.transform.position, gameObject.transform.right, Color.red);
+            Debug.DrawRay(rigidbody2d.position, rigidbody2d.velocity, Color.yellow);
+
             Vector2 forceToApply = behaviourSystem.CalculateResultingForce();
 
             if (forceToApply.sqrMagnitude < 0.1)
             {
                 rigidbody2d.velocity *= 0.5f;
             }
-
-            Vector2 acceleration = forceToApply / rigidbody2d.mass;
-
-            rigidbody2d.velocity += acceleration * Time.deltaTime;
-
-            if (rigidbody2d.velocity.magnitude > 3.0f)
+            else
             {
-                rigidbody2d.velocity = rigidbody2d.velocity.normalized * 3.0f;
-            }
+                Vector2 acceleration = forceToApply / rigidbody2d.mass;
+                rigidbody2d.velocity += acceleration * Time.deltaTime;
 
-            rigidbody2d.position += rigidbody2d.velocity * Time.deltaTime;
+                if (rigidbody2d.velocity.magnitude > 3.0f)
+                {
+                    rigidbody2d.velocity = rigidbody2d.velocity.normalized * 3.0f;
+                }
+                rigidbody2d.position += rigidbody2d.velocity * Time.deltaTime;
 
-            if (rigidbody2d.velocity.sqrMagnitude > 0.0001)
-            {
-                gameObject.transform.up = rigidbody2d.velocity.normalized;
-                gameObject.transform.right = new Vector3(
-                    -gameObject.transform.up.y,
-                    gameObject.transform.up.x,
-                    0);
+                //Rotation
+                if (rigidbody2d.velocity.sqrMagnitude > 0.0001)
+                {
+                    gameObject.transform.up = rigidbody2d.velocity.normalized;
+                }
             }
         }
 

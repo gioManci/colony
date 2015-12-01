@@ -40,7 +40,7 @@ namespace Colony.Tasks.BasicTasks
         {
             ActivateIfInactive();
 
-            if (Vector2.Distance(target, (Vector2)agent.transform.position) < 0.1)
+            if (Vector2.Distance(target, agent.transform.position) < 0.1)
             {
                 status = Status.Completed;
             }

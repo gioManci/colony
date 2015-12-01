@@ -20,20 +20,17 @@ namespace Colony.Tasks.ComplexTasks
         {
             status = Status.Active;
             RemoveAllSubtasks();
+            //TODO: Check if bag is full
             if (true)
             {
-
-            }
-            if (true)
-            {
+                AddSubtask(new Deposit(agent));
                 AddSubtask(new Move(agent, new Vector2(0, 0)));
             }
-            if (true)
+            else
             {
+                AddSubtask(new Deposit(agent));
+                AddSubtask(new Move(agent, new Vector2(0, 0)));
                 AddSubtask(new Extract(agent, resource));
-            }
-            if (agent.transform.position != resource.transform.position)
-            {
                 AddSubtask(new Move(agent, resource.transform.position));
             }
         }
@@ -45,7 +42,16 @@ namespace Colony.Tasks.ComplexTasks
 
         public override Status Process()
         {
-            throw new NotImplementedException();
+            ActivateIfInactive();
+
+            Status subtasksStatus = ProcessSubtasks();
+
+            if (subtasksStatus == Status.Completed)
+            {
+                status = Status.Inactive;
+            }
+
+            return status;
         }
 
         public override void Terminate()
