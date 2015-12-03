@@ -11,7 +11,7 @@ namespace Colony.Behaviour
     public class BehaviourSystem
     {
         private Behaviour[] behaviours;
-        private List<GameObject> neighbors;
+        private GameObject[] neighbors;
         private int neighborUsers;
 
         //TODO: This variable should be removed to decouple the behaviour system from the game objects.
@@ -42,7 +42,7 @@ namespace Colony.Behaviour
         /// <summary>
         /// Gets the last updated list of neighbors.
         /// </summary>
-        public List<GameObject> Neighbors
+        public GameObject[] Neighbors
         {
             get
             {
@@ -57,8 +57,9 @@ namespace Colony.Behaviour
         {
             int behavioursNumber = Enum.GetValues(typeof(BehaviourType)).Length;
             behaviours = new Behaviour[behavioursNumber];
-            neighbors = new List<GameObject>();
+            neighbors = new GameObject[0];
             NeighborUsers = 0;
+            //entityManager = GameObject.FindObjectOfType<EntityManager>();
 
             //TODO: This variable should be removed.
             this.owner = owner;
@@ -94,7 +95,7 @@ namespace Colony.Behaviour
 
             if (NeighborUsers > 0)
             {
-                UpdateNeighbors();
+                neighbors = EntityManager.Instance.GetNearbyUnits(owner.transform.position, 1.0f);
             }
 
             foreach (Behaviour behaviour in behaviours)
@@ -142,20 +143,6 @@ namespace Colony.Behaviour
             }
 
             return true;
-        }
-
-        //TODO: Searching the neighbors should be moved outside this class. This function should only ask for them.
-        private void UpdateNeighbors()
-        {
-            neighbors.Clear();
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Bee"))
-            {
-                Vector2 distance = obj.transform.position - owner.transform.position;
-                if (obj != owner && distance.sqrMagnitude < 1.0f)
-                {
-                    neighbors.Add(obj);
-                }
-            }
         }
     }
 }

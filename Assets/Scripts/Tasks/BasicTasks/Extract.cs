@@ -17,7 +17,7 @@ namespace Colony.Tasks.BasicTasks
 
         public override void Activate()
         {
-            throw new NotImplementedException();
+            status = Status.Active;
         }
 
         public override void OnMessage()
@@ -27,12 +27,23 @@ namespace Colony.Tasks.BasicTasks
 
         public override Status Process()
         {
-            throw new NotImplementedException();
+            //TODO: Check if the bag is full
+            if (false)
+            {
+                return Status.Completed;
+            }
+            //TODO: Check if resource is depleted
+            /*if (false)
+            {
+
+            }
+            if ()*/
+            return status;
         }
 
         public override void Terminate()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

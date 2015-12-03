@@ -20,7 +20,7 @@ public class Aged : MonoBehaviour
 		if (Age < 0)
 		{
 			// Add code to handle destruction
-			Destroy(gameObject);
+			EntityManager.Instance.DestroyEntity(gameObject);
 		}
 	}
 }

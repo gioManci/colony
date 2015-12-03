@@ -16,15 +16,20 @@ namespace Colony.Behaviour.Behaviours
         {
             Vector2 centerOfMass = Vector2.zero;
             Vector2 steeringForce = Vector2.zero;
+            int neighborCount = 0;
 
             foreach(GameObject neighbor in owner.Neighbors)
             {
-                centerOfMass += (Vector2)neighbor.transform.position;
+                if (agent != neighbor)
+                {
+                    centerOfMass += (Vector2)neighbor.transform.position;
+                    neighborCount++;
+                }
             }
 
-            if (owner.Neighbors.Count > 0)
+            if (neighborCount > 0)
             {
-                centerOfMass /= owner.Neighbors.Count;
+                centerOfMass /= neighborCount;
                 steeringForce = new Seek(agent, centerOfMass, 1.0f).Compute();
             }
 

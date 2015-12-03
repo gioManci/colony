@@ -21,7 +21,7 @@ namespace Colony.Tasks.ComplexTasks
             status = Status.Active;
             RemoveAllSubtasks();
             //TODO: Check if bag is full
-            if (true)
+            if (false)
             {
                 AddSubtask(new Deposit(agent));
                 AddSubtask(new Move(agent, new Vector2(0, 0)));

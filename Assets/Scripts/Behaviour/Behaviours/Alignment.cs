@@ -15,15 +15,20 @@ namespace Colony.Behaviour.Behaviours
         public override Vector2 Compute()
         {
             Vector2 averageHeading = Vector2.zero;
+            int neighborCount = 0;
 
             foreach (GameObject neighbor in owner.Neighbors)
             {
-                averageHeading += (Vector2)neighbor.transform.up;
+                if (agent != neighbor)
+                {
+                    averageHeading += (Vector2)neighbor.transform.up;
+                    neighborCount++;
+                }
             }
 
-            if (owner.Neighbors.Count > 0)
+            if (neighborCount > 0)
             {
-                averageHeading /= owner.Neighbors.Count;
+                averageHeading /= neighborCount;
                 averageHeading -= (Vector2)agent.transform.up;
             }
 
