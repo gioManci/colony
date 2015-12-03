@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Colony.Resources {
 
-public abstract class ResourceYielder {
+public abstract class ResourceYielder : MonoBehaviour {
 	protected ResourceYielder(ResourceSet resources) {
 		this.resources = resources;
 	}

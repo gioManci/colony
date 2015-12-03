@@ -21,6 +21,7 @@ public class MouseMonitor : MonoBehaviour {
 	// Callbacks
 	public static event Action<Click> OnLeftClick, OnRightClick;
 	public static event Action<Drag> OnDrag, OnDragEnd;
+	public static event Action<Move> OnMove;
 
 	// Make this class a singleton
 	public static MouseMonitor Instance { get; private set; }
@@ -73,6 +74,9 @@ public class MouseMonitor : MonoBehaviour {
 				OnDrag(new Drag(
 					Camera.main.ScreenToWorldPoint(dragStartPos),
 					Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+		} else {
+			if (OnMove != null)
+				OnMove(new Move(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
 		}
 	}
 

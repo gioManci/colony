@@ -25,4 +25,12 @@ public struct Drag {
 	public readonly Rect spanRect;
 }
 
+// Represents a mouse move
+public struct Move {
+	public Move(Vector2 pos) {
+		this.pos = pos;
+	}
+	public readonly Vector2 pos;
+}
+
 }
