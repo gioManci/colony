@@ -167,8 +167,6 @@ namespace Colony.Input
             }
         }
     }
-
-}
 =======
 namespace Colony.Input {
 	
@@ -317,6 +315,6 @@ public class MouseActions : MonoBehaviour {
 		}
 	}
 }
+>>>>>>> f5d7c6a828ac38a5f53c0c1d65bb856d84bc115b
 
 }
->>>>>>> Add Cursor class and tweak some settings:
