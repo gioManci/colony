@@ -33,6 +33,7 @@ namespace Colony.Input
                 MouseMonitor.OnLeftClick += clickSelect;
                 MouseMonitor.OnDrag += dragSelect;
                 MouseMonitor.OnRightClick += dispatchRightClick;
+		MouseMonitor.OnMove += changeCursor;
             }
             else
             {
@@ -60,6 +61,17 @@ namespace Colony.Input
             controllables.Remove(obj);
         }
 
+	private void updateSelected(Selectable sel) {
+                // If unit is controllable, add it to selected list.
+                if (sel.gameObject.GetComponentInChildren<Controllable>() != null)
+                {
+                    if (sel.IsSelected)
+                        selected.Add(sel);
+                    else
+                        selected.Remove(sel);
+                }
+	}
+
         private void clickSelect(Click click)
         {
             if (!Input.GetKey(KeyCode.LeftShift))
@@ -74,14 +86,7 @@ namespace Colony.Input
                 if (sel != null)
                 {
                     sel.SelectToggle();
-                    // If unit is controllable, add it to selected list.
-                    if (obj.GetComponentInChildren<Controllable>() != null)
-                    {
-                        if (sel.IsSelected)
-                            selected.Add(sel);
-                        else
-                            selected.Remove(sel);
-                    }
+		    updateSelected(sel);
                 }
             }
         }
@@ -95,8 +100,10 @@ namespace Colony.Input
             {
                 var go = obj.gameObject;
                 if (!go.GetComponent<Renderer>().isVisible) continue;
-                if (drag.spanRect.Contains(go.transform.position))
+                if (drag.spanRect.Contains(go.transform.position)) {
                     obj.Select();
+		    updateSelected(obj);
+		}
             }
         }
 
@@ -132,8 +139,8 @@ namespace Colony.Input
                 moveSelectedUnits(click.pos);
             }
         }
-
-        private void moveSelectedUnits(Vector2 pos)
+	
+	private void moveSelectedUnits(Vector2 pos)
         {
             // Draw a point on move target
             if (moveTarget != null)
@@ -158,12 +165,34 @@ namespace Colony.Input
         {
             foreach (Selectable s in selectables)
             {
-                Debug.Log(s);
                 if (s == null)
                     selectables.Remove(s);
-                else
-                    s.Deselect();
+                else {
+                	s.Deselect();
+			updateSelected(s);
+		}
             }
         }
+
+	private void changeCursor(Move move) {
+		bool beeSelected = false;
+		foreach (Selectable sel in selected) {
+			if (sel.gameObject.tag == "Bee") {
+				beeSelected = true;
+				break;
+			}
+		}
+
+		// TODO: add canHarvest check
+		if (beeSelected) {
+			var obj = Utils.GetObjectAt(move.pos);
+			if (obj != null && obj.GetComponentInChildren<ResourceYielder>() != null) {
+				Cursor.Instance.setCursor(Cursor.Type.Click); 
+				return;
+			}
+		} 
+		if (Cursor.Instance.CursType != Cursor.Type.Normal)
+			Cursor.Instance.setCursor(Cursor.Type.Normal); 
+	}
     }
 }
