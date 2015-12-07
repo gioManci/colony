@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
+using Colony.Resources;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -10,16 +8,23 @@ namespace Colony.Tasks.BasicTasks
     {
         private GameObject resource;
         private float timeFromLastExtraction;
+        private Stats stats;
+        private ResourceYielder yielder;
+        private BeeLoad load;
 
         public Extract(GameObject agent, GameObject resource) : base(agent, TaskType.Extract)
         {
             this.resource = resource;
             timeFromLastExtraction = 0.0f;
+            stats = agent.GetComponent<Stats>();
+            yielder = resource.GetComponent<ResourceYielder>();
+            load = agent.GetComponent<BeeLoad>();
         }
 
         public override void Activate()
         {
             status = Status.Active;
+
         }
 
         public override void OnMessage()
@@ -29,23 +34,40 @@ namespace Colony.Tasks.BasicTasks
 
         public override Status Process()
         {
+            ActivateIfInactive();
+
             timeFromLastExtraction += Time.deltaTime;
 
-            //TODO: Check if the bag is full
-            if (false)
+            if (load.IsFull)
             {
-                return Status.Completed;
+                status = Status.Completed;
             }
-            //TODO: Check if resource is depleted
-            if (false)
+            else if (yielder.IsDepleted)
             {
-                return Status.Failed;
+                status = Status.Failed;
             }
-            //TODO: Substitute 1.0f with constant
-            if (timeFromLastExtraction > 1.0f)
+            else if (timeFromLastExtraction > stats.LoadTime)
             {
+                ResourceSet requestAmount = new ResourceSet()
+                    .With(ResourceType.Nectar, yielder.defaultNectarYield)
+                    .With(ResourceType.Pollen, yielder.defaultPollenYield)
+                    .With(ResourceType.Water, yielder.defaultWaterYield)
+                    .With(ResourceType.Beeswax, yielder.defaultBeeswaxYield)
+                    .With(ResourceType.Honey, yielder.defaultHoneyYield)
+                    .With(ResourceType.RoyalJelly, yielder.defaultRoyalJellyYield);
 
+                ResourceSet result = yielder.Yield(requestAmount);
+
+                if (result.IsEmpty())
+                {
+                    return Status.Failed;
+                }
+
+                load.AddResources(result);
+
+                timeFromLastExtraction = 0.0f;
             }
+
             return status;
         }
 

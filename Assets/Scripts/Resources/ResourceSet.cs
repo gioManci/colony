@@ -2,42 +2,75 @@
 using System;
 using System.Collections;
 
-namespace Colony.Resources {
+namespace Colony.Resources
+{
+    public class ResourceSet
+    {
+        public ResourceSet() { }
 
-public class ResourceSet {
-	public ResourceSet() {}
-	
-	public ResourceSet(ResourceSet other) {
-		for (int i = 0; i < other.Length; ++i)
-			resources[i] = other[i];
-	}
+        public ResourceSet With(ResourceType type, int amount)
+        {
+            resources[(int)type] += amount;
+            return this;
+        }
 
-	public ResourceSet With(ResourceType type, int amount) {
-		resources[(int)type] += amount;
-		return this;
-	}
-	
-	// Subtract `amt` resources from this resource set (for each
-	// resource in this set) and return the amount of resources
-	// subtracted.
-	public static ResourceSet operator -(ResourceSet rs, int amt) {
-		var newrs = new ResourceSet(rs);
-		for (int i = 0; i < newrs.Length; ++i) {
-			newrs[i] = Mathf.Max(0, newrs[i] - amt);
-		}
-		return newrs;
-	}
-	
-	public int Length {
-		get { return resources.Length; }
-	}
-	
-	public int this[int i] {
-		get { return resources[i]; }
-		set { resources[i] = value; }
-	}
+        public static ResourceSet operator -(ResourceSet rs1, ResourceSet rs2)
+        {
+            ResourceSet result = new ResourceSet();
+            foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
+            {
+                result[type] = rs1[type] - rs2[type];
+            }
+            return result;
+        }
 
-	private int[] resources = new int[Enum.GetNames(typeof(ResourceType)).Length];
-}
+        public static ResourceSet operator +(ResourceSet rs1, ResourceSet rs2)
+        {
+            ResourceSet result = new ResourceSet();
+            foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
+            {
+                result[type] = rs1[type] + rs2[type];
+            }
+            return result;
+        }
 
+        public int this[ResourceType i]
+        {
+            get { return resources[(int)i]; }
+            set { resources[(int)i] = Mathf.Max(0, value); }
+        }
+
+        public bool IsEmpty()
+        {
+            for (int i = 0; i < resources.Length; i++)
+            {
+                if (resources[i] > 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public int GetSize()
+        {
+            int size = 0;
+
+            for (int i = 0; i < resources.Length; i++)
+            {
+                size += resources[i];
+            }
+
+            return size;
+        }
+        public void Clear()
+        {
+            for (int i = 0; i < resources.Length; i++)
+            {
+                resources[i] = 0;
+            }
+        }
+
+        private int[] resources = new int[Enum.GetNames(typeof(ResourceType)).Length];
+    }
 }

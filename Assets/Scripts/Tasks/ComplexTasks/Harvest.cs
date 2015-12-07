@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using Colony.Tasks;
 using Colony.Tasks.BasicTasks;
+using Colony.Resources;
 
 namespace Colony.Tasks.ComplexTasks
 {
@@ -10,26 +11,32 @@ namespace Colony.Tasks.ComplexTasks
     public class Harvest : ComplexTask
     {
         private GameObject resource;
+        private Stats stats;
+        private BeeLoad load;
 
         public Harvest(GameObject agent, GameObject resource) : base(agent, TaskType.Harvest)
         {
             this.resource = resource;
+            stats = agent.GetComponent<Stats>();
+            load = agent.GetComponent<BeeLoad>();
         }
 
         public override void Activate()
         {
             status = Status.Active;
             RemoveAllSubtasks();
-            //TODO: Check if bag is full
-            if (false)
+
+            GameObject closestHive = EntityManager.Instance.GetClosestHive(resource.transform.position);
+
+            if (load.IsFull)
             {
-                AddSubtask(new Deposit(agent));
-                AddSubtask(new Move(agent, new Vector2(0, 0)));
+                AddSubtask(new Deposit(agent, closestHive));
+                AddSubtask(new Move(agent, closestHive.transform.position));
             }
             else
             {
-                AddSubtask(new Deposit(agent));
-                AddSubtask(new Move(agent, new Vector2(0, 0)));
+                AddSubtask(new Deposit(agent, closestHive));
+                AddSubtask(new Move(agent, closestHive.transform.position));
                 AddSubtask(new Extract(agent, resource));
                 AddSubtask(new Move(agent, resource.transform.position));
             }
@@ -51,12 +58,19 @@ namespace Colony.Tasks.ComplexTasks
                 status = Status.Inactive;
             }
 
+            if (subtasksStatus == Status.Failed)
+            {
+                status = Status.Completed;
+                RemoveAllSubtasks();
+                //TODO: Handle search for resources.
+            }
+
             return status;
         }
 
         public override void Terminate()
         {
-            throw new NotImplementedException();
+            
         }
     }
 

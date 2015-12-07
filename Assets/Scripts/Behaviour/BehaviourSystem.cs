@@ -13,8 +13,6 @@ namespace Colony.Behaviour
         private Behaviour[] behaviours;
         private GameObject[] neighbors;
         private int neighborUsers;
-
-        //TODO: This variable should be removed to decouple the behaviour system from the game objects.
         private GameObject owner;
 
         /// <summary>
@@ -53,15 +51,12 @@ namespace Colony.Behaviour
         /// <summary>
         /// Creates a new behaviour system.
         /// </summary>
-        public BehaviourSystem(/*TODO: This parameter should be removed*/ GameObject owner)
+        public BehaviourSystem(GameObject owner)
         {
             int behavioursNumber = Enum.GetValues(typeof(BehaviourType)).Length;
             behaviours = new Behaviour[behavioursNumber];
             neighbors = new GameObject[0];
             NeighborUsers = 0;
-            //entityManager = GameObject.FindObjectOfType<EntityManager>();
-
-            //TODO: This variable should be removed.
             this.owner = owner;
         }
 
