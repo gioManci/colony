@@ -11,13 +11,11 @@ namespace Colony.Tasks.ComplexTasks
     public class Harvest : ComplexTask
     {
         private GameObject resource;
-        private Stats stats;
         private BeeLoad load;
 
         public Harvest(GameObject agent, GameObject resource) : base(agent, TaskType.Harvest)
         {
             this.resource = resource;
-            stats = agent.GetComponent<Stats>();
             load = agent.GetComponent<BeeLoad>();
         }
 

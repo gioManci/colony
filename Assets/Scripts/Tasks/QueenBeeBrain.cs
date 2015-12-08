@@ -1,6 +1,7 @@
-using UnityEngine;
-using Colony.Tasks.BasicTasks;
+﻿using UnityEngine;
+using System.Collections;
 using Colony.Tasks.ComplexTasks;
+using Colony.Tasks.BasicTasks;
 
 namespace Colony.Tasks
 {
@@ -8,7 +9,7 @@ namespace Colony.Tasks
     /// Handles the tasks of the object to which it is attached. Allows to set simple or complex goals to
     /// achieve, then the systems executes them and eventually decompose them into simple ones.
     /// </summary>
-    public class WorkerBeeBrain : MonoBehaviour
+    public class QueenBeeBrain : MonoBehaviour
     {
         private ComplexTask brain;
 
@@ -33,29 +34,6 @@ namespace Colony.Tasks
         {
             brain.RemoveAllSubtasks();
             brain.AddSubtask(new Move(gameObject, position));
-        }
-
-        /// <summary>
-        /// Tells the game object to harvest from the specified resource.
-        /// </summary>
-        /// <param name="resource">The resource to harvest from.</param>
-        public void DoHarvest(GameObject resource)
-        {
-            brain.RemoveAllSubtasks();
-            brain.AddSubtask(new Harvest(gameObject, resource));
-        }
-
-        public void DoBuild()
-        {
-        }
-
-        public void DoRepair()
-        {
-        }
-
-        public void DoAttack()
-        {
-
         }
     }
 }

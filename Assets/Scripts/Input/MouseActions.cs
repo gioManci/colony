@@ -123,10 +123,9 @@ namespace Colony.Input
                         foreach (Controllable bee in controllables)
                         {
                             Selectable sel = bee.GetComponent<Selectable>();
-                            if (sel != null && sel.IsSelected)
+                            if (sel != null && sel.IsSelected && bee.canHarvest)
                             {
-                                WorkerBeeBrain brain = sel.GetComponent<WorkerBeeBrain>();
-                                brain.DoHarvest(obj);
+                                bee.DoHarvest(obj);
                             }
                         }
                     }
@@ -156,10 +155,9 @@ namespace Colony.Input
             foreach (Controllable obj in controllables)
             {
                 Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
-                if (sel != null && sel.IsSelected)
+                if (sel != null && sel.IsSelected && obj.canMove)
                 {
-                    WorkerBeeBrain brain = obj.GetComponent<WorkerBeeBrain>();
-                    brain.DoMove(pos);
+                    obj.DoMove(pos);
                 }
             }
         }

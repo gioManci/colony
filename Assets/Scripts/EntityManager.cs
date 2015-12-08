@@ -35,18 +35,28 @@ namespace Colony
             bees = new List<GameObject>();
             GameObject[] workers = GameObject.FindGameObjectsWithTag("WorkerBee");
             bees.AddRange(workers);
+            GameObject[] drones = GameObject.FindGameObjectsWithTag("DroneBee");
+            bees.AddRange(drones);
+            GameObject[] queens = GameObject.FindGameObjectsWithTag("QueenBee");
+            bees.AddRange(queens);
         }
 
         private void InitializeEnemies()
         {
             enemies = new List<GameObject>();
+            GameObject[] wasps = GameObject.FindGameObjectsWithTag("Wasp");
+            enemies.AddRange(wasps);
+            GameObject[] hornets = GameObject.FindGameObjectsWithTag("Hornet");
+            enemies.AddRange(hornets);
         }
 
         private void InitializeResources()
         {
             resources = new List<GameObject>();
             GameObject[] flowers = GameObject.FindGameObjectsWithTag("Flower");
-            bees.AddRange(flowers);
+            resources.AddRange(flowers);
+            GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
+            resources.AddRange(trees);
         }
 
         private void InitializeBeehives()

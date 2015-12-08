@@ -6,7 +6,6 @@ namespace Colony.Tasks.BasicTasks
 {
     public class Extract : Task
     {
-        private GameObject resource;
         private float timeFromLastExtraction;
         private Stats stats;
         private ResourceYielder yielder;
@@ -14,7 +13,6 @@ namespace Colony.Tasks.BasicTasks
 
         public Extract(GameObject agent, GameObject resource) : base(agent, TaskType.Extract)
         {
-            this.resource = resource;
             timeFromLastExtraction = 0.0f;
             stats = agent.GetComponent<Stats>();
             yielder = resource.GetComponent<ResourceYielder>();
