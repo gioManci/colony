@@ -9,7 +9,9 @@ namespace Colony.Tasks
         Extract,
         Think,
         Move,
-        Harvest
+        Harvest,
+        Breed,
+        LayEgg
     }
 
 }
