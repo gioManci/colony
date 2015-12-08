@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Colony.Resources;
+using System;
 using UnityEngine;
 
 namespace Colony.Tasks.BasicTasks
 {
     public class Deposit : Task
     {
-        public Deposit(GameObject agent) : base(agent, TaskType.Deposit)
-        {
+        private BeeLoad load;
+        private HiveWarehouse targetHive;
 
+        public Deposit(GameObject agent, GameObject targetBeehive) : base(agent, TaskType.Deposit)
+        {
+            targetHive = targetBeehive.GetComponent<HiveWarehouse>();
+            load = agent.GetComponent<BeeLoad>();
         }
 
         public override void Activate()
         {
-            throw new NotImplementedException();
+            status = Status.Active;
         }
 
         public override void OnMessage()
@@ -22,12 +27,18 @@ namespace Colony.Tasks.BasicTasks
 
         public override Status Process()
         {
-            throw new NotImplementedException();
+            ActivateIfInactive();
+
+            targetHive.AddResources(load.Load);
+            load.Clear();
+            status = Status.Completed;
+
+            return status;
         }
 
         public override void Terminate()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

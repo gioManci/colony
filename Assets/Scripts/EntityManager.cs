@@ -18,11 +18,13 @@ namespace Colony
         private List<GameObject> bees;
         private List<GameObject> enemies;
         private List<GameObject> resources;
+        private List<GameObject> beehives;
 
         void Start()
         {
             Instance = this;
-            
+
+            InitializeBeehives();
             InitializeBees();
             InitializeEnemies();
             InitializeResources();
@@ -31,11 +33,8 @@ namespace Colony
         private void InitializeBees()
         {
             bees = new List<GameObject>();
-            WorkerBeeBrain[] workers = FindObjectsOfType<WorkerBeeBrain>();
-            foreach (WorkerBeeBrain workerBee in workers)
-            {
-                bees.Add(workerBee.gameObject);
-            }
+            GameObject[] workers = GameObject.FindGameObjectsWithTag("WorkerBee");
+            bees.AddRange(workers);
         }
 
         private void InitializeEnemies()
@@ -46,6 +45,15 @@ namespace Colony
         private void InitializeResources()
         {
             resources = new List<GameObject>();
+            GameObject[] flowers = GameObject.FindGameObjectsWithTag("Flower");
+            bees.AddRange(flowers);
+        }
+
+        private void InitializeBeehives()
+        {
+            beehives = new List<GameObject>();
+            GameObject[] hives = GameObject.FindGameObjectsWithTag("Beehive");
+            beehives.AddRange(hives);
         }
 
         public void CreateWorkerBee(Vector2 position)
@@ -83,6 +91,35 @@ namespace Colony
                 }
             }
             return neighbors.ToArray();
+        }
+
+        public GameObject GetClosestHive(Vector2 target)
+        {
+            if (beehives.Count == 1)
+            {
+                return beehives[0];
+            }
+            else if (beehives.Count > 1)
+            {
+                GameObject closest = beehives[0];
+                Vector2 closestDistance = target - (Vector2)closest.transform.position;
+
+                for (int i = 1; i < beehives.Count; i++)
+                {
+                    Vector2 distanceToCheck = target - (Vector2)beehives[i].transform.position;
+                    if (closestDistance.sqrMagnitude > distanceToCheck.sqrMagnitude)
+                    {
+                        closestDistance = distanceToCheck;
+                        closest = beehives[i];
+                    }
+                }
+
+                return closest;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

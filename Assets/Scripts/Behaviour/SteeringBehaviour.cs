@@ -9,11 +9,13 @@ namespace Colony.Behaviour
     {
         private BehaviourSystem behaviourSystem;
         private Rigidbody2D rigidbody2d;
+        private Stats stats;
 
         void Start()
         {
             behaviourSystem = new BehaviourSystem(gameObject);
             rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
+            stats = gameObject.GetComponent<Stats>();
 
             //TODO: This should be moved outside this class
             StartFlocking();
@@ -36,9 +38,9 @@ namespace Colony.Behaviour
                 Vector2 acceleration = forceToApply / rigidbody2d.mass;
                 rigidbody2d.velocity += acceleration * Time.deltaTime;
 
-                if (rigidbody2d.velocity.magnitude > 3.0f)
+                if (rigidbody2d.velocity.magnitude > stats.Speed)
                 {
-                    rigidbody2d.velocity = rigidbody2d.velocity.normalized * 3.0f;
+                    rigidbody2d.velocity = rigidbody2d.velocity.normalized * stats.Speed;
                 }
                 rigidbody2d.position += rigidbody2d.velocity * Time.deltaTime;
 
