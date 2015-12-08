@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Colony;
 
 namespace Colony.Input {
 
@@ -18,29 +19,36 @@ public class CameraController : MonoBehaviour {
 	// percentual values of the corresponding dimension.
 	private const float HORIZ_SCREEN_THRESHOLD = 0.15f,
 	                    VERT_SCREEN_THRESHOLD = 0.15f;
+	private Boundaries bounds;
+
+	void Start() {
+		bounds = GameObject.FindWithTag("Ground").GetComponent<Boundaries>();
+	}
 
 	// Update is called once per frame
 	void Update() {
 		/// Arrows movements ///
-		if (Input.GetKey(KeyCode.UpArrow)) 
+		var pos = transform.position;
+		var limit = bounds.worldSize/2f - arrowSpeed * Time.deltaTime * 2;
+		if (Input.GetKey(KeyCode.UpArrow) && pos.y < limit) 
 			transform.Translate(Vector2.up * arrowSpeed * Time.deltaTime, Space.World);
-		if (Input.GetKey(KeyCode.DownArrow))
+		if (Input.GetKey(KeyCode.DownArrow) && pos.y > -limit)
 		         transform.Translate(Vector2.down * arrowSpeed * Time.deltaTime, Space.World);
-		if (Input.GetKey(KeyCode.LeftArrow)) 
+		if (Input.GetKey(KeyCode.LeftArrow) && pos.x > -limit) 
 			transform.Translate(Vector2.left * arrowSpeed * Time.deltaTime, Space.World);
-		if (Input.GetKey(KeyCode.RightArrow))
+		if (Input.GetKey(KeyCode.RightArrow) && pos.x < limit)
 			transform.Translate(Vector2.right * arrowSpeed * Time.deltaTime, Space.World);
 
 		/// Mouse movements ///
-		var pos = Input.mousePosition;
-		if (Screen.width - pos.x < HORIZ_SCREEN_THRESHOLD * Screen.width)
-			transform.Translate(Vector2.right * calcSpeed(pos, Direction.RIGHT) * Time.deltaTime, Space.World);
-		else if (pos.x < HORIZ_SCREEN_THRESHOLD * Screen.width)
-			transform.Translate(Vector2.left * calcSpeed(pos, Direction.LEFT) * Time.deltaTime, Space.World);
-		if (Screen.height - pos.y < VERT_SCREEN_THRESHOLD * Screen.height)
-			transform.Translate(Vector2.up * calcSpeed(pos, Direction.UP) * Time.deltaTime, Space.World);
-		else if (pos.y < VERT_SCREEN_THRESHOLD * Screen.height)
-			transform.Translate(Vector2.down * calcSpeed(pos, Direction.DOWN) * Time.deltaTime, Space.World);
+		var mpos = Input.mousePosition;
+		if (Screen.width - mpos.x < HORIZ_SCREEN_THRESHOLD * Screen.width && pos.x < limit)
+			transform.Translate(Vector2.right * calcSpeed(mpos, Direction.RIGHT) * Time.deltaTime, Space.World);
+		else if (mpos.x < HORIZ_SCREEN_THRESHOLD * Screen.width && pos.x > -limit)
+			transform.Translate(Vector2.left * calcSpeed(mpos, Direction.LEFT) * Time.deltaTime, Space.World);
+		if (Screen.height - mpos.y < VERT_SCREEN_THRESHOLD * Screen.height && pos.y < limit)
+			transform.Translate(Vector2.up * calcSpeed(mpos, Direction.UP) * Time.deltaTime, Space.World);
+		else if (mpos.y < VERT_SCREEN_THRESHOLD * Screen.height && pos.y > -limit)
+			transform.Translate(Vector2.down * calcSpeed(mpos, Direction.DOWN) * Time.deltaTime, Space.World);
 
 	}
 

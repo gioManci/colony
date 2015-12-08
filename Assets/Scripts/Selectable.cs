@@ -7,6 +7,9 @@ namespace Colony {
 public class Selectable : MonoBehaviour {
 	// The sprite of the selection wheel
 	public GameObject selectionSprite;
+	// This object can be selected by dragging
+	public bool dragSelectable = true;
+
 	private bool selected;
 
 	public bool IsSelected {

@@ -98,8 +98,11 @@ namespace Colony.Input
 
             foreach (Selectable obj in selectables)
             {
+		if (!obj.dragSelectable) continue;
+
                 var go = obj.gameObject;
                 if (!go.GetComponent<Renderer>().isVisible) continue;
+
                 if (drag.spanRect.Contains(go.transform.position)) {
                     obj.Select();
 		    updateSelected(obj);

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+namespace Colony {
+
 public class Boundaries : MonoBehaviour {
 
 	public float worldSize;
@@ -17,4 +19,6 @@ public class Boundaries : MonoBehaviour {
 			new Vector2(-0.5f, -0.5f)
 		};
 	}
+}
+
 }
