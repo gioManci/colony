@@ -8,6 +8,8 @@ namespace Colony.UI {
 
 public class UIController : MonoBehaviour {
 
+	public GameObject hiveButtonsRoot; 
+
 	private Text[] resourceTexts = new Text[Enum.GetNames(typeof(ResourceType)).Length];
 
 	// Make this class a singleton
@@ -22,21 +24,19 @@ public class UIController : MonoBehaviour {
 	}
 
 	void Start() {
-		SetResource(ResourceType.Nectar, 100);
+		foreach (var type in Enum.GetValues(typeof(ResourceType))) {
+			var obj = GameObject.Find(type.ToString() + "Text");
+			if (obj != null)
+				resourceTexts[(int)type] = obj.GetComponent<Text>();
+		}
 	}
 
 	public void SetResource(ResourceType type, int amount) {
-		if (resourceTexts[(int)type] != null) {
-			resourceTexts[(int)type].text = amount.ToString();
-		} else {
-			var txt = GameObject.Find(type.ToString() + "Text").GetComponent<Text>();
-			if (txt == null)
-				throw new Exception("Called SetResource with unknown type #" + (int)type);
+		resourceTexts[(int)type].text = amount.ToString();
+	}
 
-			txt.text = amount.ToString();
-			resourceTexts[(int)type] = txt;
-			Debug.Log("set " + type + " to " + amount);
-		}
+	public void SetHiveButtonsVisible(bool visible) {
+		hiveButtonsRoot.SetActive(visible);
 	}
 }
 
