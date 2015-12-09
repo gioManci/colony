@@ -89,6 +89,12 @@ namespace Colony
             Destroy(entity);
         }
 
+        public void DestroyBee(GameObject deadBee)
+        {
+            bees.Remove(deadBee);
+            Destroy(deadBee);
+        }
+
         public GameObject[] GetNearbyUnits(Vector2 position, float radius)
         {
             List<GameObject> neighbors = new List<GameObject>();
