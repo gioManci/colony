@@ -5,9 +5,11 @@ namespace Colony.Tasks.BasicTasks
 {
     public class LayEgg : Task
     {
-        public LayEgg(GameObject agent) : base(agent, TaskType.LayEgg)
-        {
+        private GameObject breedingCell;
 
+        public LayEgg(GameObject agent, GameObject breedingCell) : base(agent, TaskType.LayEgg)
+        {
+            this.breedingCell = breedingCell;
         }
 
         public override void Activate()
@@ -22,7 +24,12 @@ namespace Colony.Tasks.BasicTasks
 
         public override Status Process()
         {
-            throw new NotImplementedException();
+            ActivateIfInactive();
+
+            EntityManager.Instance.CreateLarva(breedingCell.transform.position);
+            status = Status.Completed;
+
+            return status;
         }
 
         public override void Terminate()

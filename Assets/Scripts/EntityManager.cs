@@ -7,9 +7,13 @@ namespace Colony
     public class EntityManager : MonoBehaviour
     {
         public static EntityManager Instance { get; private set; }
+
+        //Prefabs
         public GameObject workerBee;
         public GameObject droneBee;
         public GameObject queenBee;
+        public GameObject larva;
+        public GameObject egg;
         public GameObject wasp;
         public GameObject hornet;
         public GameObject flower;
@@ -22,7 +26,14 @@ namespace Colony
 
         void Start()
         {
-            Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
 
             InitializeBeehives();
             InitializeBees();
@@ -82,6 +93,11 @@ namespace Colony
         {
             GameObject newBee = (GameObject)Instantiate(droneBee, position, Quaternion.identity);
             bees.Add(newBee);
+        }
+
+        public void CreateLarva(Vector2 position)
+        {
+            Instantiate(larva, position, Quaternion.identity);
         }
 
         public void DestroyEntity(GameObject entity)

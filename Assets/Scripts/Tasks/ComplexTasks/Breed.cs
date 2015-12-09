@@ -21,7 +21,7 @@ namespace Colony.Tasks.ComplexTasks
             status = Status.Active;
             RemoveAllSubtasks();
 
-            AddSubtask(new LayEgg(agent));
+            AddSubtask(new LayEgg(agent, breedingCell));
             AddSubtask(new Move(agent, breedingCell.transform.position));
         }
 
