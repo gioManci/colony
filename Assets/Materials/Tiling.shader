@@ -68,7 +68,7 @@ Shader "Sprites/TilingSprite"
 
 			fixed4 SampleSpriteTexture (float2 uv)
 			{
-				uv = uv*((float) _Tiling)%_Tiling;
+				uv = uv*(((float) _Tiling)%_Tiling);
 				fixed4 color = tex2D (_MainTex, uv);
 				if (_AlphaSplitEnabled)
 					color.a = tex2D (_AlphaTex, uv).r;

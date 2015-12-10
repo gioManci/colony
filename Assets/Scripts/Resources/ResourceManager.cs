@@ -34,5 +34,9 @@ namespace Colony.Resources
             }
             return false;
         }
+
+	public int GetResource(ResourceType type) {
+		return resourcesStock[type];
+	}
     }
 }

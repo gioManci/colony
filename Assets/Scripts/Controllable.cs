@@ -7,6 +7,7 @@ using Colony.Tasks.BasicTasks;
 
 namespace Colony
 {
+    using Move = Colony.Tasks.BasicTasks.Move;
 
     public class Controllable : MonoBehaviour
     {

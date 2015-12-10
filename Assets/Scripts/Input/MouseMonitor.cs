@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
@@ -35,6 +36,10 @@ public class MouseMonitor : MonoBehaviour {
 	}
 
 	void Update() {
+		EventSystem eventSystem = EventSystem.current;
+		var u = eventSystem.IsPointerOverGameObject()
+			     && eventSystem.currentSelectedGameObject != null;
+
 		if (Input.GetMouseButtonDown(0)) {
 			dragging = true;
 			dragStartPos = (Vector2)Input.mousePosition;
@@ -53,7 +58,7 @@ public class MouseMonitor : MonoBehaviour {
 				selection.height = -selection.height;
 			}
 
-			if (dragSpan < MinDragSpan && OnLeftClick != null)
+			if (dragSpan < MinDragSpan && OnLeftClick != null && !u)
 				OnLeftClick(new Click(
 					Camera.main.ScreenToWorldPoint(dragStartPos)));
 			else if (OnDragEnd != null)
@@ -70,7 +75,7 @@ public class MouseMonitor : MonoBehaviour {
 			var spos = ScreenToRectPoint(dragStartPos);
 			var epos = ScreenToRectPoint(Input.mousePosition);
 			selection = new Rect(spos.x, spos.y, epos.x - spos.x, epos.y - spos.y);
-			if (OnDrag != null)
+			if (OnDrag != null && !u)
 				OnDrag(new Drag(
 					Camera.main.ScreenToWorldPoint(dragStartPos),
 					Camera.main.ScreenToWorldPoint(Input.mousePosition)));

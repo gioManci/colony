@@ -49,6 +49,7 @@ namespace Colony.Input
         public void RemoveSelectable(Selectable obj)
         {
             selectables.Remove(obj);
+	    updateSelected(obj);
         }
 
         public void AddControllable(Controllable obj)
@@ -61,21 +62,29 @@ namespace Colony.Input
             controllables.Remove(obj);
         }
 
+	public List<T> GetSelected<T>() {
+		List<T> list = new List<T>();
+		foreach (Selectable s in selected) {
+			var c = s.gameObject.GetComponentInChildren<T>();
+			if (c != null)
+				list.Add(c);
+		}
+		return list;
+	}
+
+	/************ Private ************/
+
 	private void updateSelected(Selectable sel) {
-                // If unit is controllable, add it to selected list.
-                if (sel.gameObject.GetComponentInChildren<Controllable>() != null)
-                {
-                    if (sel.IsSelected)
-                        selected.Add(sel);
-                    else
-                        selected.Remove(sel);
-                }
+	    if (sel.IsSelected)
+		selected.Add(sel);
+	    else
+		selected.Remove(sel);
 	}
 
         private void clickSelect(Click click)
         {
-            if (!Input.GetKey(KeyCode.LeftShift))
-                deselectAll();
+	    if (!Input.GetKey(KeyCode.LeftShift))
+	        deselectAll();
 
             // Find out if some Selectable was hit by click
             var obj = Utils.GetObjectAt(click.pos);
@@ -152,10 +161,9 @@ namespace Colony.Input
             moveTarget.transform.position = pos;
 
             // Move each selected moveable object
-            foreach (Controllable obj in controllables)
+            foreach (Controllable obj in GetSelected<Controllable>())
             {
-                Selectable sel = obj.gameObject.GetComponentInChildren<Selectable>();
-                if (sel != null && sel.IsSelected && obj.canMove)
+                if (obj.canMove)
                 {
                     obj.DoMove(pos);
                 }

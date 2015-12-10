@@ -7,7 +7,8 @@ public class Aged : MonoBehaviour
 {
 
 	public float Lifespan;
-	public float Age { private set; get; }
+	public float Age { set; get; }
+	public bool DestroyOnExpire = true;
 	
 	// Age bar management
 	MaterialPropertyBlock block;
@@ -28,8 +29,10 @@ public class Aged : MonoBehaviour
 		Age -= Time.deltaTime;
 		if (Age < 0)
 		{
-			// Add code to handle destruction
-			EntityManager.Instance.DestroyEntity(gameObject);
+			if (DestroyOnExpire) {
+				// Add code to handle destruction
+				EntityManager.Instance.DestroyEntity(gameObject);
+			}
 		}
 		else
 		{
