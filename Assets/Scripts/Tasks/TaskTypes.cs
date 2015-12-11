@@ -11,7 +11,10 @@ namespace Colony.Tasks
         Move,
         Harvest,
         Breed,
-        LayEgg
+        LayEgg,
+        Attack,
+        Hit,
+        Arbitrate
     }
 
 }

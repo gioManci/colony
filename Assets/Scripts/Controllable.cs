@@ -40,7 +40,7 @@ namespace Colony
         public void DoMove(Vector2 position)
         {
             brain.RemoveAllSubtasks();
-            brain.AddSubtask(new Move(gameObject, position));
+            brain.AddSubtask(new Move(gameObject, position, 0.5f));
         }
 
         /// <summary>
@@ -61,9 +61,10 @@ namespace Colony
         {
         }
 
-        public void DoAttack()
+        public void DoAttack(GameObject enemy)
         {
-
+            brain.RemoveAllSubtasks();
+            brain.AddSubtask(new Attack(gameObject, enemy));
         }
 
         public void DoBreed(GameObject breedingCell)

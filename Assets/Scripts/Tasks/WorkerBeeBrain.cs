@@ -32,7 +32,7 @@ namespace Colony.Tasks
         public void DoMove(Vector2 position)
         {
             brain.RemoveAllSubtasks();
-            brain.AddSubtask(new Move(gameObject, position));
+            brain.AddSubtask(new Move(gameObject, position, 0.5f));
         }
 
         /// <summary>

@@ -13,14 +13,18 @@ namespace Colony.Tasks.BasicTasks
     {
         private Vector2 target;
         private SteeringBehaviour steering;
+        private float errorMargin;
 
         /// <summary>
-        /// Creates a new Move task specifying the agent that will perform this task and the target position.
+        /// Creates a new Move task specifying the agent that will perform this task, the target position and
+        /// the admissible error.
         /// </summary>
         /// <param name="agent">The agent that will perform this task.</param>
         /// <param name="position">The target position.</param>
-        public Move(GameObject agent, Vector2 position) : base(agent, TaskType.Move)
+        /// <param name="errorMargin">The maximum admitted error.</param>
+        public Move(GameObject agent, Vector2 position, float errorMargin) : base(agent, TaskType.Move)
         {
+            this.errorMargin = errorMargin;
             target = position;
             steering = agent.GetComponent<SteeringBehaviour>();
         }
@@ -40,7 +44,7 @@ namespace Colony.Tasks.BasicTasks
         {
             ActivateIfInactive();
 
-            if (Vector2.Distance(target, agent.transform.position) < 0.5)
+            if (Vector2.Distance(target, agent.transform.position) < errorMargin)
             {
                 status = Status.Completed;
             }

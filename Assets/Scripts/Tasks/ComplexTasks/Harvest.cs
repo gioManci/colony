@@ -29,14 +29,14 @@ namespace Colony.Tasks.ComplexTasks
             if (load.IsFull)
             {
                 AddSubtask(new Deposit(agent, closestHive));
-                AddSubtask(new Move(agent, closestHive.transform.position));
+                AddSubtask(new Move(agent, closestHive.transform.position, 0.5f));
             }
             else
             {
                 AddSubtask(new Deposit(agent, closestHive));
-                AddSubtask(new Move(agent, closestHive.transform.position));
+                AddSubtask(new Move(agent, closestHive.transform.position, 0.5f));
                 AddSubtask(new Extract(agent, resource));
-                AddSubtask(new Move(agent, resource.transform.position));
+                AddSubtask(new Move(agent, resource.transform.position, 0.5f));
             }
         }
 
