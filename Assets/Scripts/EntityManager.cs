@@ -102,13 +102,63 @@ namespace Colony
 
         public void DestroyEntity(GameObject entity)
         {
-            Destroy(entity);
+            if (entity != null)
+            {
+                switch (entity.tag)
+                {
+                    case "WorkerBee":
+                    case "DroneBee":
+                    case "QueenBee":
+                        DestroyBee(entity);
+                        break;
+                    case "Wasp":
+                    case "Hornet":
+                        DestroyEnemy(entity);
+                        break;
+                    case "Flower":
+                    case "Tree":
+                        DestroyResource(entity);
+                        break;
+                    case "Cell":
+                        DestroyCell(entity);
+                        break;
+                    case "Beehive":
+                        DestroyBeehive(entity);
+                        break;
+                    default:
+                        Destroy(entity);
+                        break;
+                }
+            }
         }
 
         public void DestroyBee(GameObject deadBee)
         {
             bees.Remove(deadBee);
             Destroy(deadBee);
+        }
+
+        public void DestroyEnemy(GameObject deadEnemy)
+        {
+            enemies.Remove(deadEnemy);
+            Destroy(deadEnemy);
+        }
+
+        public void DestroyResource(GameObject deadResource)
+        {
+            resources.Remove(deadResource);
+            Destroy(deadResource);
+        }
+
+        public void DestroyBeehive(GameObject deadBeehive)
+        {
+            beehives.Remove(deadBeehive);
+            Destroy(deadBeehive);
+        }
+
+        public void DestroyCell(GameObject deadCell)
+        {
+            //TODO: Implement cell destruction.
         }
 
         public GameObject[] GetNearbyUnits(Vector2 position, float radius)

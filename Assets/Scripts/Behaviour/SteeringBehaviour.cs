@@ -121,5 +121,13 @@ namespace Colony.Behaviour
             StopAlignment();
             StopCohesion();
         }
+
+        public void StartWander()
+        {
+        }
+
+        public void StopWander()
+        {
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Colony.Tasks.ComplexTasks
             RemoveAllSubtasks();
 
             AddSubtask(new LayEgg(agent, breedingCell));
-            AddSubtask(new Move(agent, breedingCell.transform.position));
+            AddSubtask(new Move(agent, breedingCell.transform.position, 0.5f));
         }
 
         public override void OnMessage()
