@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Colony {
-
-public class Aged : MonoBehaviour
+namespace Colony
 {
 
+    public class Aged : MonoBehaviour {
 	public float Lifespan;
 	public float Age { set; get; }
 	public bool DestroyOnExpire = true;
@@ -40,12 +39,11 @@ public class Aged : MonoBehaviour
 		}
 	}
 
-	private void updateAgeBar(float percentage) 
-	{
-		rend.GetPropertyBlock(block);
-		block.SetFloat("_Cutoff", percentage);
-		rend.SetPropertyBlock(block);
-	}
-}
-
+        private void updateAgeBar(float percentage)
+        {
+            rend.GetPropertyBlock(block);
+            block.SetFloat("_Cutoff", percentage);
+            rend.SetPropertyBlock(block);
+        }
+    }
 }

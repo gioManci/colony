@@ -138,6 +138,17 @@ namespace Colony.Input
                             }
                         }
                     }
+                    if ("Cell".Equals(obj.tag))
+                    {
+                        foreach (Controllable bee in controllables)
+                        {
+                            Selectable sel = bee.GetComponent<Selectable>();
+                            if (sel != null && sel.IsSelected && bee.canBreed)
+                            {
+                                bee.DoBreed(obj);
+                            }
+                        }
+                    }
                     //moveSelectedUnits(click.pos);
                 }
                 else

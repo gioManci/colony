@@ -14,7 +14,7 @@ namespace Colony
         public bool canHarvest;
         public bool canAttack;
         public bool canBuild;
-        public bool canLayEgg;
+        public bool canBreed;
         public bool canRepair;
         public bool canMove;
 
@@ -66,9 +66,10 @@ namespace Colony
 
         }
 
-        public void DoLayEgg()
+        public void DoBreed(GameObject breedingCell)
         {
-
+            brain.RemoveAllSubtasks();
+            brain.AddSubtask(new Breed(gameObject, breedingCell));
         }
 
         // Use this for initialization
