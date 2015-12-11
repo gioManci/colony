@@ -21,7 +21,7 @@ namespace Colony.Tasks.ComplexTasks
             // if no targets are nearby, wander
             if (!targetSystem.HasTarget)
             {
-                AddSubtask(new Explore(agent, /*max wander time*/5.0f));
+                //AddSubtask(new Explore(agent, /*max wander time*/5.0f));
             }
             else
             {

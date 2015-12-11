@@ -143,9 +143,12 @@ namespace Colony.Input
                         foreach (Controllable bee in controllables)
                         {
                             Selectable sel = bee.GetComponent<Selectable>();
-                            if (sel != null && sel.IsSelected && bee.canBreed)
+                            if (sel != null && sel.IsSelected)
                             {
-                                bee.DoBreed(obj);
+			        if (bee.canBreed)
+			            bee.DoBreed(obj);
+		                else if (bee.canMove)
+				    bee.DoMove(click.pos);
                             }
                         }
                     }
