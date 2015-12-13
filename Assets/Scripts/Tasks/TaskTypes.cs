@@ -14,7 +14,8 @@ namespace Colony.Tasks
         LayEgg,
         Attack,
         Hit,
-        Arbitrate
+        Arbitrate,
+        Explore
     }
 
 }

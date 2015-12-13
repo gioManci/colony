@@ -60,6 +60,11 @@ namespace Colony.Behaviour
             this.owner = owner;
         }
 
+        public bool IsBehaviourOn(BehaviourType type)
+        {
+            return behaviours[(int)type] != null;
+        }
+
         /// <summary>
         /// Adds the behaviour to the list of behaviours to compute. It overwrites an existing one of the
         /// same type, if any.

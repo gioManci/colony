@@ -1,6 +1,7 @@
 ﻿using Colony.Tasks.BasicTasks;
 using System;
 using UnityEngine;
+
 namespace Colony.Tasks.ComplexTasks
 {
     public class Attack : ComplexTask
@@ -48,21 +49,6 @@ namespace Colony.Tasks.ComplexTasks
         public override void Terminate()
         {
             
-        }
-
-        private void HandleFailure()
-        {
-            if (subtasks.Peek().Type == TaskType.Hit)
-            {
-                if (enemy == null)
-                {
-                    status = Status.Completed;
-                }
-                else if (Vector2.Distance(agent.transform.position, enemy.transform.position) > 1.0f)
-                {
-
-                }
-            }
         }
     }
 }

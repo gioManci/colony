@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colony.Tasks.BasicTasks;
+using System;
 using UnityEngine;
 
 namespace Colony.Tasks.ComplexTasks
@@ -17,20 +18,24 @@ namespace Colony.Tasks.ComplexTasks
         public override void Activate()
         {
             status = Status.Active;
+            RemoveAllSubtasks();
 
-            // if no targets are nearby, wander
-            if (!targetSystem.HasTarget)
-            {
-                AddSubtask(new Explore(agent, /*max wander time*/5.0f));
-            }
-            else
-            {
+            //Default behaviour: explore.
+            AddSubtask(new Explore(agent, 5.0f, 5.0f));
 
-            }
-            
-            // if wandering for too long, stop
-            // if an enemy is found, hunt and attack
-            // if a beehive is found, loot it
+            //targetSystem.Update();
+
+            //if (targetSystem.HasTarget)
+            //{
+            //    if (targetSystem.CurrentTarget.tag == "Cell")
+            //    {
+            //        //Loot hive
+            //    }
+            //    else
+            //    {
+            //        AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
+            //    }
+            //}
         }
 
         public override void OnMessage()
@@ -41,6 +46,29 @@ namespace Colony.Tasks.ComplexTasks
         public override Status Process()
         {
             ActivateIfInactive();
+
+            //if (targetSystem.LastUpdate - Time.time >= stats.ReactionTime)
+            //{
+            //    targetSystem.Update();
+            //}
+
+            //// if it finds a target and is exploring, attack!
+            //if (targetSystem.HasTarget && IsCurrentSubtask(TaskType.Explore))
+            //{
+            //    if (targetSystem.CurrentTarget.tag == "Cell")
+            //    {
+            //        //Loot hive
+            //    }
+            //    else
+            //    {
+            //        AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
+            //    }
+            //}
+
+            //if (!targetSystem.HasTarget && IsCurrentSubtask(TaskType.Attack))
+            //{
+            //    subtasks.Pop();
+            //}
 
             Status subtasksStatus = ProcessSubtasks();
             if (subtasksStatus == Status.Completed || subtasksStatus == Status.Failed)

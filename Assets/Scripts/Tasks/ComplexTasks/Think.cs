@@ -45,19 +45,5 @@ namespace Colony.Tasks.ComplexTasks
         /// Terminates this task [Has no effect on this task]
         /// </summary>
         public override void Terminate() { }
-
-        /// <summary>
-        /// Returns whether the current subtask of this task is of type taskType.
-        /// </summary>
-        /// <param name="taskType">The task type to check.</param>
-        /// <returns>True if the current subtask is of type taskType, false otherwise.</returns>
-        public bool IsCurrentSubtask(TaskType taskType)
-        {
-            if (subtasks.Count > 0)
-            {
-                return subtasks.Peek().Type == taskType;
-            }
-            return false;
-        }
     }
 }

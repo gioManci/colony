@@ -11,10 +11,11 @@ class Hive : MonoBehaviour {
 	public int Id { get; private set; }
 	public static int ids = 0;
 
-	private List<Cell> cells = new List<Cell>();
+	public List<GameObject> Cells { get; private set; }
 
 	void Awake() {
 		Id = ids++;
+            Cells = new List<GameObject>();
 	}
 
 	void Start() {
@@ -54,6 +55,7 @@ class Hive : MonoBehaviour {
 				var cell = (GameObject)GameObject.Instantiate(cellTemplate,
 						pos, transform.rotation);
 				cell.transform.parent = transform;
+                Cells.Add(cell);
 			}
 		};
 

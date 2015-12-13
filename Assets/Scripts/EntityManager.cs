@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Colony.Tasks;
 
 namespace Colony
 {
@@ -175,6 +174,24 @@ namespace Colony
             return neighbors.ToArray();
         }
 
+        public GameObject[] GetNearbyCells(Vector2 position, float radius)
+        {
+            List<GameObject> nearbyHives = new List<GameObject>();
+            foreach (GameObject hive in beehives)
+            {
+                Hive.Hive hiveComponent = hive.GetComponent<Hive.Hive>();
+                foreach (GameObject hiveCell in hiveComponent.Cells)
+                {
+                    Vector2 distance = hiveCell.transform.position - (Vector3)position;
+                    if (distance.sqrMagnitude < radius * radius)
+                    {
+                        nearbyHives.Add(hiveCell);
+                    }
+                }
+            }
+            return nearbyHives.ToArray();
+        }
+
         public GameObject GetClosestHive(Vector2 target)
         {
             if (beehives.Count == 1)
@@ -202,6 +219,14 @@ namespace Colony
             {
                 return null;
             }
+        }
+
+        public bool IsBee(GameObject entity)
+        {
+            return entity != null
+                && (entity.tag == "WorkerBee"
+                || entity.tag == "DroneBee"
+                || entity.tag == "QueenBee");
         }
     }
 }

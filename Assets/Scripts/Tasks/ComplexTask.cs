@@ -26,6 +26,14 @@ namespace Colony.Tasks
             subtasks = new Stack<Task>();
         }
 
+        protected Task CurrentSubtask
+        {
+            get
+            {
+                return (subtasks.Count == 0) ? null : subtasks.Peek();
+            }
+        }
+
         /// <summary>
         /// Removes the completed tasks and executes the most recent one.
         /// </summary>
@@ -71,6 +79,11 @@ namespace Colony.Tasks
                 task.Terminate();
             }
             subtasks.Clear();
+        }
+
+        public bool IsCurrentSubtask(TaskType type)
+        {
+            return (CurrentSubtask == null) ? false : CurrentSubtask.Type == type;
         }
     }
 }

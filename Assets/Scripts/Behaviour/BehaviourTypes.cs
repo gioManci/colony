@@ -7,7 +7,9 @@ namespace Colony.Behaviour
         Arrive,
         Separation,
         Alignment,
-        Cohesion
+        Cohesion,
+        Wander,
+        Pursuit
     }
 
 }

@@ -6,17 +6,18 @@ namespace Colony
     public class Life : MonoBehaviour
     {
         public int initialLife;
-        private int life;
+
+        public int CurrentLife { get; private set; }
 
         void Awake()
         {
-            life = initialLife;
+            CurrentLife = initialLife;
         }
 
         public void Decrease(int damage)
         {
-            life -= damage;
-            if (life < 0)
+            CurrentLife -= damage;
+            if (CurrentLife < 0)
             {
                 EntityManager.Instance.DestroyEntity(gameObject);
             }
