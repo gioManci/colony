@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Colony.Resources;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Colony
             stats = owner.GetComponent<Stats>();
         }
 
-        public bool HasTarget { get { return targets.Count > 0; } }
+        public bool HasTarget { get { return CurrentTarget != null; } }
 
         public GameObject CurrentTarget { get; private set; }
 
@@ -31,13 +32,10 @@ namespace Colony
             targets.Clear();
             targets.AddRange(EntityManager.Instance.GetNearbyUnits(owner.transform.position, stats.VisualRadius));
             targets.AddRange(EntityManager.Instance.GetNearbyCells(owner.transform.position, stats.VisualRadius));
+            targets.Remove(owner);
             if (targets.Count == 0)
             {
                 CurrentTarget = null;
-            }
-            else if (targets.Count == 1)
-            {
-                CurrentTarget = targets[0];
             }
             else
             {
@@ -82,16 +80,26 @@ namespace Colony
                     //Choose the closest cell
                     if (targetCell == null)
                     {
-                        targetCell = entity;
-                        distanceToClosest = targetCell.transform.position - owner.transform.position;
+                        //Check if its hive contains resources
+                        HiveWarehouse warehouse = entity.GetComponentInParent<HiveWarehouse>();
+                        if (!warehouse.IsEmpty)
+                        {
+                            targetCell = entity;
+                            distanceToClosest = targetCell.transform.position - owner.transform.position;
+                        }
                     }
                     else
                     {
                         Vector2 distanceToCheck = entity.transform.position - owner.transform.position;
                         if (distanceToClosest.sqrMagnitude > distanceToCheck.sqrMagnitude)
                         {
-                            targetCell = entity;
-                            distanceToClosest = distanceToCheck;
+                            //Add as target only if its hive contains some resources
+                            HiveWarehouse warehouse = entity.GetComponentInParent<HiveWarehouse>();
+                            if (!warehouse.IsEmpty)
+                            {
+                                targetCell = entity;
+                                distanceToClosest = distanceToCheck;
+                            }
                         }
                     }
                 }

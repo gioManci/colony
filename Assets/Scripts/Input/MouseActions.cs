@@ -149,6 +149,18 @@ namespace Colony.Input
                             }
                         }
                     }
+
+                    if ("Wasp".Equals(obj.tag))
+                    {
+                        foreach (Controllable bee in controllables)
+                        {
+                            Selectable sel = bee.GetComponent<Selectable>();
+                            if (sel != null && sel.IsSelected && bee.canAttack)
+                            {
+                                bee.DoAttack(obj);
+                            }
+                        }
+                    }
                     //moveSelectedUnits(click.pos);
                 }
                 else
@@ -197,7 +209,7 @@ namespace Colony.Input
 	private void changeCursor(Move move) {
 		bool beeSelected = false;
 		foreach (Selectable sel in selected) {
-			if (sel.gameObject.tag == "Bee") {
+			if (sel != null && sel.gameObject.tag == "Bee") {
 				beeSelected = true;
 				break;
 			}

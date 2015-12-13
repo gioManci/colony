@@ -7,6 +7,8 @@ namespace Colony.Resources
     {
         private ResourceManager resourceManager;
 
+        public bool IsEmpty { get { return resourceManager.IsEmpty; } }
+
         void Start()
         {
             resourceManager = FindObjectOfType<ResourceManager>();
@@ -15,6 +17,11 @@ namespace Colony.Resources
         public void AddResources(ResourceSet resources)
         {
             resourceManager.AddResources(resources);
+        }
+
+        public void RemoveResources(ResourceSet resources)
+        {
+            resourceManager.RemoveResources(resources);
         }
     }
 }

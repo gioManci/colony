@@ -6,12 +6,27 @@ namespace Colony.Resources
 {
     public class ResourceManager : MonoBehaviour
     {
+        public int initialBeeswax;
+        public int initialHoney;
+        public int initialNectar;
+        public int initialPollen;
+        public int initialRoyalJelly;
+        public int initialWater;
+
         private ResourceSet resourcesStock;
 	public event Action OnResourceChange;
 
+        public bool IsEmpty { get { return resourcesStock.IsEmpty(); } }
+
         void Awake()
         {
-            resourcesStock = new ResourceSet();
+            resourcesStock = new ResourceSet()
+                .With(ResourceType.Beeswax, initialBeeswax)
+                .With(ResourceType.Honey, initialHoney)
+                .With(ResourceType.Nectar, initialNectar)
+                .With(ResourceType.Pollen, initialPollen)
+                .With(ResourceType.RoyalJelly, initialRoyalJelly)
+                .With(ResourceType.Water, initialWater);
         }
 
         public void AddResources(ResourceSet resources)
@@ -28,6 +43,15 @@ namespace Colony.Resources
                 resourcesStock[resourceType] += amount;
 	        if (OnResourceChange != null)
 		    OnResourceChange();
+            }
+        }
+
+        public void RemoveResources(ResourceSet resources)
+        {
+            resourcesStock -= resources;
+            if (OnResourceChange != null)
+            {
+                OnResourceChange();
             }
         }
 

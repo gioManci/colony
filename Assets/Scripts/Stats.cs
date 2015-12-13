@@ -8,6 +8,8 @@ namespace Colony
         public float speed;
         public float visualRadius;
         public int damage;
+        public float attackRange;
+        public float cooldownTime;
         public float loadSize;
         public float loadTime;
         public float reactionTime;
@@ -15,6 +17,8 @@ namespace Colony
         public float Speed { get; private set; }
         public float VisualRadius { get; private set; }
         public int Damage { get; private set; }
+        public float AttackRange { get; private set; }
+        public float CooldownTime { get; private set; }
         public float LoadSize { get; private set; }
         public float LoadTime { get; private set; }
         public float ReactionTime { get; private set; }
@@ -24,6 +28,8 @@ namespace Colony
             Speed = speed;
             VisualRadius = visualRadius;
             Damage = damage;
+            AttackRange = attackRange;
+            CooldownTime = cooldownTime;
             LoadSize = loadSize;
             LoadTime = loadTime;
             ReactionTime = reactionTime;

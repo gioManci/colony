@@ -1,4 +1,5 @@
-﻿using Colony.Tasks.BasicTasks;
+﻿using Colony.Resources;
+using Colony.Tasks.BasicTasks;
 using System;
 using UnityEngine;
 
@@ -20,22 +21,23 @@ namespace Colony.Tasks.ComplexTasks
             status = Status.Active;
             RemoveAllSubtasks();
 
-            //Default behaviour: explore.
-            AddSubtask(new Explore(agent, 5.0f, 5.0f));
+            targetSystem.Update();
 
-            //targetSystem.Update();
-
-            //if (targetSystem.HasTarget)
-            //{
-            //    if (targetSystem.CurrentTarget.tag == "Cell")
-            //    {
-            //        //Loot hive
-            //    }
-            //    else
-            //    {
-            //        AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
-            //    }
-            //}
+            if (targetSystem.HasTarget)
+            {
+                if (targetSystem.CurrentTarget.tag == "Cell")
+                {
+                    AddSubtask(new Loot(agent, targetSystem.CurrentTarget));
+                }
+                else
+                {
+                    AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
+                }
+            }
+            else
+            {
+                AddSubtask(new Explore(agent, 5.0f, 5.0f));
+            }
         }
 
         public override void OnMessage()
@@ -47,31 +49,28 @@ namespace Colony.Tasks.ComplexTasks
         {
             ActivateIfInactive();
 
-            //if (targetSystem.LastUpdate - Time.time >= stats.ReactionTime)
-            //{
-            //    targetSystem.Update();
-            //}
+            if (Time.time - targetSystem.LastUpdate >= stats.ReactionTime)
+            {
+                targetSystem.Update();
+            }
 
-            //// if it finds a target and is exploring, attack!
-            //if (targetSystem.HasTarget && IsCurrentSubtask(TaskType.Explore))
-            //{
-            //    if (targetSystem.CurrentTarget.tag == "Cell")
-            //    {
-            //        //Loot hive
-            //    }
-            //    else
-            //    {
-            //        AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
-            //    }
-            //}
+            // if it finds a target and is exploring, attack!
+            if (targetSystem.HasTarget && IsCurrentSubtask(TaskType.Explore))
+            {
+                RemoveAllSubtasks();
 
-            //if (!targetSystem.HasTarget && IsCurrentSubtask(TaskType.Attack))
-            //{
-            //    subtasks.Pop();
-            //}
+                if (targetSystem.CurrentTarget.tag == "Cell")
+                {
+                    AddSubtask(new Loot(agent, targetSystem.CurrentTarget));
+                }
+                else
+                {
+                    AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
+                }
+            }
 
             Status subtasksStatus = ProcessSubtasks();
-            if (subtasksStatus == Status.Completed || subtasksStatus == Status.Failed)
+            if (subtasksStatus == Status.Completed)
             {
                 status = Status.Inactive;
             }

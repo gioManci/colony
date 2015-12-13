@@ -171,6 +171,14 @@ namespace Colony
                     neighbors.Add(bee);
                 }
             }
+            foreach (GameObject enemy in enemies)
+            {
+                Vector2 distance = enemy.transform.position - (Vector3)position;
+                if (distance.sqrMagnitude < radius * radius)
+                {
+                    neighbors.Add(enemy);
+                }
+            }
             return neighbors.ToArray();
         }
 

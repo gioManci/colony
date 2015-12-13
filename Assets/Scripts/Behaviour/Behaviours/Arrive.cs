@@ -7,12 +7,14 @@ namespace Colony.Behaviour.Behaviours
     {
         private Vector2 target;
         private float deceleration;
+        private Stats stats;
 
         public Arrive(GameObject agent, Vector2 target, float deceleration, float weight)
             : base(agent, BehaviourType.Arrive, weight)
         {
             this.target = target;
             this.deceleration = deceleration;
+            stats = agent.GetComponent<Stats>();
         }
 
         public override Vector2 Compute()
@@ -25,10 +27,9 @@ namespace Colony.Behaviour.Behaviours
             {
                 float speed = distance / deceleration;
 
-                //TODO: Substitute 3.0f with the max speed constant
-                if (speed > 3.0f)
+                if (speed > stats.Speed)
                 {
-                    speed = 3.0f;
+                    speed = stats.Speed;
                 }
 
                 Vector2 desiredVelocity = distanceVector * speed / distance;

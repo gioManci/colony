@@ -15,7 +15,9 @@ namespace Colony.Tasks
         Attack,
         Hit,
         Arbitrate,
-        Explore
+        Explore,
+        Loot,
+        StealResources
     }
 
 }
