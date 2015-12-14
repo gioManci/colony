@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using Colony.Hive;
 
 namespace Colony
 {
@@ -243,5 +245,15 @@ namespace Colony
                 || entity.tag == "DroneBee"
                 || entity.tag == "QueenBee");
         }
+
+	public List<Selectable> GetSelectablesIn(Rect rect) {
+		List<Selectable> sel = new List<Selectable>(Bees.Select(x => x.GetComponent<Selectable>()));
+		sel.AddRange(Resources.Select(x => x.GetComponent<Selectable>()));
+		foreach (var beehive in Beehives) 
+			sel.AddRange(beehive.GetComponent<Hive.Hive>()
+					.Cells.Select(x => x.GetComponent<Selectable>()));
+		sel.AddRange(Enemies.Select(x => x.GetComponent<Selectable>()));
+		return sel;
+	}
     }
 }

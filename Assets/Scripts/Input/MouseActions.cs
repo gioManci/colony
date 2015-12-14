@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using Colony.Tasks;
 using Colony.Resources;
 using Colony;
-using Colony.Hive;
 
 namespace Colony.Input
 {
+
     using Input = UnityEngine.Input;
-    using Hive = Colony.Hive.Hive;
 
     // Implements all the actions performed when an event is caught
     // by MouseMonitor.
     public class MouseActions : MonoBehaviour
     {
+        private HashSet<Selectable> selected = new HashSet<Selectable>();
+
         private GameObject moveTarget;
 
         // Make this class a singleton
@@ -37,7 +38,28 @@ namespace Colony.Input
             }
         }
 
+	public void RemoveSelected(Selectable sel) {
+		selected.Remove(sel);
+	}
+
+	public List<T> GetSelected<T>() {
+		List<T> list = new List<T>();
+		foreach (Selectable s in selected) {
+			var c = s.gameObject.GetComponentInChildren<T>();
+			if (c != null)
+				list.Add(c);
+		}
+		return list;
+	}
+
 	/************ Private ************/
+
+	private void updateSelected(Selectable sel) {
+	    if (sel.IsSelected)
+		selected.Add(sel);
+	    else
+		selected.Remove(sel);
+	}
 
         private void clickSelect(Click click)
         {
@@ -53,6 +75,7 @@ namespace Colony.Input
                 if (sel != null)
                 {
                     sel.SelectToggle();
+		    updateSelected(sel);
                 }
             }
         }
@@ -62,63 +85,46 @@ namespace Colony.Input
             if (!Input.GetKey(KeyCode.LeftShift))
                 deselectAll();
 
-            foreach (var bee in EntityManager.Instance.Bees)
+            foreach (Selectable obj in EntityManager.Instance.GetSelectablesIn(drag.spanRect))
             {
-		Selectable obj = bee.GetComponent<Selectable>();
 		if (!obj.dragSelectable) continue;
 
-                if (!bee.GetComponent<Renderer>().isVisible) continue;
+                var go = obj.gameObject;
+                if (!go.GetComponent<Renderer>().isVisible) continue;
 
-                if (drag.spanRect.Contains(bee.transform.position)) {
+                if (drag.spanRect.Contains(go.transform.position)) {
                     obj.Select();
+		    updateSelected(obj);
 		}
             }
         }
 
         private void dispatchRightClick(Click click)
         {
+            if (selected.Count > 0)
+            {
                 // Check if click was on an interactable unit (resource, etc)
                 var obj = Utils.GetObjectAt(click.pos);
                 if (obj != null)
                 {
                     if ("Flower".Equals(obj.tag))
                     {
-                        foreach (var b in EntityManager.Instance.Bees)
+                        foreach (var bee in GetSelected<Controllable>())
                         {
-                            Selectable sel = b.GetComponent<Selectable>();
-			    Controllable bee = b.GetComponent<Controllable>();
-                            if (sel != null && sel.IsSelected && bee.canHarvest)
+                            if (bee.canHarvest)
                             {
                                 bee.DoHarvest(obj);
                             }
                         }
                     }
-                    else if ("Cell".Equals(obj.tag))
+                    if ("Cell".Equals(obj.tag))
                     {
-                        foreach (var b in EntityManager.Instance.Bees)
+                        foreach (var bee in GetSelected<Controllable>())
                         {
-                            Selectable sel = b.GetComponent<Selectable>();
-			    Controllable bee = b.GetComponent<Controllable>();
-                            if (sel != null && sel.IsSelected)
-                            {
-			        if (bee.canBreed)
-			            bee.DoBreed(obj);
-		                else if (bee.canMove)
-				    bee.DoMove(click.pos);
-                            }
-                        }
-                    }
-
-                    if ("Wasp".Equals(obj.tag))
-                    {
-                        foreach (var b in EntityManager.Instance.Bees)
-                        {
-                            Selectable sel = b.GetComponent<Selectable>();
-			    Controllable bee = b.GetComponent<Controllable>();
-                            if (sel != null && sel.IsSelected && bee.canAttack)
-                            {
-                                bee.DoAttack(obj);
-                            }
+			    if (bee.canBreed)
+			        bee.DoBreed(obj);
+			    else if (bee.canMove)
+			        bee.DoMove(click.pos);
                         }
                     }
                     //moveSelectedUnits(click.pos);
@@ -127,6 +133,11 @@ namespace Colony.Input
                 {
                     moveSelectedUnits(click.pos);
                 }
+            }
+            else
+            {
+                moveSelectedUnits(click.pos);
+            }
         }
 	
 	private void moveSelectedUnits(Vector2 pos)
@@ -139,37 +150,28 @@ namespace Colony.Input
             moveTarget.transform.position = pos;
 
             // Move each selected moveable object
-            foreach (var b in EntityManager.Instance.Bees)
+            foreach (Controllable obj in GetSelected<Controllable>())
             {
-		Controllable bee = b.GetComponent<Controllable>();
-                Selectable sel = b.GetComponent<Selectable>();
-		if (bee.canMove && sel.IsSelected)
+                if (obj.canMove)
                 {
-                    bee.DoMove(pos);
+                    obj.DoMove(pos);
                 }
             }
         }
 
         private void deselectAll()
         {
-            foreach (var s in EntityManager.Instance.Bees)
+            foreach (Selectable s in selected)
             {
-		s.GetComponent<Selectable>().Deselect();
-            }
-            foreach (var s in EntityManager.Instance.Resources)
-            {
-		s.GetComponent<Selectable>().Deselect();
-            }
-            foreach (var s in EntityManager.Instance.Beehives)
-            {
-		s.GetComponent<Hive>().DeselectAll();
+		s.Deselect();
+		updateSelected(s);
             }
         }
 
 	private void changeCursor(Move move) {
 		bool beeSelected = false;
-		foreach (var sel in EntityManager.Instance.Bees) {
-			if (sel.tag == "Bee") {
+		foreach (Selectable sel in selected) {
+			if (sel.gameObject.tag == "Bee") {
 				beeSelected = true;
 				break;
 			}
