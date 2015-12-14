@@ -35,7 +35,7 @@ namespace Colony.Tasks.BasicTasks
             {
                 status = Status.Completed;
             }
-            else if (timeFromLastTheft >= stats.CooldownTime)
+            else if (timeFromLastTheft >= stats.LoadTime)
             {
                 ResourceSet toSteal = new ResourceSet()
                     .With(ResourceType.Beeswax, 10)
