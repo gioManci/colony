@@ -18,6 +18,7 @@ namespace Colony
         public GameObject hornet;
         public GameObject flower;
         public GameObject tree;
+        public GameObject beehive;
 
         public event Action OnAllBeeDead;
 
@@ -100,6 +101,14 @@ namespace Colony
         public void CreateLarva(Vector2 position)
         {
             Instantiate(larva, position, Quaternion.identity);
+        }
+
+        public void CreateBeehive(Vector2 position)
+        {
+            GameObject hive = (GameObject)Instantiate(beehive, position, Quaternion.identity);
+            Beehives.Add(hive);
+            hive.GetComponent<Hive.Hive>().radius = 1;
+            hive.SetActive(true);
         }
 
         public void DestroyEntity(GameObject entity)
@@ -242,6 +251,12 @@ namespace Colony
                 && (entity.tag == "WorkerBee"
                 || entity.tag == "DroneBee"
                 || entity.tag == "QueenBee");
+        }
+        public bool IsEnemy(GameObject entity)
+        {
+            return entity != null
+                && (entity.tag == "Wasp"
+                || entity.tag == "Hornet");
         }
     }
 }
