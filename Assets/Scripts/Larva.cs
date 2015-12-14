@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System;
+using Colony.UI;
 
 namespace Colony
 {
+    [RequireComponent(typeof(Selectable))]
     public class Larva : MonoBehaviour
     {
         public float workerIncubationTime;
@@ -20,6 +22,12 @@ namespace Colony
             countdownStarted = false;
         }
 
+	void Start() {
+		var sel = GetComponent<Selectable>();
+		sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Larva);
+		sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+	}
+
         void Update()
         {
             if (countdownStarted)
@@ -30,11 +38,6 @@ namespace Colony
                     CreateBee();
                     EntityManager.Instance.DestroyEntity(gameObject);
                 }
-            }
-            //ATTENTION: For debug purposes only, must be removed!
-            else
-            {
-                StartGrowing("WorkerBee");
             }
         }
 

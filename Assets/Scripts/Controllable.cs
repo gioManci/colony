@@ -2,6 +2,7 @@
 using Colony.Tasks;
 using Colony.Tasks.ComplexTasks;
 using Colony.Tasks.BasicTasks;
+using Colony.UI;
 
 namespace Colony
 {
@@ -23,6 +24,14 @@ namespace Colony
         {
             brain = new Think(gameObject);
         }
+	
+	void Start() {
+		if (gameObject.tag == "QueenBee") {
+			var sel = GetComponent<Selectable>();
+			sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Queen);
+			sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+		}
+	}
 
         void Update()
         {

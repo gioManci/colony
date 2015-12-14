@@ -25,6 +25,7 @@ namespace Colony
         public event Action OnAllBeeDead;
 
         public List<GameObject> Bees { get; private set; }
+        public List<GameObject> Larvae { get; private set; }
         public List<GameObject> Enemies { get; private set; }
         public List<GameObject> Resources { get; private set; }
         public List<GameObject> Beehives { get; private set; }
@@ -44,6 +45,7 @@ namespace Colony
             InitializeBees();
             InitializeEnemies();
             InitializeResources();
+	    InitializeLarvae();
         }
 
         private void InitializeBees()
@@ -82,6 +84,13 @@ namespace Colony
             Beehives.AddRange(hives);
         }
 
+        private void InitializeLarvae()
+        {
+            Larvae = new List<GameObject>();
+            GameObject[] larvae = GameObject.FindGameObjectsWithTag("Larva");
+            Larvae.AddRange(larvae);
+        }
+
         public void CreateWorkerBee(Vector2 position)
         {
             GameObject newBee = (GameObject)Instantiate(workerBee, position, Quaternion.identity);
@@ -102,7 +111,8 @@ namespace Colony
 
         public void CreateLarva(Vector2 position)
         {
-            Instantiate(larva, position, Quaternion.identity);
+            GameObject newLarva = (GameObject)Instantiate(larva, position, Quaternion.identity);
+	    Larvae.Add(newLarva);
         }
 
         public void CreateBeehive(Vector2 position)
@@ -138,6 +148,9 @@ namespace Colony
                     case "Beehive":
                         DestroyBeehive(entity);
                         break;
+		    case "Larva":
+			DestroyLarva(entity);
+			break;
                     default:
                         Destroy(entity);
                         break;
@@ -171,6 +184,12 @@ namespace Colony
         {
             Beehives.Remove(deadBeehive);
             Destroy(deadBeehive);
+        }
+
+        public void DestroyLarva(GameObject deadLarva)
+        {
+            Larvae.Remove(deadLarva);
+            Destroy(deadLarva);
         }
 
         public void DestroyCell(GameObject deadCell)
@@ -256,14 +275,17 @@ namespace Colony
         }
 
 	public List<Selectable> GetSelectablesIn(Rect rect) {
-		List<Selectable> sel = new List<Selectable>(Bees.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
+		List<Selectable> sel = new List<Selectable>(Bees.Select(x => 
+					x.GetComponent<Selectable>()).Where(x => x != null));
 		sel.AddRange(Resources.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
 		foreach (var beehive in Beehives) 
 			sel.AddRange(beehive.GetComponent<Hive.Hive>().Cells.Select(x => 
 						x.GetComponent<Selectable>()).Where(x => x != null));
 		sel.AddRange(Enemies.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
+		sel.AddRange(Larvae.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
 		return sel;
 	}
+
         public bool IsEnemy(GameObject entity)
         {
             return entity != null

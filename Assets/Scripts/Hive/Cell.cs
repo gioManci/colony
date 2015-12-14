@@ -23,8 +23,8 @@ public class Cell : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		var sel = gameObject.GetComponent<Selectable>();
-		sel.OnSelect += selectCell;
-		sel.OnDeselect += deselectCell;
+		sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Hive);
+		sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
 		//aged = gameObject.GetComponent<Aged>();
 		//aged.DestroyOnExpire = false;
 	}
@@ -53,14 +53,6 @@ public class Cell : MonoBehaviour {
 		eggSprite.SetActive(false);
 		//aged.gameObject.SetActive(false);
 		state = State.Refine;
-	}
-
-	private void selectCell() {
-		UIController.Instance.SetHiveButtonsVisible(true);
-	}
-
-	private void deselectCell() {
-		UIController.Instance.SetHiveButtonsVisible(false);
 	}
 
 	private void spawnBee() {

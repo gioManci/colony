@@ -7,11 +7,13 @@ using Colony.Input;
 using Colony.Resources;
 using Colony.Hive;
 
-public class HiveButtons : MonoBehaviour {
+public class HiveButtonsCallbacks : MonoBehaviour {
+
+	private ResourceManager rm;
 
 	// Use this for initialization
 	void Start() {
-	
+		rm = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();	
 	}
 
 	public void CreateEgg() {
@@ -19,7 +21,7 @@ public class HiveButtons : MonoBehaviour {
 			Hive hive = hiveObj.GetComponent<Hive>();
 			foreach (var cellObj in hive.Cells) {
 				Cell cell = cellObj.GetComponent<Cell>();
-				if (!requireResources(new ResourceSet())) {
+				if (!rm.RequireResources(new ResourceSet())) {
 					// UI message
 					break;
 				}
@@ -34,13 +36,5 @@ public class HiveButtons : MonoBehaviour {
 
 	public void Refine() {
 		Debug.Log("refine");
-	}
-
-	private bool requireResources(ResourceSet res) {
-		for (int i = 0; i < Enum.GetValues(typeof(ResourceType)).Length; ++i) {
-			// if resourceManager hasn't enough resources
-			// return false
-		}
-		return true;
 	}
 }

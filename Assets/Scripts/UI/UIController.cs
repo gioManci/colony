@@ -9,9 +9,15 @@ namespace Colony.UI {
 public class UIController : MonoBehaviour {
 
 	public GameObject hiveButtonsRoot; 
+	public GameObject larvaButtonsRoot;
+	public GameObject queenButtonsRoot;
+
+	public enum ButtonType {
+		None, Hive, Larva, Queen
+	}
 
 	private Text[] resourceTexts = new Text[Enum.GetNames(typeof(ResourceType)).Length];
-	private ResourceManager resourceManager;
+	public ResourceManager resourceManager;
 
 	// Make this class a singleton
 	public static UIController Instance { get; private set; }
@@ -31,8 +37,10 @@ public class UIController : MonoBehaviour {
 				resourceTexts[(int)type] = obj.GetComponent<Text>();
 		}
 		// Subscribe to ResourceManager's events
-		var rm = GameObject.Find("ResourceManager");
-		resourceManager = rm.GetComponent<ResourceManager>();
+		if (resourceManager == null) {
+			var rm = GameObject.Find("ResourceManager");
+			resourceManager = rm.GetComponent<ResourceManager>();
+		}
 		resourceManager.OnResourceChange += updateResources;
 		updateResources();
 	}
@@ -41,8 +49,10 @@ public class UIController : MonoBehaviour {
 		resourceTexts[(int)type].text = amount.ToString();
 	}
 
-	public void SetHiveButtonsVisible(bool visible) {
-		hiveButtonsRoot.SetActive(visible);
+	public void SetButtonsVisible(ButtonType type) {
+		hiveButtonsRoot.SetActive(type == ButtonType.Hive);
+		queenButtonsRoot.SetActive(type == ButtonType.Queen);
+		larvaButtonsRoot.SetActive(type == ButtonType.Larva);
 	}
 
 	private void updateResources() {
