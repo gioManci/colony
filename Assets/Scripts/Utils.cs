@@ -1,6 +1,9 @@
 using UnityEngine;
+using System;
 
 namespace Colony {
+
+using Random = UnityEngine.Random;
 
 public static class Utils {
 
@@ -11,6 +14,16 @@ public static class Utils {
 			return collider.gameObject;
 
 		return null;
+	}
+
+	// Generate gaussian numbers using Box-Muller
+	public static float NextGaussian(float mean, float stdDev) {
+		float u1 = Random.Range(0, 1);
+		float u2 = Random.Range(0, 1);
+		// random normal(0, 1)
+		float randStdNormal = Mathf.Sqrt(-2.0f * Mathf.Log(u1)) * Mathf.Sin(2.0f * (float)Math.PI * u2); 
+		// random normal(mean, stdDev)
+		return mean + stdDev * randStdNormal;
 	}
 }
 

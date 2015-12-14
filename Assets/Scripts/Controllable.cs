@@ -72,17 +72,5 @@ namespace Colony
             brain.RemoveAllSubtasks();
             brain.AddSubtask(new Breed(gameObject, breedingCell));
         }
-
-        // Use this for initialization
-        void Start()
-        {
-            MouseActions.Instance.AddControllable(this);
-        }
-
-        void OnDestroy()
-        {
-            MouseActions.Instance.RemoveControllable(this);
-        }
     }
-
 }

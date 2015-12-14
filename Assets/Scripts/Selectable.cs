@@ -19,14 +19,6 @@ public class Selectable : MonoBehaviour {
 		get { return selected; }
 	}
 
-	void Start() {
-		MouseActions.Instance.AddSelectable(this);
-	}
-
-	void OnDestroy() {
-		MouseActions.Instance.RemoveSelectable(this);
-	}
-
 	public void Select() {
 		selectionSprite.SetActive(selected = true);
 		if (OnSelect != null)

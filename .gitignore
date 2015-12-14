@@ -23,3 +23,8 @@ sysinfo.txt
 compilation\ log.txt
 
 *.swp
+
+Assets/Scenes
+*.prefab
+ProjectSettings/
+*.unity

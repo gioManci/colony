@@ -13,7 +13,6 @@ public class HiveButtons : MonoBehaviour {
 	}
 
 	public void CreateEgg() {
-		Debug.Log("create egg");
 		List<Cell> selectedCells = MouseActions.Instance.GetSelected<Cell>();
 		foreach (Cell cell in selectedCells) {
 			if (!requireResources(new ResourceSet())) {
