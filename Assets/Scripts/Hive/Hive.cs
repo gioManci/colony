@@ -21,6 +21,11 @@ class Hive : MonoBehaviour {
 	void Start() {
 		createCells(radius);		
 	}
+	
+	public void DeselectAll() {
+		foreach (var obj in Cells)
+			obj.GetComponent<Selectable>().Deselect();
+	}
 
 	private delegate void AlgorithmStep(float i, float r);
 

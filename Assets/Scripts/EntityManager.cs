@@ -138,7 +138,7 @@ namespace Colony
         {
             Bees.Remove(deadBee);
             Destroy(deadBee);
-            if (bees.Count == 0 && OnAllBeeDead != null)
+            if (Bees.Count == 0 && OnAllBeeDead != null)
             {
                 OnAllBeeDead();
             }
@@ -178,7 +178,7 @@ namespace Colony
                     neighbors.Add(bee);
                 }
             }
-            foreach (GameObject enemy in enemies)
+            foreach (GameObject enemy in Enemies)
             {
                 Vector2 distance = enemy.transform.position - (Vector3)position;
                 if (distance.sqrMagnitude < radius * radius)
@@ -192,7 +192,7 @@ namespace Colony
         public GameObject[] GetNearbyCells(Vector2 position, float radius)
         {
             List<GameObject> nearbyHives = new List<GameObject>();
-            foreach (GameObject hive in beehives)
+            foreach (GameObject hive in Beehives)
             {
                 Hive.Hive hiveComponent = hive.GetComponent<Hive.Hive>();
                 foreach (GameObject hiveCell in hiveComponent.Cells)

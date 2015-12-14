@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Colony;
 using Colony.Input;
 using Colony.Resources;
+using Colony.Hive;
 
 public class HiveButtons : MonoBehaviour {
 
@@ -13,13 +15,16 @@ public class HiveButtons : MonoBehaviour {
 	}
 
 	public void CreateEgg() {
-		List<Cell> selectedCells = MouseActions.Instance.GetSelected<Cell>();
-		foreach (Cell cell in selectedCells) {
-			if (!requireResources(new ResourceSet())) {
-				// UI message
-				break;
+		foreach (var hiveObj in EntityManager.Instance.Beehives) {
+			Hive hive = hiveObj.GetComponent<Hive>();
+			foreach (var cellObj in hive.Cells) {
+				Cell cell = cellObj.GetComponent<Cell>();
+				if (!requireResources(new ResourceSet())) {
+					// UI message
+					break;
+				}
+				cell.CreateEgg();
 			}
-			cell.CreateEgg();
 		}
 	}
 

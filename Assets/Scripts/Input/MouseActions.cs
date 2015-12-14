@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Colony.Tasks;
 using Colony.Resources;
 using Colony;
+using Colony.Hive;
 
 namespace Colony.Input
 {
     using Input = UnityEngine.Input;
+    using Hive = Colony.Hive.Hive;
 
     // Implements all the actions performed when an event is caught
     // by MouseMonitor.
@@ -109,9 +111,10 @@ namespace Colony.Input
 
                     if ("Wasp".Equals(obj.tag))
                     {
-                        foreach (Controllable bee in controllables)
+                        foreach (var b in EntityManager.Instance.Bees)
                         {
-                            Selectable sel = bee.GetComponent<Selectable>();
+                            Selectable sel = b.GetComponent<Selectable>();
+			    Controllable bee = b.GetComponent<Controllable>();
                             if (sel != null && sel.IsSelected && bee.canAttack)
                             {
                                 bee.DoAttack(obj);
@@ -139,7 +142,8 @@ namespace Colony.Input
             foreach (var b in EntityManager.Instance.Bees)
             {
 		Controllable bee = b.GetComponent<Controllable>();
-                if (bee.canMove)
+                Selectable sel = b.GetComponent<Selectable>();
+		if (bee.canMove && sel.IsSelected)
                 {
                     bee.DoMove(pos);
                 }
@@ -151,6 +155,14 @@ namespace Colony.Input
             foreach (var s in EntityManager.Instance.Bees)
             {
 		s.GetComponent<Selectable>().Deselect();
+            }
+            foreach (var s in EntityManager.Instance.Resources)
+            {
+		s.GetComponent<Selectable>().Deselect();
+            }
+            foreach (var s in EntityManager.Instance.Beehives)
+            {
+		s.GetComponent<Hive>().DeselectAll();
             }
         }
 
