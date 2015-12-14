@@ -10,6 +10,7 @@ namespace Colony
         private GameObject owner;
         private Stats stats;
         private List<GameObject> targets;
+        private GameObject lastTarget;
 
         public TargetSystem(GameObject owner)
         {
@@ -25,6 +26,8 @@ namespace Colony
 
         public float LastUpdate { get; private set; }
 
+        public bool HasChangedTarget { get { return lastTarget != CurrentTarget; } }
+
         public void Update()
         {
             LastUpdate = Time.time;
@@ -33,6 +36,7 @@ namespace Colony
             targets.AddRange(EntityManager.Instance.GetNearbyUnits(owner.transform.position, stats.VisualRadius));
             targets.AddRange(EntityManager.Instance.GetNearbyCells(owner.transform.position, stats.VisualRadius));
             targets.Remove(owner);
+            lastTarget = CurrentTarget;
             if (targets.Count == 0)
             {
                 CurrentTarget = null;
@@ -103,6 +107,10 @@ namespace Colony
                         }
                     }
                 }
+            }
+            if (targetBee != null)
+            {
+                return targetBee;
             }
             return targetCell;
         }

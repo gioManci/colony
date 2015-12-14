@@ -52,20 +52,20 @@ namespace Colony.Tasks.ComplexTasks
             if (Time.time - targetSystem.LastUpdate >= stats.ReactionTime)
             {
                 targetSystem.Update();
-            }
 
-            // if it finds a target and is exploring, attack!
-            if (targetSystem.HasTarget && IsCurrentSubtask(TaskType.Explore))
-            {
-                RemoveAllSubtasks();
+                // if it finds a target and is exploring, attack!
+                if (targetSystem.HasTarget && (IsCurrentSubtask(TaskType.Explore) || targetSystem.HasChangedTarget))
+                {
+                    RemoveAllSubtasks();
 
-                if (targetSystem.CurrentTarget.tag == "Cell")
-                {
-                    AddSubtask(new Loot(agent, targetSystem.CurrentTarget));
-                }
-                else
-                {
-                    AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
+                    if (targetSystem.CurrentTarget.tag == "Cell")
+                    {
+                        AddSubtask(new Loot(agent, targetSystem.CurrentTarget));
+                    }
+                    else
+                    {
+                        AddSubtask(new Attack(agent, targetSystem.CurrentTarget));
+                    }
                 }
             }
 

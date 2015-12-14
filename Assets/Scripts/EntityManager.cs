@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 namespace Colony
@@ -17,6 +18,8 @@ namespace Colony
         public GameObject hornet;
         public GameObject flower;
         public GameObject tree;
+
+        public event Action OnAllBeeDead;
 
         private List<GameObject> bees;
         private List<GameObject> enemies;
@@ -135,6 +138,10 @@ namespace Colony
         {
             bees.Remove(deadBee);
             Destroy(deadBee);
+            if (bees.Count == 0 && OnAllBeeDead != null)
+            {
+                OnAllBeeDead();
+            }
         }
 
         public void DestroyEnemy(GameObject deadEnemy)

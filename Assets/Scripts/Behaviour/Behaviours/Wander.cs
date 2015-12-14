@@ -21,14 +21,15 @@ namespace Colony.Behaviour.Behaviours
 
             wanderTarget = Random.insideUnitCircle * wanderRadius;
 
-            if (agent.transform.childCount == 0)
+            Transform trickTransform = agent.transform.Find("TransformTrick");
+            if (trickTransform == null)
             {
-                trick = new GameObject();
+                trick = new GameObject("TransformTrick");
                 trick.transform.SetParent(agent.transform);
             }
             else
             {
-                trick = agent.transform.GetChild(0).gameObject;
+                trick = trickTransform.gameObject;
             }
         }
 
