@@ -164,29 +164,37 @@ namespace Colony.Input
             foreach (Selectable s in selected)
             {
 		s.Deselect();
-		updateSelected(s);
             }
+	    selected.Clear();
         }
 
 	private void changeCursor(Move move) {
-		bool beeSelected = false;
-		foreach (Selectable sel in selected) {
-			if (sel.gameObject.tag == "Bee") {
-				beeSelected = true;
-				break;
-			}
+		uint CanHarvest = 1, 
+		     CanAttack  = 1 << 1;
+		uint flags = 0;
+		foreach (Controllable bee in GetSelected<Controllable>()) {
+			if (bee.canHarvest)
+				flags |= CanHarvest;
+			if (bee.canAttack)
+				flags |= CanAttack;
+			
+			if (~flags == 0) break;
 		}
 
-		// TODO: add canHarvest check
-		if (beeSelected) {
+		if (flags != 0) {
 			var obj = Utils.GetObjectAt(move.pos);
-			if (obj != null && obj.GetComponentInChildren<ResourceYielder>() != null) {
-				Cursor.Instance.setCursor(Cursor.Type.Click); 
-				return;
+			if (obj != null) {
+				if ((flags & CanHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null) {
+					Cursor.Instance.SetCursor(Cursor.Type.Click); 
+					return;
+				} else if ((flags & CanAttack) != 0 && EntityManager.Instance.IsEnemy(obj)) {
+					Cursor.Instance.SetCursor(Cursor.Type.Attack);	
+					return;
+				}
 			}
 		} 
 		if (Cursor.Instance.CursType != Cursor.Type.Normal)
-			Cursor.Instance.setCursor(Cursor.Type.Normal); 
+			Cursor.Instance.SetCursor(Cursor.Type.Normal); 
 	}
     }
 }

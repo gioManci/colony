@@ -6,10 +6,12 @@ using UCursor = UnityEngine.Cursor;
 
 public class Cursor : MonoBehaviour {
 	public enum Type {
-		Normal, Click
+		Normal, Click, Attack
 	}
 
 	public Texture2D clickCursorTexture;
+	public Texture2D attackCursorTexture;
+
 	private Type cursor = Type.Normal;
 
 	public Type CursType {
@@ -27,7 +29,7 @@ public class Cursor : MonoBehaviour {
 		Instance = this;
 	}
 
-	public void setCursor(Type type) {
+	public void SetCursor(Type type) {
 		cursor = type;
 
 		switch (type) {
@@ -36,6 +38,9 @@ public class Cursor : MonoBehaviour {
 			break;
 		case Type.Click:
 			UCursor.SetCursor(clickCursorTexture, Vector2.zero, CursorMode.Auto);
+			break;
+		case Type.Attack:
+			UCursor.SetCursor(attackCursorTexture, Vector2.zero, CursorMode.Auto);
 			break;
 		}
 	}

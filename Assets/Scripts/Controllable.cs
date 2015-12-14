@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Colony.Input;
 using Colony.Tasks;
 using Colony.Tasks.ComplexTasks;
 using Colony.Tasks.BasicTasks;
@@ -17,6 +15,7 @@ namespace Colony
         public bool canBreed;
         public bool canRepair;
         public bool canMove;
+        public bool canColonize;
 
         private ComplexTask brain;
 
@@ -71,6 +70,12 @@ namespace Colony
         {
             brain.RemoveAllSubtasks();
             brain.AddSubtask(new Breed(gameObject, breedingCell));
+        }
+
+        public void DoColonize()
+        {
+            brain.RemoveAllSubtasks();
+            brain.AddSubtask(new Colonize(gameObject));
         }
     }
 }

@@ -12,9 +12,9 @@ class Hive : MonoBehaviour {
 	public static int ids = 0;
 
 	public List<GameObject> Cells { get; private set; }
-
+	
 	void Awake() {
-		Id = ids++;
+	    Id = ids++;
             Cells = new List<GameObject>();
 	}
 

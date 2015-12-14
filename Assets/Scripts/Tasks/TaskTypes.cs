@@ -17,7 +17,8 @@ namespace Colony.Tasks
         Arbitrate,
         Explore,
         Loot,
-        StealResources
+        StealResources,
+        Colonize
     }
 
 }
