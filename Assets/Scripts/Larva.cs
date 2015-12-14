@@ -40,24 +40,27 @@ namespace Colony
 
         public void StartGrowing(string beeType)
         {
-            this.beeType = beeType;
-
-            switch (beeType)
+            if (!countdownStarted)
             {
-                case "WorkerBee":
-                    incubationTime = workerIncubationTime;
-                    break;
-                case "DroneBee":
-                    incubationTime = droneIncubationTime;
-                    break;
-                case "QueenBee":
-                    incubationTime = queenIncubationTime;
-                    break;
-                default:
-                    throw new Exception("Invalid bee type: " + beeType);
-            }
+                this.beeType = beeType;
 
-            countdownStarted = true;
+                switch (beeType)
+                {
+                    case "WorkerBee":
+                        incubationTime = workerIncubationTime;
+                        break;
+                    case "DroneBee":
+                        incubationTime = droneIncubationTime;
+                        break;
+                    case "QueenBee":
+                        incubationTime = queenIncubationTime;
+                        break;
+                    default:
+                        throw new Exception("Invalid bee type: " + beeType);
+                }
+
+                countdownStarted = true;
+            }
         }
 
         private void CreateBee()
