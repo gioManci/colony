@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ public class EventManager : MonoBehaviour {
 	// Make this class a singleton
 	public static EventManager Instance { get; private set; }
 
-	private GameObject popupPanel;
+	public GameObject PopupPanel;
 
 	private EventManager() {}
 
@@ -19,10 +20,6 @@ public class EventManager : MonoBehaviour {
 		if (Instance != null && Instance != this)
 			Destroy(gameObject);
 		Instance = this;
-	}
-
-	void Start() {
-		popupPanel = GameObject.Find("PopupPanel");
 	}
 	
 	void Update() {
@@ -43,8 +40,10 @@ public class EventManager : MonoBehaviour {
 	private void showPopup(string text) {
 		// pause the game
 		Time.timeScale = 0f;
-		popupPanel.GetComponent<Text>().text = text;
-		popupPanel.SetActive(true);
+		PopupPanel.SetActive(true);
+		Text t = PopupPanel.GetComponentInChildren<Text>();
+		Debug.Assert(t != null, "text is null!");
+		t.text = text;
 	}
 
 	private string toReadable(int f) {

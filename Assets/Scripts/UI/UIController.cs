@@ -34,6 +34,7 @@ public class UIController : MonoBehaviour {
 		var rm = GameObject.Find("ResourceManager");
 		resourceManager = rm.GetComponent<ResourceManager>();
 		resourceManager.OnResourceChange += updateResources;
+		updateResources();
 	}
 
 	public void SetResource(ResourceType type, int amount) {

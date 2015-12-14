@@ -7,6 +7,7 @@ namespace Colony.Events {
 class BearEvent : Event {
 	public BearEvent() {
 		Text = "A bear is approaching your beehive to steal you honey!";
+		Timeout = 10;
 		Happen = consequences;
 	}
 
@@ -23,7 +24,7 @@ class BearEvent : Event {
 		foreach (GameObject bee in listCopy.GetRange(0, nBees))
 			EntityManager.Instance.DestroyBee(bee);
 
-		return "You lost " + nBees.ToString() + " bees!";
+		return "The bear killed " + nBees.ToString() + " of your bees!";
 	}
 }
 
