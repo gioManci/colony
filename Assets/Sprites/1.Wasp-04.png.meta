@@ -1,0 +1,119 @@
+fileFormatVersion: 2
+guid: 2de3168a5a99eea42a5603b83850f495
+timeCreated: 1450166286
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 1.Wasp-04_0
+    21300002: 1.Wasp-04_1
+    21300004: 1.Wasp-04_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: 1.Wasp-04_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1
+        width: 118
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -59, y: 39.5}
+        - {x: -59, y: -3.5}
+        - {x: -51, y: -38.5}
+        - {x: -48, y: -39.5}
+        - {x: 21, y: -39.5}
+        - {x: 59, y: 2.5}
+        - {x: 59, y: 39.5}
+    - name: 1.Wasp-04_1
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 1
+        width: 123
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 33.5, y: 39}
+        - {x: -27.5, y: 39}
+        - {x: -57.5, y: 34}
+        - {x: -61.5, y: 31}
+        - {x: -61.5, y: -17}
+        - {x: -12.5, y: -39}
+        - {x: 15.5, y: -39}
+        - {x: 29.5, y: -24}
+        - {x: 61.5, y: 9}
+        - {x: 61.5, y: 32}
+    - name: 1.Wasp-04_2
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 1
+        width: 122
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31, y: 39}
+        - {x: -61, y: 29}
+        - {x: -61, y: -3}
+        - {x: -21, y: -39}
+        - {x: 27, y: -39}
+        - {x: 42, y: -33}
+        - {x: 61, y: -1}
+        - {x: 61, y: 27}
+        - {x: 48, y: 39}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

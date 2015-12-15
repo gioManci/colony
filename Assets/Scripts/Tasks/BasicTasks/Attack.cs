@@ -27,8 +27,6 @@ namespace Colony.Tasks.BasicTasks
             status = Status.Active;
 
             steeringBehaviour.StartPursuit(enemy);
-            steeringBehaviour.StopAlignment();
-            steeringBehaviour.StopSeparation();
         }
 
         public override void OnMessage()
@@ -61,8 +59,6 @@ namespace Colony.Tasks.BasicTasks
         public override void Terminate()
         {
             steeringBehaviour.StopPursuit();
-            steeringBehaviour.StartAlignment();
-            steeringBehaviour.StartSeparation();
         }
     }
 }
