@@ -70,6 +70,16 @@ namespace Colony.Resources
                 resources[i] = 0;
             }
         }
+	
+	public string ToString() {
+		string s = "";
+		for (int i = 0; i < resources.Length; ++i) {
+			if (resources[i] > 0) {
+				s += ((ResourceType)i).ToString() + ": " + resources[i] + " ";
+			}
+		}
+		return s;
+	}
 
         private int[] resources = new int[Enum.GetNames(typeof(ResourceType)).Length];
     }

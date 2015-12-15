@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Colony.Input {
+namespace Colony.UI {
 
 using UCursor = UnityEngine.Cursor;
 
@@ -9,6 +9,7 @@ public class Cursor : MonoBehaviour {
 		Normal, Click, Attack
 	}
 
+	public Texture2D normalCursorTexture;
 	public Texture2D clickCursorTexture;
 	public Texture2D attackCursorTexture;
 
@@ -29,12 +30,16 @@ public class Cursor : MonoBehaviour {
 		Instance = this;
 	}
 
+	void Start() {
+		UCursor.SetCursor(normalCursorTexture, Vector2.zero, CursorMode.Auto);
+	}
+
 	public void SetCursor(Type type) {
 		cursor = type;
 
 		switch (type) {
 		case Type.Normal:
-			UCursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+			UCursor.SetCursor(normalCursorTexture, Vector2.zero, CursorMode.Auto);
 			break;
 		case Type.Click:
 			UCursor.SetCursor(clickCursorTexture, Vector2.zero, CursorMode.Auto);

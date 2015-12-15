@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Colony.Tasks;
 using Colony.Resources;
 using Colony;
+using Colony.UI;
 
 namespace Colony.Input
 {
-
+    using Cursor = Colony.UI.Cursor;
     using Input = UnityEngine.Input;
 
     // Implements all the actions performed when an event is caught
