@@ -19,10 +19,11 @@ public class LarvaButtonsCallbacks : MonoBehaviour {
 	private void growBee(string beeType) {
 		var sel = EntityManager.Instance.Larvae.Where(x => x.GetComponent<Selectable>().IsSelected);
 		foreach (var larvaObj in sel) {
-			if (!UIController.Instance.resourceManager.RequireResources(Costs.WorkerBee)) {
+			if (!UIController.Instance.resourceManager.RequireResources(Costs.Get(beeType))) {
 				// UI message
 				return;
 			}
+            UIController.Instance.resourceManager.RemoveResources(Costs.Get(beeType));
 			larvaObj.GetComponent<Larva>().StartGrowing(beeType);
 		}
 	}

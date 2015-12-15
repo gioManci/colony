@@ -86,7 +86,7 @@ namespace Colony
                     {
                         //Check if its hive contains resources
                         HiveWarehouse warehouse = entity.GetComponentInParent<HiveWarehouse>();
-                        if (!warehouse.IsEmpty)
+                        if (warehouse != null && !warehouse.IsEmpty)
                         {
                             targetCell = entity;
                             distanceToClosest = targetCell.transform.position - owner.transform.position;

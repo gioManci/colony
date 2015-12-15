@@ -123,6 +123,12 @@ namespace Colony
             hive.SetActive(true);
         }
 
+        public void CreateWasp(Vector2 position)
+        {
+            GameObject enemy = (GameObject)Instantiate(wasp, position, Quaternion.identity);
+            Enemies.Add(enemy);
+        }
+
         public void DestroyEntity(GameObject entity)
         {
             if (entity != null)

@@ -122,10 +122,23 @@ namespace Colony.Input
                     {
                         foreach (var bee in GetSelected<Controllable>())
                         {
-			    if (bee.canBreed)
-			        bee.DoBreed(obj);
-			    else if (bee.canMove)
-			        bee.DoMove(click.pos);
+                            if (bee.canBreed && UIController.Instance.resourceManager.RequireResources(Costs.Larva))
+                            {
+                                UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
+                                bee.DoBreed(obj);
+                            }
+                            else if (bee.canMove)
+                                bee.DoMove(click.pos);
+                        }
+                    }
+                    if (EntityManager.Instance.IsEnemy(obj))
+                    {
+                        foreach (var bee in GetSelected<Controllable>())
+                        {
+                            if (bee.canAttack)
+                            {
+                                bee.DoAttack(obj);
+                            }
                         }
                     }
                     //moveSelectedUnits(click.pos);
@@ -171,13 +184,16 @@ namespace Colony.Input
 
 	private void changeCursor(Move move) {
 		uint CanHarvest = 1, 
-		     CanAttack  = 1 << 1;
+		     CanAttack  = 1 << 1,
+             CanBreed   = 1 << 2;
 		uint flags = 0;
 		foreach (Controllable bee in GetSelected<Controllable>()) {
 			if (bee.canHarvest)
 				flags |= CanHarvest;
 			if (bee.canAttack)
 				flags |= CanAttack;
+            if (bee.canBreed)
+                flags |= CanBreed;
 			
 			if (~flags == 0) break;
 		}
@@ -185,7 +201,8 @@ namespace Colony.Input
 		if (flags != 0) {
 			var obj = Utils.GetObjectAt(move.pos);
 			if (obj != null) {
-				if ((flags & CanHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null) {
+				if (((flags & CanHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null)
+                    || ((flags & CanBreed) != 0 && obj.GetComponent<Cell>() != null)) {
 					Cursor.Instance.SetCursor(Cursor.Type.Click); 
 					return;
 				} else if ((flags & CanAttack) != 0 && EntityManager.Instance.IsEnemy(obj)) {

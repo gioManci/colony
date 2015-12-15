@@ -8,6 +8,7 @@ namespace Colony
 	public float Lifespan;
 	public float Age { set; get; }
 	public bool DestroyOnExpire = true;
+    public bool Active = true;
 	
 	// Age bar management
 	MaterialPropertyBlock block;
@@ -25,6 +26,7 @@ namespace Colony
 
 	void Update()
 	{
+        if (!Active) return;
 		Age -= Time.deltaTime;
 		if (Age < 0)
 		{

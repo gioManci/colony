@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace Colony.Tasks.ComplexTasks
 {
+    using Random = UnityEngine.Random;
+
     public class Arbitrate : ComplexTask
     {
         private Stats stats;
@@ -36,7 +38,7 @@ namespace Colony.Tasks.ComplexTasks
             }
             else
             {
-                AddSubtask(new Explore(agent, 5.0f, 5.0f));
+                AddSubtask(new Explore(agent, Random.Range(4.0f, 8.0f), Random.Range(3.0f, 6.0f)));
             }
         }
 

@@ -15,6 +15,7 @@ public class QueenButtonsCallbacks : MonoBehaviour {
 				// UI message
 				return;
 			}
+            UIController.Instance.resourceManager.RemoveResources(Costs.NewHive);
 			queen.DoColonize();
 		}
 	}

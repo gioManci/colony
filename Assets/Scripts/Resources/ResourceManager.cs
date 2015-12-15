@@ -73,8 +73,10 @@ namespace Colony.Resources
 
 	public bool RequireResources(ResourceSet res) {
 		for (int i = 0; i < Enum.GetValues(typeof(ResourceType)).Length; ++i) {
-			// if resourceManager hasn't enough resources
-			// return false
+			if (resourcesStock[(ResourceType)i] < res[(ResourceType)i])
+            {
+                return false;
+            }
 		}
 		return true;
 	}

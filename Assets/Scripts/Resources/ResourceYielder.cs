@@ -41,6 +41,12 @@ namespace Colony.Resources
                 result[type] = Mathf.Min(request[type], resources[type]);
             }
             resources -= request;
+
+            if (resources.IsEmpty())
+            {
+                gameObject.SetActive(false);
+            }
+
             return result;
         }
     }

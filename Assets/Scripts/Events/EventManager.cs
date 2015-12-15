@@ -33,7 +33,7 @@ public class EventManager : MonoBehaviour {
 	}
 
 	public void LaunchEvent(Event evt) {
-		showPopup(evt.Text + "This will happen in: " + toReadable((int)evt.Timeout));
+		showPopup(evt.Text + "\r\nThis will happen in: " + toReadable((int)evt.Timeout));
 		ongoing.Add(evt);
 	}
 

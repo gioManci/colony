@@ -4,13 +4,14 @@ namespace Colony.Events {
 
 public class EventSpawner : MonoBehaviour {
 	
-	private float timeout = 5;
+	public float eventTimeout = 5;
+    public float bearTimeout;
 
 	void Update() {
-		timeout -= Time.deltaTime;
-		if (timeout <= 0) {
-			timeout = 100000;
-			EventManager.Instance.LaunchEvent(new BearEvent());
+		eventTimeout -= Time.deltaTime;
+		if (eventTimeout <= 0) {
+			eventTimeout = 100000;
+			EventManager.Instance.LaunchEvent(new BearEvent(bearTimeout));
 		}
 	}
 }

@@ -5,6 +5,7 @@ using Colony.UI;
 namespace Colony
 {
     [RequireComponent(typeof(Selectable))]
+    [RequireComponent(typeof(Aged))]
     public class Larva : MonoBehaviour
     {
         public float workerIncubationTime;
@@ -15,6 +16,7 @@ namespace Colony
         private bool countdownStarted;
         private float incubationTime;
         private string beeType;
+        private Aged aged;
 
         void Awake()
         {
@@ -26,6 +28,8 @@ namespace Colony
 		var sel = GetComponent<Selectable>();
 		sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Larva);
 		sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+        aged = GetComponent<Aged>();
+        aged.Active = false;
 	}
 
         void Update()
@@ -63,6 +67,8 @@ namespace Colony
                 }
 
                 countdownStarted = true;
+                aged.Age = aged.Lifespan = incubationTime;
+                aged.Active = true;
             }
         }
 

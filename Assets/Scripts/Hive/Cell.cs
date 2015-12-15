@@ -3,8 +3,6 @@ using System.Collections;
 using Colony;
 using Colony.UI;
 
-[RequireComponent(typeof(Selectable))]
-[RequireComponent(typeof(Aged))]
 public class Cell : MonoBehaviour {
 
 	public enum State { Storage, CreateEgg, Refine };
@@ -23,8 +21,11 @@ public class Cell : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		var sel = gameObject.GetComponent<Selectable>();
-		sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Hive);
-		sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+        if (sel != null)
+        {
+            sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Hive);
+            sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+        }
 		//aged = gameObject.GetComponent<Aged>();
 		//aged.DestroyOnExpire = false;
 	}

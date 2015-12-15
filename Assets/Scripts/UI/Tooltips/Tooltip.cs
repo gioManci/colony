@@ -9,24 +9,21 @@ namespace Colony.UI.Tooltips {
 
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 	public string Txt;
-	
-	private GameObject tooltipPanel;
 
 	void Start() {
-		tooltipPanel = GameObject.Find("TooltipText");
-		Debug.Assert(tooltipPanel != null, "Tooltip Panel is null!");
+		Debug.Assert(UIController.Instance.tooltipText != null, "Tooltip Panel is null!");
 		Regex rgx = new Regex(@"{\w+}", RegexOptions.IgnoreCase);
 		Txt = rgx.Replace(Txt, new MatchEvaluator(parseSpecial));
 	}
 
 	public void OnPointerEnter(PointerEventData data) {
-		tooltipPanel.SetActive(true);
-		tooltipPanel.transform.position = gameObject.transform.position;
-		tooltipPanel.GetComponent<Text>().text = Txt;
+		UIController.Instance.tooltipText.SetActive(true);
+		UIController.Instance.tooltipText.transform.position = gameObject.transform.position;
+		UIController.Instance.tooltipText.GetComponent<Text>().text = Txt;
 	}
 
 	public void OnPointerExit(PointerEventData data) {
-		tooltipPanel.SetActive(false);
+		UIController.Instance.tooltipText.SetActive(false);
 	}
 
 	private string parseSpecial(Match m) {

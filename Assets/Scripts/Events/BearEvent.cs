@@ -5,9 +5,9 @@ using Colony;
 namespace Colony.Events {
 
 class BearEvent : Event {
-	public BearEvent() {
-		Text = "A bear is approaching your beehive to steal you honey!";
-		Timeout = 10;
+	public BearEvent(float timeout) {
+		Text = "A bear is approaching your beehive to steal your honey!";
+		Timeout = timeout;
 		Happen = consequences;
 	}
 
