@@ -23,7 +23,7 @@ public class MouseMonitor : MonoBehaviour {
 	// Callbacks
 	public static event Action<Click> OnLeftClick, OnRightClick;
 	public static event Action<Drag> OnDrag, OnDragEnd;
-	public static event Action<Move> OnMove, OnOverEnter, OnOverExit;
+	public static event Action<Move> OnMove; 
 
 	// Make this class a singleton
 	public static MouseMonitor Instance { get; private set; }
@@ -83,15 +83,7 @@ public class MouseMonitor : MonoBehaviour {
 		} else {
 			if (OnMove != null)
 				OnMove(new Move(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-			/*if (u && OnOverEnter != null) {
-				Debug.Log("on over enter");
-				OnOverEnter(new Move(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-			}
-			else if (!u && wasOver && OnOverExit != null)
-				OnOverExit(new Move(Camera.main.ScreenToWorldPoint(Input.mousePosition)));*/
 		}
-
-		wasOver = u;
 	}
 
 	void OnGUI() {

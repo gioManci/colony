@@ -52,7 +52,7 @@ namespace Colony.Behaviour
 
             if (forceToApply.sqrMagnitude < 0.001)
             {
-                rigidbody2d.velocity *= 0.3f;
+                rigidbody2d.velocity *= 0.1f;
             }
             else
             {

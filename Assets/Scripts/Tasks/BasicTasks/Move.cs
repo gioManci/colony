@@ -32,6 +32,7 @@ namespace Colony.Tasks.BasicTasks
         public override void Activate()
         {
             status = Status.Active;
+            steering.StopFlocking();
             steering.StartArrive(target);
         }
 
@@ -55,6 +56,7 @@ namespace Colony.Tasks.BasicTasks
         public override void Terminate()
         {
             steering.StopArrive();
+            steering.StartFlocking();
         }
     }
 
