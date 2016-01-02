@@ -21,7 +21,8 @@ public static class Costs {
 	public static ResourceSet NewHive = new ResourceSet()
 						.With(ResourceType.Pollen, 2000)
 						.With(ResourceType.Honey, 1000)
-						.With(ResourceType.Water, 2000);
+						.With(ResourceType.RoyalJelly, 1000)
+						.With(ResourceType.Water, 750);
 
 	public static ResourceSet Get(string key) {
 		switch (key) {

@@ -38,7 +38,7 @@ public class MouseMonitor : MonoBehaviour {
 
 	void Update() {
 		EventSystem eventSystem = EventSystem.current;
-		var u = eventSystem.IsPointerOverGameObject()
+		var isGUIClick = eventSystem.IsPointerOverGameObject()
 			     && eventSystem.currentSelectedGameObject != null;
 
 		if (Input.GetMouseButtonDown(0)) {
@@ -59,14 +59,16 @@ public class MouseMonitor : MonoBehaviour {
 				selection.height = -selection.height;
 			}
 
-			if (dragSpan < MinDragSpan && OnLeftClick != null && !u)
-				OnLeftClick(new Click(
-					Camera.main.ScreenToWorldPoint(dragStartPos)));
-			else if (OnDragEnd != null)
+			if (dragSpan < MinDragSpan) {
+				if (!isGUIClick && OnLeftClick != null) {
+					OnLeftClick(new Click(
+						Camera.main.ScreenToWorldPoint(dragStartPos)));
+				}
+			} else if (OnDragEnd != null) {
 				OnDragEnd(new Drag(
 					Camera.main.ScreenToWorldPoint(dragStartPos),
 					Camera.main.ScreenToWorldPoint(dragEndPos)));
-
+			}
 		} else if (Input.GetMouseButtonDown(1)) {
 			if (OnRightClick != null)
 				OnRightClick(new Click(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
@@ -76,7 +78,7 @@ public class MouseMonitor : MonoBehaviour {
 			var spos = ScreenToRectPoint(dragStartPos);
 			var epos = ScreenToRectPoint(Input.mousePosition);
 			selection = new Rect(spos.x, spos.y, epos.x - spos.x, epos.y - spos.y);
-			if (OnDrag != null && !u)
+			if (OnDrag != null && !isGUIClick)
 				OnDrag(new Drag(
 					Camera.main.ScreenToWorldPoint(dragStartPos),
 					Camera.main.ScreenToWorldPoint(Input.mousePosition)));

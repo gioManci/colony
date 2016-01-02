@@ -30,13 +30,13 @@ public class CameraController : MonoBehaviour {
 		/// Arrows movements ///
 		var pos = transform.position;
 		var limit = bounds.worldSize/2f - arrowSpeed * Time.deltaTime * 2;
-		if (Input.GetKey(KeyCode.UpArrow) && pos.y < limit) 
+		if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && pos.y < limit) 
 			transform.Translate(Vector2.up * arrowSpeed * Time.deltaTime, Space.World);
-		if (Input.GetKey(KeyCode.DownArrow) && pos.y > -limit)
+		if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && pos.y > -limit)
 		         transform.Translate(Vector2.down * arrowSpeed * Time.deltaTime, Space.World);
-		if (Input.GetKey(KeyCode.LeftArrow) && pos.x > -limit) 
+		if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && pos.x > -limit) 
 			transform.Translate(Vector2.left * arrowSpeed * Time.deltaTime, Space.World);
-		if (Input.GetKey(KeyCode.RightArrow) && pos.x < limit)
+		if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && pos.x < limit)
 			transform.Translate(Vector2.right * arrowSpeed * Time.deltaTime, Space.World);
 
 		/// Mouse movements ///

@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour {
 	public GameObject hiveButtonsRoot; 
 	public GameObject larvaButtonsRoot;
 	public GameObject queenButtonsRoot;
-    public GameObject tooltipText;
+    	public GameObject tooltipText;
 
 	public enum ButtonType {
 		None, Hive, Larva, Queen

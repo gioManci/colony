@@ -60,7 +60,7 @@ class Hive : MonoBehaviour {
 				var cell = (GameObject)GameObject.Instantiate(cellTemplate,
 						pos, transform.rotation);
 				cell.transform.parent = transform;
-                Cells.Add(cell);
+             			Cells.Add(cell);
 			}
 		};
 

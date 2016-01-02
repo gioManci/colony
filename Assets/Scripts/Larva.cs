@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Colony.UI;
+using Colony.Resources;
 
 namespace Colony
 {
@@ -69,6 +70,7 @@ namespace Colony
                 countdownStarted = true;
                 aged.Age = aged.Lifespan = incubationTime;
                 aged.Active = true;
+		UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
             }
         }
 

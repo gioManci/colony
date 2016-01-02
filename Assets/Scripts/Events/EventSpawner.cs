@@ -4,8 +4,8 @@ namespace Colony.Events {
 
 public class EventSpawner : MonoBehaviour {
 	
-	public float eventTimeout = 5;
-    public float bearTimeout;
+	public float eventTimeout;
+    	public float bearTimeout;
 
 	void Update() {
 		eventTimeout -= Time.deltaTime;

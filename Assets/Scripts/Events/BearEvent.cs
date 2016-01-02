@@ -6,7 +6,7 @@ namespace Colony.Events {
 
 class BearEvent : Event {
 	public BearEvent(float timeout) {
-		Text = "A bear is approaching your beehive to steal your honey!";
+		Text = "A bear is approaching your beehive to steal your honey!\r\nHe will also kill some of your bees.";
 		Timeout = timeout;
 		Happen = consequences;
 	}
@@ -15,8 +15,7 @@ class BearEvent : Event {
 		// FIXME: when we have specializations, this will
 		// depend on number of warrior bees in the hive;
 		// for now, just kill a random number of bees.
-		int nBees = Mathf.Clamp(0, EntityManager.Instance.Bees.Count,
-				(int)Utils.NextGaussian(5f, 1f));
+		int nBees = Random.Range(2, 8);
 
 		// Shuffle the list of bees to kill random ones
 		var listCopy = new List<GameObject>(EntityManager.Instance.Bees);
