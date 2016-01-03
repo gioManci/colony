@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using Colony.UI;
+using Colony.Resources;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -27,6 +29,7 @@ namespace Colony.Tasks.BasicTasks
             ActivateIfInactive();
 
             EntityManager.Instance.CreateLarva(breedingCell.transform.position);
+	    UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
             status = Status.Completed;
 
             return status;

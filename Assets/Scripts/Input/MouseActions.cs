@@ -108,8 +108,9 @@ public class MouseActions : MonoBehaviour {
 					foreach (var bee in GetSelected<Controllable>()) {
 						if (bee.canBreed && UIController.Instance.resourceManager.RequireResources(Costs.Larva)) {
 							bee.DoBreed(obj);
-						} else if (bee.canMove)
+						} else if (bee.canMove) {
 							bee.DoMove(click.pos);
+						}
 					}
 				}
 				if (EntityManager.Instance.IsEnemy(obj)) {

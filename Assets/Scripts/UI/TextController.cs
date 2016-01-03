@@ -36,17 +36,6 @@ public class TextController : MonoBehaviour {
 		text.transform.SetParent(TextPanel.transform, false);
 		texts.Enqueue(text);
 		GameObject.Destroy(text.gameObject, TEXT_TIMEOUT);
-		updateGUI();
-	}
-
-	private void updateGUI() {
-		
-//		foreach (var text in texts.Reverse()) {
-//			var pos = TextPanel.transform.position + new Vector3(0, hOffset, 0);
-//			var txt = GameObject.Instantiate(TextTemplate);
-//			txt.text = text.Txt;
-//			txt.transform.SetParent(TextPanel.transform);
-//		}
 	}
 }
 
