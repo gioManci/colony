@@ -26,7 +26,7 @@ namespace Colony.Tasks
             subtasks = new Stack<Task>();
         }
 
-        protected Task CurrentSubtask
+        public Task CurrentSubtask
         {
             get
             {

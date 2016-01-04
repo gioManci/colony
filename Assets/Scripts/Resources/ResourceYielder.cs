@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System;
+using Colony.UI;
 
 namespace Colony.Resources
 {
+    [RequireComponent(typeof(Selectable))]
     public class ResourceYielder : MonoBehaviour
     {
         public int initialPollen;
@@ -18,19 +20,26 @@ namespace Colony.Resources
         public int defaultRoyalJellyYield;
         public int defaultBeeswaxYield;
 
-        private ResourceSet resources;
+	public ResourceSet Resources { get; private set; }
 
-        public bool IsDepleted { get { return resources.IsEmpty(); } }
+        public bool IsDepleted { get { return Resources.IsEmpty(); } }
 
         void Start()
         {
-            resources = new ResourceSet()
+            Resources = new ResourceSet()
                 .With(ResourceType.Beeswax, initialBeeswax)
                 .With(ResourceType.Honey, initialHoney)
                 .With(ResourceType.Nectar, initialNectar)
                 .With(ResourceType.Pollen, initialPollen)
                 .With(ResourceType.RoyalJelly, initialRoyalJelly)
                 .With(ResourceType.Water, initialWater);
+
+		var sel = GetComponent<Selectable>();
+		sel.OnSelect += () => {
+			UIController.Instance.SetResourceBPText(this);
+			UIController.Instance.SetBottomPanel(UIController.BPType.Text);
+		};
+		sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
         }
 
         public ResourceSet Yield(ResourceSet request)
@@ -38,13 +47,17 @@ namespace Colony.Resources
             ResourceSet result = new ResourceSet();
             foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
             {
-                result[type] = Mathf.Min(request[type], resources[type]);
+                result[type] = Mathf.Min(request[type], Resources[type]);
             }
-            resources -= request;
+            Resources -= request;
 
-            if (resources.IsEmpty())
+            if (Resources.IsEmpty())
             {
                 gameObject.SetActive(false);
+            }
+            else if (GetComponent<Selectable>().IsSelected)
+            {
+                UIController.Instance.SetResourceBPText(this);
             }
 
             return result;

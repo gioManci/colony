@@ -5,8 +5,8 @@ namespace Colony.Hive {
 
 class Hive : MonoBehaviour {
 
-	public uint radius;
-	public GameObject cellTemplate;
+	public uint Radius;
+	public GameObject CellTemplate;
 
 	public int Id { get; private set; }
 	public static int ids = 0;
@@ -19,7 +19,7 @@ class Hive : MonoBehaviour {
 	}
 
 	void Start() {
-		createCells(radius);		
+		createCells(Radius);		
 	}
 	
 	public void DeselectAll() {
@@ -32,7 +32,7 @@ class Hive : MonoBehaviour {
 	// Creates a hive of radius `r` with cells correctly placed.
 	// r = 0 means a single cell.
 	private void createCells(uint r) {
-		var c = (GameObject)GameObject.Instantiate(cellTemplate,
+		var c = (GameObject)GameObject.Instantiate(CellTemplate,
 				transform.position, transform.rotation);
 		c.transform.parent = transform;
 
@@ -57,7 +57,7 @@ class Hive : MonoBehaviour {
 			for (uint i = 0; i < radius; ++i) {
 				pos.x += dx;
 				pos.y += dy;
-				var cell = (GameObject)GameObject.Instantiate(cellTemplate,
+				var cell = (GameObject)GameObject.Instantiate(CellTemplate,
 						pos, transform.rotation);
 				cell.transform.parent = transform;
              			Cells.Add(cell);

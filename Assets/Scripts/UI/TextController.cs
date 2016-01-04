@@ -5,8 +5,11 @@ using System.Linq;
 
 namespace Colony.UI {
 
+// Class controlling the UI messages
 public class TextController : MonoBehaviour {
+	// The maximum number of messages to display at once
 	private const int QUEUE_LEN = 6;
+	// Number of seconds after which messages expire
 	private const float TEXT_TIMEOUT = 10f;
 
 	public GameObject TextPanel;
@@ -25,6 +28,8 @@ public class TextController : MonoBehaviour {
 		Instance = this;
 	}
 
+	// Adds a message to the queue. Messages will self-destroy after
+	// TEXT_TIMEOUT seconds.
 	public void Add(string msg) {
 		if (texts.Count == QUEUE_LEN) {
 			var t = texts.Dequeue();

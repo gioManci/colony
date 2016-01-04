@@ -11,10 +11,11 @@ public class UIController : MonoBehaviour {
 	public GameObject hiveButtonsRoot; 
 	public GameObject larvaButtonsRoot;
 	public GameObject queenButtonsRoot;
+	public GameObject bpText;
     	public GameObject tooltipText;
 
-	public enum ButtonType {
-		None, Hive, Larva, Queen
+	public enum BPType {
+		None, Hive, Larva, Queen, Text
 	}
 
 	private Text[] resourceTexts = new Text[Enum.GetNames(typeof(ResourceType)).Length];
@@ -50,10 +51,32 @@ public class UIController : MonoBehaviour {
 		resourceTexts[(int)type].text = amount.ToString();
 	}
 
-	public void SetButtonsVisible(ButtonType type) {
-		hiveButtonsRoot.SetActive(type == ButtonType.Hive);
-		queenButtonsRoot.SetActive(type == ButtonType.Queen);
-		larvaButtonsRoot.SetActive(type == ButtonType.Larva);
+	public void SetBottomPanel(BPType type) {
+		hiveButtonsRoot.SetActive(type == BPType.Hive);
+		queenButtonsRoot.SetActive(type == BPType.Queen);
+		larvaButtonsRoot.SetActive(type == BPType.Larva);
+		bpText.SetActive(type == BPType.Text);
+	}
+
+	public void SetResourceBPText(ResourceYielder res) {
+		string txt = "Resources left:";
+		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
+			txt += "\r\n" + type.ToString() + ": " + res.Resources[type];
+		}
+		setBPText(txt);
+	}
+
+	public void SetBeeLoadText(BeeLoad load) {
+		string txt = "Load:";
+		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
+			txt += "\r\n" + type.ToString() + ": " + load.Load[type];
+		}
+		setBPText(txt);
+	}
+
+	private void setBPText(string text) {
+		var txt = bpText.GetComponentInChildren<Text>();
+		txt.text = text;
 	}
 
 	private void updateResources() {

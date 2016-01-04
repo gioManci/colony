@@ -3,11 +3,13 @@ using Colony.Tasks;
 using Colony.Tasks.ComplexTasks;
 using Colony.Tasks.BasicTasks;
 using Colony.UI;
+using Colony.Resources;
 
 namespace Colony
 {
     using Move = Colony.Tasks.BasicTasks.Move;
 
+    [RequireComponent(typeof(Selectable))]
     public class Controllable : MonoBehaviour
     {
         public bool canHarvest;
@@ -28,8 +30,15 @@ namespace Colony
 	void Start() {
 		if (gameObject.tag == "QueenBee") {
 			var sel = GetComponent<Selectable>();
-			sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Queen);
-			sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+			sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Queen);
+			sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
+		} else if (gameObject.tag == "WorkerBee") {
+			var sel = GetComponent<Selectable>();
+			sel.OnSelect += () => {
+				UIController.Instance.SetBeeLoadText(GetComponent<BeeLoad>());
+				UIController.Instance.SetBottomPanel(UIController.BPType.Text);
+			};
+			sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
 		}
 	}
 
@@ -40,6 +49,10 @@ namespace Colony
                 brain.Process();
             }
         }
+
+	public bool IsInactive() {
+		return brain.CurrentSubtask == null;
+	}
 
         /// <summary>
         /// Tells the game object to move to the specified position.

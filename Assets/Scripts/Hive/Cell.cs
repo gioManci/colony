@@ -23,8 +23,8 @@ public class Cell : MonoBehaviour {
 		var sel = gameObject.GetComponent<Selectable>();
         if (sel != null)
         {
-            sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Hive);
-            sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+            sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Hive);
+            sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
         }
 		//aged = gameObject.GetComponent<Aged>();
 		//aged.DestroyOnExpire = false;

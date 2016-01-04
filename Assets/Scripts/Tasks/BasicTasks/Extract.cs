@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Colony.Resources;
+using Colony.UI;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -62,7 +63,8 @@ namespace Colony.Tasks.BasicTasks
                 }
 
                 load.AddResources(result);
-
+                if (agent.GetComponent<Selectable>().IsSelected)
+                    UIController.Instance.SetBeeLoadText(load);
                 timeFromLastExtraction = 0.0f;
             }
 

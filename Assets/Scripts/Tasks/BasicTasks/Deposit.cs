@@ -1,6 +1,7 @@
 ﻿using Colony.Resources;
 using System;
 using UnityEngine;
+using Colony.UI;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -31,6 +32,8 @@ namespace Colony.Tasks.BasicTasks
 
             targetHive.AddResources(load.Load);
             load.Clear();
+            if (agent.GetComponent<Selectable>().IsSelected)
+                UIController.Instance.SetBeeLoadText(load);
             status = Status.Completed;
 
             return status;

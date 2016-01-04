@@ -18,7 +18,6 @@ public class MouseMonitor : MonoBehaviour {
 
 	private bool dragging = false;
 	private Vector2 dragStartPos;
-	private bool wasOver = false;
 
 	// Callbacks
 	public static event Action<Click> OnLeftClick, OnRightClick;
@@ -39,8 +38,12 @@ public class MouseMonitor : MonoBehaviour {
 	void Update() {
 		EventSystem eventSystem = EventSystem.current;
 		var isGUIClick = eventSystem.IsPointerOverGameObject()
-			     && eventSystem.currentSelectedGameObject != null;
-
+		                 && eventSystem.currentSelectedGameObject != null;
+		
+		// This is a workaround
+		if (isGUIClick && eventSystem.currentSelectedGameObject.tag == "UI_IgnoreEvents")
+			isGUIClick = false;
+		
 		if (Input.GetMouseButtonDown(0)) {
 			dragging = true;
 			dragStartPos = (Vector2)Input.mousePosition;
@@ -78,10 +81,11 @@ public class MouseMonitor : MonoBehaviour {
 			var spos = ScreenToRectPoint(dragStartPos);
 			var epos = ScreenToRectPoint(Input.mousePosition);
 			selection = new Rect(spos.x, spos.y, epos.x - spos.x, epos.y - spos.y);
-			if (OnDrag != null && !isGUIClick)
+			if (OnDrag != null && !isGUIClick) {
 				OnDrag(new Drag(
 					Camera.main.ScreenToWorldPoint(dragStartPos),
 					Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+			}
 		} else {
 			if (OnMove != null)
 				OnMove(new Move(Camera.main.ScreenToWorldPoint(Input.mousePosition)));

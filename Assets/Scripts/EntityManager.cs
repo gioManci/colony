@@ -119,7 +119,7 @@ namespace Colony
         {
             GameObject hive = (GameObject)Instantiate(beehive, position, Quaternion.identity);
             Beehives.Add(hive);
-            hive.GetComponent<Hive.Hive>().radius = 1;
+            hive.GetComponent<Hive.Hive>().Radius = 1;
             hive.SetActive(true);
         }
 
@@ -272,6 +272,22 @@ namespace Colony
             }
         }
 
+	private delegate IEnumerable<Selectable> SelectableFilter(List<GameObject> lst);
+
+	public List<Selectable> GetSelectablesIn(Rect rect) {
+
+		SelectableFilter selectables = (lst) => lst.Select(x => x.GetComponent<Selectable>()).Where(x => x != null);
+
+		List<Selectable> sel = new List<Selectable>(selectables(Bees));
+		sel.AddRange(selectables(Resources));
+		/*foreach (var beehive in Beehives) 
+			sel.AddRange(beehive.GetComponent<Hive.Hive>().Cells.Select(x => 
+				x.GetComponent<Selectable>()).Where(x => x != null));*/
+		sel.AddRange(selectables(Enemies));
+		sel.AddRange(selectables(Larvae));
+		return sel.Where(x => rect.Contains(x.transform.position)).ToList();
+	}
+
         public bool IsBee(GameObject entity)
         {
             return entity != null
@@ -279,18 +295,6 @@ namespace Colony
                 || entity.tag == "DroneBee"
                 || entity.tag == "QueenBee");
         }
-
-	public List<Selectable> GetSelectablesIn(Rect rect) {
-		List<Selectable> sel = new List<Selectable>(Bees.Select(x => 
-					x.GetComponent<Selectable>()).Where(x => x != null));
-		sel.AddRange(Resources.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
-		foreach (var beehive in Beehives) 
-			sel.AddRange(beehive.GetComponent<Hive.Hive>().Cells.Select(x => 
-						x.GetComponent<Selectable>()).Where(x => x != null));
-		sel.AddRange(Enemies.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
-		sel.AddRange(Larvae.Select(x => x.GetComponent<Selectable>()).Where(x => x != null));
-		return sel;
-	}
 
         public bool IsEnemy(GameObject entity)
         {

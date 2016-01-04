@@ -27,8 +27,8 @@ namespace Colony
 
 	void Start() {
 		var sel = GetComponent<Selectable>();
-		sel.OnSelect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.Larva);
-		sel.OnDeselect += () => UIController.Instance.SetButtonsVisible(UIController.ButtonType.None);
+		sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Larva);
+		sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
         aged = GetComponent<Aged>();
         aged.Active = false;
 	}

@@ -7,6 +7,10 @@ using Colony.Input;
 
 namespace Colony.UI.Tooltips {
 
+// Attach this component to a UI element to assign it a tooltip.
+// If the tooltip text has the form {rSomething}, the resulting
+// text will be the _resources_ needed to create Something, as defined
+// in Costs.Get(Something).
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 	public string Txt;
 
@@ -17,15 +21,21 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	}
 
 	public void OnPointerEnter(PointerEventData data) {
-		UIController.Instance.tooltipText.SetActive(true);
-		UIController.Instance.tooltipText.transform.position = gameObject.transform.position;
-		UIController.Instance.tooltipText.GetComponent<Text>().text = Txt;
+		var tt = UIController.Instance.tooltipText;
+		tt.SetActive(true);
+		tt.transform.position = transform.position;
+		tt.GetComponent<Text>().text = Txt;
+		// Prevent overflowing from screen
+		var transf = tt.transform.position;
+		var diff = Screen.width - tt.GetComponent<Text>().rectTransform.rect.width;
+		if (transf.x >= diff)
+			tt.transform.position = new Vector3(diff, transf.y, transf.z);
 	}
 
 	public void OnPointerExit(PointerEventData data) {
 		UIController.Instance.tooltipText.SetActive(false);
 	}
-
+		
 	private string parseSpecial(Match m) {
 		string txt = m.ToString();
 		if (txt.Length > 4) {
