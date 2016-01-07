@@ -1,5 +1,6 @@
 ﻿using Colony.Tasks.BasicTasks;
 using Colony.Behaviour;
+using Colony.UI;
 using System;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Colony.Tasks.BasicTasks
         private Stats stats;
         private Life enemyLife;
         private float remainingCooldownTime;
+	private bool warningGiven;
 
         public Attack(GameObject agent, GameObject enemy) : base(agent, TaskType.Attack)
         {
@@ -49,6 +51,11 @@ namespace Colony.Tasks.BasicTasks
                 if (remainingCooldownTime <= 0 && toEnemy.sqrMagnitude < stats.AttackRange * stats.AttackRange)
                 {
                     enemyLife.Decrease(stats.Damage);
+                    if (!warningGiven)
+                    {
+                        TextController.Instance.Add("Your bees are being attacked!");
+                        warningGiven = true;
+                    }
                     remainingCooldownTime = stats.CooldownTime;
                 }
             }

@@ -74,6 +74,12 @@ public class UIController : MonoBehaviour {
 		setBPText(txt);
 	}
 
+	public void SetBPRefining(bool refining) {
+		SetBottomPanel(BPType.Hive);
+		GameObject.Find("RefineButton").GetComponentInChildren<Text>().text =
+			refining ? "Stop refining" : "Refine";
+	}
+
 	private void setBPText(string text) {
 		var txt = bpText.GetComponentInChildren<Text>();
 		txt.text = text;

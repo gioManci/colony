@@ -71,7 +71,7 @@ namespace Colony.Resources
             }
         }
 	
-	public string ToString() {
+	public override string ToString() {
 		string s = "";
 		for (int i = 0; i < resources.Length; ++i) {
 			if (resources[i] > 0) {

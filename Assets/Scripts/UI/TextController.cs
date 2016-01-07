@@ -10,7 +10,7 @@ public class TextController : MonoBehaviour {
 	// The maximum number of messages to display at once
 	private const int QUEUE_LEN = 6;
 	// Number of seconds after which messages expire
-	private const float TEXT_TIMEOUT = 10f;
+	private const float TEXT_TIMEOUT = 5f;
 
 	public GameObject TextPanel;
 	public Text TextTemplate;

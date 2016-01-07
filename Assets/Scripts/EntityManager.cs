@@ -91,42 +91,48 @@ namespace Colony
             Larvae.AddRange(larvae);
         }
 
-        public void CreateWorkerBee(Vector2 position)
+        public GameObject CreateWorkerBee(Vector2 position)
         {
             GameObject newBee = (GameObject)Instantiate(workerBee, position, Quaternion.identity);
             Bees.Add(newBee);
+            return newBee;
         }
 
-        public void CreateQueenBee(Vector2 position)
+        public GameObject CreateQueenBee(Vector2 position)
         {
             GameObject newBee = (GameObject)Instantiate(queenBee, position, Quaternion.identity);
             Bees.Add(newBee);
+            return newBee;
         }
 
-        public void CreateDroneBee(Vector2 position)
+        public GameObject CreateDroneBee(Vector2 position)
         {
             GameObject newBee = (GameObject)Instantiate(droneBee, position, Quaternion.identity);
             Bees.Add(newBee);
+            return newBee;
         }
 
-        public void CreateLarva(Vector2 position)
+        public GameObject CreateLarva(Vector2 position)
         {
             GameObject newLarva = (GameObject)Instantiate(larva, position, Quaternion.identity);
 	    Larvae.Add(newLarva);
+            return newLarva;
         }
 
-        public void CreateBeehive(Vector2 position)
+        public GameObject CreateBeehive(Vector2 position)
         {
             GameObject hive = (GameObject)Instantiate(beehive, position, Quaternion.identity);
             Beehives.Add(hive);
             hive.GetComponent<Hive.Hive>().Radius = 1;
             hive.SetActive(true);
+            return hive;
         }
 
-        public void CreateWasp(Vector2 position)
+        public GameObject CreateWasp(Vector2 position)
         {
             GameObject enemy = (GameObject)Instantiate(wasp, position, Quaternion.identity);
             Enemies.Add(enemy);
+            return enemy;
         }
 
         public void DestroyEntity(GameObject entity)

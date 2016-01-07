@@ -8,8 +8,6 @@ public class Cell : MonoBehaviour {
 	public enum State { Storage, CreateEgg, Refine };
 
 	public GameObject eggSprite, storageSprite, refineSprite;
-	public int eggSpawnTimeout = 30; // seconds
-	//public Aged aged;
 
 	private State state = State.Storage;
 
@@ -21,11 +19,11 @@ public class Cell : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		var sel = gameObject.GetComponent<Selectable>();
-        if (sel != null)
-        {
-            sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Hive);
-            sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
-        }
+                if (sel != null)
+                {
+                    sel.OnSelect += () => UIController.Instance.SetBPRefining(CellState == State.Refine);
+                    sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
+                }
 		//aged = gameObject.GetComponent<Aged>();
 		//aged.DestroyOnExpire = false;
 	}
@@ -35,16 +33,12 @@ public class Cell : MonoBehaviour {
 		refineSprite.SetActive(false);
 		eggSprite.SetActive(true);
 		state = State.CreateEgg;
-		//aged.Age = eggSpawnTimeout;
-		//aged.gameObject.SetActive(true);
-		Invoke("spawnBee", eggSpawnTimeout);
 	}
 
 	public void UseAsStorage() {
 		storageSprite.SetActive(true);
 		refineSprite.SetActive(false);
 		eggSprite.SetActive(false);
-		//aged.gameObject.SetActive(false);
 		state = State.Storage;
 	}
 
@@ -52,12 +46,6 @@ public class Cell : MonoBehaviour {
 		storageSprite.SetActive(false);
 		refineSprite.SetActive(true);
 		eggSprite.SetActive(false);
-		//aged.gameObject.SetActive(false);
 		state = State.Refine;
-	}
-
-	private void spawnBee() {
-		//aged.gameObject.SetActive(false);
-		// TODO: spawn bee
 	}
 }

@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Colony;
+using Colony.Resources;
 
 namespace Colony.Events {
 
 class BearEvent : Event {
-	public BearEvent(float timeout) {
-		Text = "A bear is approaching your beehive to steal your honey!\r\nHe will also kill some of your bees.";
+	public BearEvent(float timeout) : base() {
+		Text = "A <b>bear</b> is approaching your beehive to <i>steal your honey</i>!" +
+			"\r\nHe will also <i>kill some of your bees</i>.";
 		Timeout = timeout;
 		Happen = consequences;
 	}
@@ -23,7 +25,12 @@ class BearEvent : Event {
 		foreach (GameObject bee in listCopy.GetRange(0, nBees))
 			EntityManager.Instance.DestroyBee(bee);
 
-		return "The bear killed " + nBees.ToString() + " of your bees!";
+		// Steal honey
+		int honeyStolen = (int)Mathf.Clamp(Utils.NextGaussian(200, 40), 1f, 300f);
+		resourceManager.RemoveResource(ResourceType.Honey, honeyStolen);
+
+		return "The bear killed <b>" + nBees.ToString() + "</b> of your bees " +
+			"and stole <b>" + honeyStolen + "</b> of your honey!";
 	}
 }
 

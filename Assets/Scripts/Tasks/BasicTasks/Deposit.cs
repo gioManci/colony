@@ -32,6 +32,8 @@ namespace Colony.Tasks.BasicTasks
 
             targetHive.AddResources(load.Load);
             load.Clear();
+            // FIXME: this is not very nice: it'd be better if UIController
+            	// updated by itself (maybe via an event?)
             if (agent.GetComponent<Selectable>().IsSelected)
                 UIController.Instance.SetBeeLoadText(load);
             status = Status.Completed;

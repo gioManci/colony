@@ -3,93 +3,89 @@ using System;
 using Colony.UI;
 using Colony.Resources;
 
-namespace Colony
-{
-    [RequireComponent(typeof(Selectable))]
-    [RequireComponent(typeof(Aged))]
-    public class Larva : MonoBehaviour
-    {
-        public float workerIncubationTime;
-        public float droneIncubationTime;
-        public float queenIncubationTime;
+namespace Colony {
+[RequireComponent(typeof(Selectable))]
+[RequireComponent(typeof(Aged))]
+public class Larva : MonoBehaviour {
+	public float WorkerIncubationTime;
+	public float DroneIncubationTime;
+	public float QueenIncubationTime;
 
-        private float elapsedTime;
-        private bool countdownStarted;
-        private float incubationTime;
-        private string beeType;
-        private Aged aged;
+	private float elapsedTime;
+	private bool countdownStarted;
+	private float incubationTime;
+	private string beeType;
+	private Aged aged;
 
-        void Awake()
-        {
-            elapsedTime = 0.0f;
-            countdownStarted = false;
-        }
+	public GameObject BreedingCell;
+
+	void Awake() {
+		elapsedTime = 0.0f;
+		countdownStarted = false;
+	}
 
 	void Start() {
 		var sel = GetComponent<Selectable>();
 		sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Larva);
 		sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
-        aged = GetComponent<Aged>();
-        aged.Active = false;
+		aged = GetComponent<Aged>();
+		aged.Active = false;
+		// This is to prioritize clicks on larvae rather than cells
+		transform.Translate(new Vector3(0, 0, -1));
 	}
 
-        void Update()
-        {
-            if (countdownStarted)
-            {
-                elapsedTime += Time.deltaTime;
-                if (elapsedTime >= incubationTime)
-                {
-                    CreateBee();
-                    EntityManager.Instance.DestroyEntity(gameObject);
-                }
-            }
-        }
+	void Update() {
+		if (countdownStarted) {
+			elapsedTime += Time.deltaTime;
+			if (elapsedTime >= incubationTime) {
+				CreateBee();
+				EntityManager.Instance.DestroyEntity(gameObject);
+			}
+		}
+	}
 
-        public void StartGrowing(string beeType)
-        {
-            if (!countdownStarted)
-            {
-                this.beeType = beeType;
+	public void StartGrowing(string beeType) {
+		Debug.Assert(BreedingCell != null, "Breeding cell is null for larva!");
 
-                switch (beeType)
-                {
-                    case "WorkerBee":
-                        incubationTime = workerIncubationTime;
-                        break;
-                    case "DroneBee":
-                        incubationTime = droneIncubationTime;
-                        break;
-                    case "QueenBee":
-                        incubationTime = queenIncubationTime;
-                        break;
-                    default:
-                        throw new Exception("Invalid bee type: " + beeType);
-                }
+		if (!countdownStarted) {
+			this.beeType = beeType;
 
-                countdownStarted = true;
-                aged.Age = aged.Lifespan = incubationTime;
-                aged.Active = true;
-		UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
-            }
-        }
+			switch (beeType) {
+			case "WorkerBee":
+				incubationTime = WorkerIncubationTime;
+				break;
+			case "DroneBee":
+				incubationTime = DroneIncubationTime;
+				break;
+			case "QueenBee":
+				incubationTime = QueenIncubationTime;
+				break;
+			default:
+				throw new Exception("Invalid bee type: " + beeType);
+			}
 
-        private void CreateBee()
-        {
-            switch (beeType)
-            {
-                case "WorkerBee":
-                    EntityManager.Instance.CreateWorkerBee(gameObject.transform.position);
-                    break;
-                case "DroneBee":
-                    EntityManager.Instance.CreateDroneBee(gameObject.transform.position);
-                    break;
-                case "QueenBee":
-                    EntityManager.Instance.CreateQueenBee(gameObject.transform.position);
-                    break;
-                default:
-                    throw new Exception("Impossible to create a bee of type: " + beeType);
-            }
-        }
-    }
+			countdownStarted = true;
+			aged.Age = aged.Lifespan = incubationTime;
+			aged.Active = true;
+			UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
+		}
+	}
+
+	private void CreateBee() {
+		switch (beeType) {
+		case "WorkerBee":
+			EntityManager.Instance.CreateWorkerBee(gameObject.transform.position);
+			break;
+		case "DroneBee":
+			EntityManager.Instance.CreateDroneBee(gameObject.transform.position);
+			break;
+		case "QueenBee":
+			EntityManager.Instance.CreateQueenBee(gameObject.transform.position);
+			break;
+		default:
+			throw new Exception("Impossible to create a bee of type: " + beeType);
+		}
+		BreedingCell.GetComponent<Cell>().CellState = Cell.State.Storage;
+	}
+}
 }
