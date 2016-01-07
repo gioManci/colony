@@ -7,13 +7,24 @@ namespace Colony {
 
 public class Selectable : MonoBehaviour {
 	// The sprite of the selection wheel
-	public GameObject selectionSprite;
+	public GameObject SelectionSprite;
+	// The sprite viewed on the minimap, if any
+	public GameObject MinimapSprite;
 	// This object can be selected by dragging
-	public bool dragSelectable = true;
+	public bool DragSelectable = true;
 
 	public event Action OnSelect, OnDeselect;
 
 	private bool selected;
+	private SpriteRenderer minimapSpriteRenderer;
+	private Color origMinimapSpriteColor;
+
+	void Start() {
+		if (MinimapSprite != null) {
+			minimapSpriteRenderer = MinimapSprite.GetComponent<SpriteRenderer>();
+			origMinimapSpriteColor = minimapSpriteRenderer.color;
+		}
+	}
 
 	public bool IsSelected {
 		get { return selected; }
@@ -24,13 +35,19 @@ public class Selectable : MonoBehaviour {
 	}
 
 	public void Select() {
-		selectionSprite.SetActive(selected = true);
+		SelectionSprite.SetActive(selected = true);
+		if (MinimapSprite != null) {
+			minimapSpriteRenderer.color = Color.white;
+		}
 		if (OnSelect != null)
 			OnSelect();
 	}
 
 	public void Deselect() {
-		selectionSprite.SetActive(selected = false);
+		SelectionSprite.SetActive(selected = false);
+		if (MinimapSprite != null) {
+			minimapSpriteRenderer.color = origMinimapSpriteColor;
+		}
 		if (OnDeselect != null)
 			OnDeselect();
 	}

@@ -86,7 +86,7 @@ public class MouseActions : MonoBehaviour {
 			DeselectAll();
 
 		foreach (Selectable obj in EntityManager.Instance.GetSelectablesIn(drag.spanRect)) {
-			if (obj.dragSelectable) {
+			if (obj.DragSelectable) {
 				obj.Select();
 				UpdateSelected(obj);
 			}
