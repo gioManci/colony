@@ -17,8 +17,8 @@ public class CameraController : MonoBehaviour {
 	// If cursor moves past this threshold (near the screen boundaries),
 	// camera will start moving in that direction. Both values are in
 	// percentual values of the corresponding dimension.
-	private const float HORIZ_SCREEN_THRESHOLD = 0.15f,
-	                    VERT_SCREEN_THRESHOLD = 0.15f;
+	public float HorizScreenThreshold = 0.02f,
+	             VertScreenThreshold = 0.02f;
 	private Boundaries bounds;
 
 	void Start() {
@@ -41,13 +41,13 @@ public class CameraController : MonoBehaviour {
 
 		/// Mouse movements ///
 		var mpos = Input.mousePosition;
-		if (Screen.width - mpos.x < HORIZ_SCREEN_THRESHOLD * Screen.width && pos.x < limit)
+		if (Screen.width - mpos.x < HorizScreenThreshold * Screen.width && pos.x < limit)
 			transform.Translate(Vector2.right * calcSpeed(mpos, Direction.RIGHT) * Time.deltaTime, Space.World);
-		else if (mpos.x < HORIZ_SCREEN_THRESHOLD * Screen.width && pos.x > -limit)
+		else if (mpos.x < HorizScreenThreshold * Screen.width && pos.x > -limit)
 			transform.Translate(Vector2.left * calcSpeed(mpos, Direction.LEFT) * Time.deltaTime, Space.World);
-		if (Screen.height - mpos.y < VERT_SCREEN_THRESHOLD * Screen.height && pos.y < limit)
+		if (Screen.height - mpos.y < VertScreenThreshold * Screen.height && pos.y < limit)
 			transform.Translate(Vector2.up * calcSpeed(mpos, Direction.UP) * Time.deltaTime, Space.World);
-		else if (mpos.y < VERT_SCREEN_THRESHOLD * Screen.height && pos.y > -limit)
+		else if (mpos.y < VertScreenThreshold * Screen.height && pos.y > -limit)
 			transform.Translate(Vector2.down * calcSpeed(mpos, Direction.DOWN) * Time.deltaTime, Space.World);
 
 	}
@@ -55,17 +55,17 @@ public class CameraController : MonoBehaviour {
 	private float calcSpeed(Vector2 pos, Direction dir) {
 		switch (dir) {
 		case Direction.UP:
-			return mouseSpeedMax * (pos.y - Screen.height * (1 - VERT_SCREEN_THRESHOLD))
-				/ (Screen.height * VERT_SCREEN_THRESHOLD);
+			return mouseSpeedMax * (pos.y - Screen.height * (1 - VertScreenThreshold))
+				/ (Screen.height * VertScreenThreshold);
 		case Direction.DOWN:
-			return mouseSpeedMax * (Screen.height * VERT_SCREEN_THRESHOLD - pos.y)
-				/ (Screen.height * VERT_SCREEN_THRESHOLD);
+			return mouseSpeedMax * (Screen.height * VertScreenThreshold - pos.y)
+				/ (Screen.height * VertScreenThreshold);
 		case Direction.LEFT:
-			return mouseSpeedMax * (Screen.width * HORIZ_SCREEN_THRESHOLD - pos.x) 
-				/ (Screen.width * HORIZ_SCREEN_THRESHOLD);
+			return mouseSpeedMax * (Screen.width * HorizScreenThreshold - pos.x) 
+				/ (Screen.width * HorizScreenThreshold);
 		case Direction.RIGHT:
-			return mouseSpeedMax * (pos.x - Screen.width * (1 - HORIZ_SCREEN_THRESHOLD)) 
-				/ (Screen.width * HORIZ_SCREEN_THRESHOLD);
+			return mouseSpeedMax * (pos.x - Screen.width * (1 - HorizScreenThreshold)) 
+				/ (Screen.width * HorizScreenThreshold);
 		}
 		return 0f;
 	}
