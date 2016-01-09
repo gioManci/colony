@@ -9,6 +9,8 @@ namespace Colony.UI {
 public class UIController : MonoBehaviour {
 
 	public GameObject hiveButtonsRoot; 
+	public GameObject refineButtons;
+	public GameObject stopRefineButtons;
 	public GameObject larvaButtonsRoot;
 	public GameObject queenButtonsRoot;
 	public GameObject bpText;
@@ -76,8 +78,8 @@ public class UIController : MonoBehaviour {
 
 	public void SetBPRefining(bool refining) {
 		SetBottomPanel(BPType.Hive);
-		GameObject.Find("RefineButton").GetComponentInChildren<Text>().text =
-			refining ? "Stop refining" : "Refine";
+		refineButtons.SetActive(!refining);
+		stopRefineButtons.SetActive(refining);
 	}
 
 	private void setBPText(string text) {

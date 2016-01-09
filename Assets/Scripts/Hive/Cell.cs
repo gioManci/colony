@@ -7,13 +7,29 @@ public class Cell : MonoBehaviour {
 
 	public enum State { Storage, CreateEgg, Refine };
 
+	public enum RefinedResource {
+		None,
+		Honey,
+		RoyalJelly
+	}
+
 	public GameObject eggSprite, storageSprite, refineSprite;
 
 	private State state = State.Storage;
+	private RefinedResource refined;
 
 	public State CellState {
 		get { return state; }
 		set { state = value; }
+	}
+
+	public RefinedResource Refined {
+		get {
+			return state != State.Refine 
+				? RefinedResource.None 
+				: refined;
+		}
+		private set { refined = value; }
 	}
 
 	// Use this for initialization
@@ -42,10 +58,15 @@ public class Cell : MonoBehaviour {
 		state = State.Storage;
 	}
 
-	public void Refine() {
+	public void Refine(RefinedResource what) {
+		if (what == RefinedResource.None) {
+			UseAsStorage();
+			return;
+		}
 		storageSprite.SetActive(false);
 		refineSprite.SetActive(true);
 		eggSprite.SetActive(false);
 		state = State.Refine;
+		refined = what;
 	}
 }
