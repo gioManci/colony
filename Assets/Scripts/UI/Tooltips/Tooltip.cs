@@ -14,22 +14,27 @@ namespace Colony.UI.Tooltips {
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 	public string Txt;
 
+	private Text ttText;
+
 	void Start() {
 		Debug.Assert(UIController.Instance.tooltipText != null, "Tooltip Panel is null!");
 		Regex rgx = new Regex(@"{\w+}", RegexOptions.IgnoreCase);
 		Txt = rgx.Replace(Txt, new MatchEvaluator(parseSpecial));
+		ttText = UIController.Instance.tooltipText.GetComponentInChildren<Text>();
 	}
 
 	public void OnPointerEnter(PointerEventData data) {
 		var tt = UIController.Instance.tooltipText;
 		tt.SetActive(true);
 		tt.transform.position = transform.position;
-		tt.GetComponent<Text>().text = Txt;
+		ttText.text = Txt;
 		// Prevent overflowing from screen
 		var transf = tt.transform.position;
-		var diff = Screen.width - tt.GetComponent<Text>().rectTransform.rect.width;
-		if (transf.x >= diff)
-			tt.transform.position = new Vector3(diff, transf.y, transf.z);
+		float diffx = Screen.width - ttText.rectTransform.rect.width,
+		      diffy = Screen.height  - ttText.rectTransform.rect.height;
+		float newx = transf.x >= diffx ? diffx : transf.x,
+		      newy = transf.y >= diffy ? diffy : transf.y;
+		tt.transform.position = new Vector3(newx, newy, transf.z);
 	}
 
 	public void OnPointerExit(PointerEventData data) {
