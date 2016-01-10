@@ -47,7 +47,7 @@ namespace Colony.Tasks.BasicTasks
                 if (remainingCooldownTime <= 0 && toEnemy.sqrMagnitude < stats.AttackRange * stats.AttackRange)
                 {
                     enemy.SendMessage("OnHit", agent);
-                    remainingCooldownTime = stats.CooldownTime;
+                    remainingCooldownTime = stats.AttackCooldownTime;
                 }
             }
 
