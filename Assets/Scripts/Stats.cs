@@ -1,38 +1,111 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Colony.Specializations;
 
 namespace Colony
 {
     public class Stats : MonoBehaviour
     {
-        public float speed;
-        public float visualRadius;
-        public int damage;
-        public float attackRange;
-        public float cooldownTime;
-        public float loadSize;
-        public float loadTime;
-        public float reactionTime;
+        private Specialization spec;
 
-        public float Speed { get; private set; }
-        public float VisualRadius { get; private set; }
-        public int Damage { get; private set; }
-        public float AttackRange { get; private set; }
-        public float CooldownTime { get; private set; }
-        public float LoadSize { get; private set; }
-        public float LoadTime { get; private set; }
-        public float ReactionTime { get; private set; }
+        public float initialSpeed;
+        public float initialVisualRadius;
+        public int initialDamage;
+        public float initialAttackRange;
+        public float initialAttackCooldownTime;
+        public float initialLoadSize;
+        public float initialLoadTime;
+        public float initialReactionTime;
 
-        void Start()
+        private float speed;
+        private float visualRadius;
+        private int damage;
+        private float attackRange;
+        private float attackCooldownTime;
+        private float loadSize;
+        private float loadTime;
+        private float reactionTime;
+
+        public float Speed
         {
-            Speed = speed;
-            VisualRadius = visualRadius;
-            Damage = damage;
-            AttackRange = attackRange;
-            CooldownTime = cooldownTime;
-            LoadSize = loadSize;
-            LoadTime = loadTime;
-            ReactionTime = reactionTime;
+            get
+            {
+                return speed * spec.SpeedMultiplier;
+            }
+        }
+
+        public float VisualRadius
+        {
+            get
+            {
+                return visualRadius * spec.VisualRadiusMultiplier;
+            }
+        }
+
+        public int Damage
+        {
+            get
+            {
+                return (int)(damage * spec.DamageMultiplier);
+            }
+        }
+
+        public float AttackRange
+        {
+            get
+            {
+                return attackRange * spec.AttackRangeMultiplier;
+            }
+        }
+
+        public float AttackCooldownTime
+        {
+            get
+            {
+                return attackCooldownTime * spec.CooldownTimeMultiplier;
+            }
+        }
+
+        public float LoadSize
+        {
+            get
+            {
+                return loadSize * spec.LoadSizeMultiplier;
+            }
+        }
+
+        public float LoadTime
+        {
+            get
+            {
+                return loadTime * spec.LoadTimeMultiplier;
+            }
+        }
+
+        public float ReactionTime
+        {
+            get
+            {
+                return reactionTime * spec.ReactionTimeMultiplier;
+            }
+        }
+
+        void Awake()
+        {
+            spec = SpecializationFactory.GetSpecialization(SpecializationType.None);
+
+            speed = initialSpeed;
+            visualRadius = initialVisualRadius;
+            damage = initialDamage;
+            attackRange = initialAttackRange;
+            attackCooldownTime = initialAttackCooldownTime;
+            loadSize = initialLoadSize;
+            loadTime = initialLoadTime;
+            reactionTime = initialReactionTime;
+        }
+
+        public void Specialize(SpecializationType type)
+        {
+            spec = SpecializationFactory.GetSpecialization(type);
         }
     }
 }
