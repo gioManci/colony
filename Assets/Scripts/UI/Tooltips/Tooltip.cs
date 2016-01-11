@@ -15,17 +15,20 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	public string Txt;
 
 	private Text ttText;
+	private GameObject ttPanel;
 
 	void Start() {
 		Debug.Assert(UIController.Instance.tooltipText != null, "Tooltip Panel is null!");
 		Regex rgx = new Regex(@"{\w+}", RegexOptions.IgnoreCase);
 		Txt = rgx.Replace(Txt, new MatchEvaluator(parseSpecial));
 		ttText = UIController.Instance.tooltipText.GetComponentInChildren<Text>();
+		ttPanel = UIController.Instance.tooltipText.transform.FindChild("Panel").gameObject;
+		Debug.Assert(ttText != null && ttPanel != null, "ttText or ttPanel are null!");
 	}
 
 	public void OnPointerEnter(PointerEventData data) {
 		var tt = UIController.Instance.tooltipText;
-		tt.SetActive(true);
+		ttPanel.SetActive(true);
 		tt.transform.position = transform.position;
 		ttText.text = Txt;
 		// Prevent overflowing from screen
@@ -38,7 +41,8 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	}
 
 	public void OnPointerExit(PointerEventData data) {
-		UIController.Instance.tooltipText.SetActive(false);
+		ttPanel.SetActive(false);
+		ttText.text = "";
 	}
 		
 	private string parseSpecial(Match m) {
