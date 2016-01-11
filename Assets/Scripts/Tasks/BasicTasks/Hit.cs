@@ -36,8 +36,7 @@ namespace Colony.Tasks.BasicTasks
             else
             {
                 //TODO: Get the enemy's battling system component and notify it of the hit.
-                Life life = target.GetComponent<Life>();
-                life.Decrease(stats.Damage);
+                target.SendMessage("OnHit", agent);
                 status = Status.Completed;
             }
 

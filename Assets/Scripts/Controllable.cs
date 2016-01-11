@@ -99,5 +99,20 @@ namespace Colony
             brain.RemoveAllSubtasks();
             brain.AddSubtask(new Colonize(gameObject));
         }
+
+        public void OnHit(GameObject enemy)
+        {
+            if (canAttack)
+            {
+                if (!brain.IsCurrentSubtask(TaskType.Attack))
+                {
+                    brain.AddSubtask(new Attack(gameObject, enemy));
+                }
+            }
+            else
+            {
+                //Runaway!!!
+            }
+        }
     }
 }

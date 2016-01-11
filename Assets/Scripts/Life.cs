@@ -15,9 +15,10 @@ namespace Colony
             CurrentLife = initialLife;
         }
 
-        public void Decrease(int damage)
+        public void OnHit(GameObject enemy)
         {
-            CurrentLife -= damage;
+            Stats enemyStats = enemy.GetComponent<Stats>();
+            CurrentLife -= enemyStats.Damage;
             if (onHit != null)
             {
                 onHit.Play();

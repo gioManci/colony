@@ -11,7 +11,6 @@ namespace Colony.Tasks.BasicTasks
         private GameObject enemy;
         private SteeringBehaviour steeringBehaviour;
         private Stats stats;
-        private Life enemyLife;
         private float remainingCooldownTime;
 	private bool warningGiven;
 
@@ -20,7 +19,6 @@ namespace Colony.Tasks.BasicTasks
             this.enemy = enemy;
             steeringBehaviour = agent.GetComponent<SteeringBehaviour>();
             stats = agent.GetComponent<Stats>();
-            enemyLife = enemy.GetComponent<Life>();
             remainingCooldownTime = 0.0f;
         }
 
@@ -50,13 +48,13 @@ namespace Colony.Tasks.BasicTasks
                 Vector2 toEnemy = enemy.transform.position - agent.transform.position;
                 if (remainingCooldownTime <= 0 && toEnemy.sqrMagnitude < stats.AttackRange * stats.AttackRange)
                 {
-                    enemyLife.Decrease(stats.Damage);
+                    enemy.SendMessage("OnHit", agent);
+                    remainingCooldownTime = stats.AttackCooldownTime;
                     if (!warningGiven)
                     {
                         TextController.Instance.Add("Your bees are being attacked!");
                         warningGiven = true;
                     }
-                    remainingCooldownTime = stats.CooldownTime;
                 }
             }
 
