@@ -62,5 +62,23 @@ namespace Colony.Resources
 
             return result;
         }
+
+	public int YieldAmount(ResourceType type) {
+		switch (type) {
+		case ResourceType.Beeswax:
+			return defaultBeeswaxYield;
+		case ResourceType.Honey:
+			return defaultHoneyYield;
+		case ResourceType.Nectar:
+			return defaultNectarYield;
+		case ResourceType.Pollen:
+			return defaultPollenYield;
+		case ResourceType.RoyalJelly:
+			return defaultRoyalJellyYield;
+		case ResourceType.Water:
+			return defaultWaterYield;
+		}
+		return 0;
+	}
     }
 }

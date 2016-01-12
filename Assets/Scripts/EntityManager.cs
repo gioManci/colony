@@ -30,6 +30,8 @@ namespace Colony
         public List<GameObject> Resources { get; private set; }
         public List<GameObject> Beehives { get; private set; }
 
+	private Canvas worldCanvas;
+
         void Start()
         {
             if (Instance == null)
@@ -40,6 +42,8 @@ namespace Colony
             {
                 Destroy(gameObject);
             }
+	
+            worldCanvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
 
             InitializeBeehives();
             InitializeBees();
@@ -95,6 +99,7 @@ namespace Colony
         {
             GameObject newBee = (GameObject)Instantiate(workerBee, position, Quaternion.identity);
             Bees.Add(newBee);
+            newBee.transform.SetParent(worldCanvas.transform);
             return newBee;
         }
 
@@ -102,6 +107,7 @@ namespace Colony
         {
             GameObject newBee = (GameObject)Instantiate(queenBee, position, Quaternion.identity);
             Bees.Add(newBee);
+            newBee.transform.SetParent(worldCanvas.transform);
             return newBee;
         }
 
@@ -109,13 +115,15 @@ namespace Colony
         {
             GameObject newBee = (GameObject)Instantiate(droneBee, position, Quaternion.identity);
             Bees.Add(newBee);
+            newBee.transform.SetParent(worldCanvas.transform);
             return newBee;
         }
 
         public GameObject CreateLarva(Vector2 position)
         {
             GameObject newLarva = (GameObject)Instantiate(larva, position, Quaternion.identity);
-	    Larvae.Add(newLarva);
+            Larvae.Add(newLarva);
+            newLarva.transform.SetParent(worldCanvas.transform);
             return newLarva;
         }
 

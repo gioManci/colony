@@ -8,16 +8,22 @@ namespace Colony.UI {
 
 public class UIController : MonoBehaviour {
 
-	public GameObject hiveButtonsRoot; 
-	public GameObject refineButtons;
-	public GameObject stopRefineButtons;
-	public GameObject larvaButtonsRoot;
-	public GameObject queenButtonsRoot;
-	public GameObject bpText;
-    	public GameObject tooltipText;
+	private GameObject hiveButtonsRoot; 
+	private GameObject refineButtons;
+	private GameObject stopRefineButtons;
+	private GameObject larvaButtonsRoot;
+	private GameObject queenButtonsRoot;
+	private GameObject specButtonsRoot;
+	private GameObject bpText;
+    	public GameObject TooltipPanel;
 
 	public enum BPType {
-		None, Hive, Larva, Queen, Text
+		None  = 1 << 1,
+		Hive  = 1 << 2,
+		Larva = 1 << 3,
+		Queen = 1 << 4,
+		Text  = 1 << 5,
+		Spec  = 1 << 6
 	}
 
 	private Text[] resourceTexts = new Text[Enum.GetNames(typeof(ResourceType)).Length];
@@ -40,6 +46,22 @@ public class UIController : MonoBehaviour {
 			if (obj != null)
 				resourceTexts[(int)type] = obj.GetComponent<Text>();
 		}
+		// Find ALL the buttons!
+		refineButtons = GameObject.Find("RefineButtons");
+		refineButtons.SetActive(false);
+		stopRefineButtons = GameObject.Find("StopRefineButtons");
+		stopRefineButtons.SetActive(false);	
+		hiveButtonsRoot = GameObject.Find("HiveButtons");
+		hiveButtonsRoot.SetActive(false);
+		queenButtonsRoot = GameObject.Find("QueenButtons");
+		queenButtonsRoot.SetActive(false);
+		larvaButtonsRoot = GameObject.Find("LarvaButtons");
+		larvaButtonsRoot.SetActive(false);
+		bpText = GameObject.Find("BPText");
+		bpText.SetActive(false);
+		TooltipPanel = GameObject.Find("TooltipPanel");
+		specButtonsRoot = GameObject.Find("SpecializationButtons");
+		specButtonsRoot.SetActive(false);
 		// Subscribe to ResourceManager's events
 		if (resourceManager == null) {
 			var rm = GameObject.Find("ResourceManager");
@@ -54,16 +76,18 @@ public class UIController : MonoBehaviour {
 	}
 
 	public void SetBottomPanel(BPType type) {
-		hiveButtonsRoot.SetActive(type == BPType.Hive);
-		queenButtonsRoot.SetActive(type == BPType.Queen);
-		larvaButtonsRoot.SetActive(type == BPType.Larva);
-		bpText.SetActive(type == BPType.Text);
+		hiveButtonsRoot.SetActive((type & BPType.Hive) != 0);
+		queenButtonsRoot.SetActive((type & BPType.Queen) != 0);
+		larvaButtonsRoot.SetActive((type & BPType.Larva) != 0);
+		bpText.SetActive((type & BPType.Text) != 0);
+		specButtonsRoot.SetActive((type & BPType.Spec) != 0);
 	}
 
 	public void SetResourceBPText(ResourceYielder res) {
-		string txt = "Resources left:";
+		string txt = "Resources left: (yield amount)";
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
-			txt += "\r\n" + type.ToString() + ": " + res.Resources[type];
+			txt += "\r\n" + String.Format("{0,-9} {1,-5:D} ({2:D})", type.ToString() + ":",
+				res.Resources[type], res.YieldAmount(type));
 		}
 		setBPText(txt);
 	}
@@ -84,6 +108,7 @@ public class UIController : MonoBehaviour {
 
 	private void setBPText(string text) {
 		var txt = bpText.GetComponentInChildren<Text>();
+		Debug.Assert(txt != null, "null");
 		txt.text = text;
 	}
 

@@ -36,7 +36,10 @@ namespace Colony
 			var sel = GetComponent<Selectable>();
 			sel.OnSelect += () => {
 				UIController.Instance.SetBeeLoadText(GetComponent<BeeLoad>());
-				UIController.Instance.SetBottomPanel(UIController.BPType.Text);
+				var type = UIController.BPType.Text;
+				if (GetComponent<Stats>().Spec.Type == Colony.Specializations.SpecializationType.None)
+					type |= UIController.BPType.Spec;
+				UIController.Instance.SetBottomPanel(type);
 			};
 			sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
 		}

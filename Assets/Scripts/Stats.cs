@@ -25,6 +25,11 @@ namespace Colony
         private float loadTime;
         private float reactionTime;
 
+	public Specialization Spec {
+		get { return spec; }
+		private set { spec = value; }
+	}
+
         public float Speed
         {
             get

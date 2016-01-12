@@ -95,6 +95,8 @@ namespace Colony.Behaviour
 
             if (NeighborUsers > 0)
             {
+			Debug.Assert(owner != null, "owner");
+			Debug.Assert(owner.transform != null, "transform");
                 neighbors = EntityManager.Instance.GetNearbyUnits(owner.transform.position, 1.0f);
             }
 
