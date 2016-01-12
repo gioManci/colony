@@ -1,51 +1,43 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-namespace Colony
-{
+namespace Colony {
 
-    public class Aged : MonoBehaviour {
+[RequireComponent(typeof(Selectable))]
+public class Aged : MonoBehaviour {
 	public float Lifespan;
+
 	public float Age { set; get; }
+
 	public bool DestroyOnExpire = true;
-    public bool Active = true;
-	
-	// Age bar management
-	MaterialPropertyBlock block;
-	public SpriteRenderer rend;
-	
-	void Start()
-	{
+	public bool Active = true;
+
+	private Image ageBar;
+
+	void Start() {
 		Age = Lifespan;
-		
-		block = new MaterialPropertyBlock(); 
-		rend.GetPropertyBlock(block);
-		block.SetFloat("_Cutoff", 0f);
-		rend.SetPropertyBlock(block);
+		ageBar = GetComponent<Selectable>().SelectionSprite.transform.GetChild(0).gameObject.GetComponent<Image>();
+		Debug.Assert(ageBar != null, "Age bar is null!");
 	}
 
-	void Update()
-	{
-        if (!Active) return;
+	void Update() {
+		if (!Active)
+			return;
 		Age -= Time.deltaTime;
-		if (Age < 0)
-		{
+		if (Age < 0) {
 			if (DestroyOnExpire) {
 				// Add code to handle destruction
 				EntityManager.Instance.DestroyEntity(gameObject);
 			}
-		}
-		else
-		{
+		} else {
 			updateAgeBar(Age / Lifespan);
 		}
 	}
 
-        private void updateAgeBar(float percentage)
-        {
-            rend.GetPropertyBlock(block);
-            block.SetFloat("_Cutoff", percentage);
-            rend.SetPropertyBlock(block);
-        }
-    }
+	private void updateAgeBar(float percentage) {
+		ageBar.fillAmount = percentage;
+	}
+}
+
 }

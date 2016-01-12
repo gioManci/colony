@@ -18,16 +18,16 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	private GameObject ttPanel;
 
 	void Start() {
-		Debug.Assert(UIController.Instance.tooltipText != null, "Tooltip Panel is null!");
+		Debug.Assert(UIController.Instance.TooltipPanel != null, "Tooltip Panel is null!");
 		Regex rgx = new Regex(@"{\w+}", RegexOptions.IgnoreCase);
 		Txt = rgx.Replace(Txt, new MatchEvaluator(parseSpecial));
-		ttText = UIController.Instance.tooltipText.GetComponentInChildren<Text>();
-		ttPanel = UIController.Instance.tooltipText.transform.FindChild("Panel").gameObject;
+		ttText = UIController.Instance.TooltipPanel.GetComponentInChildren<Text>();
+		ttPanel = UIController.Instance.TooltipPanel.transform.FindChild("Panel").gameObject;
 		Debug.Assert(ttText != null && ttPanel != null, "ttText or ttPanel are null!");
 	}
 
 	public void OnPointerEnter(PointerEventData data) {
-		var tt = UIController.Instance.tooltipText;
+		var tt = UIController.Instance.TooltipPanel;
 		ttPanel.SetActive(true);
 		tt.transform.position = transform.position;
 		ttText.text = Txt;
