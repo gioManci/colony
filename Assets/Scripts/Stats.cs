@@ -106,6 +106,13 @@ namespace Colony
         public void Specialize(SpecializationType type)
         {
             spec = SpecializationFactory.GetSpecialization(type);
+            GetComponent<Animator>().SetInteger("Specialization", (int)type);
+        }
+
+        public void Unspecialize()
+        {
+            spec = SpecializationFactory.GetSpecialization(SpecializationType.None);
+            GetComponent<Animator>().SetInteger("Specialization", (int)SpecializationType.None);
         }
     }
 }
