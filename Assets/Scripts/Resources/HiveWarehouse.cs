@@ -36,8 +36,9 @@ using Hive = Colony.Hive.Hive;
 		if (refineTimer <= 0) {
 			refineTimer = REFINE_INTERVAL;
 			foreach (GameObject cell in hive.Cells) {
-				if (cell.GetComponent<Cell>().CellState == Cell.State.Refine) {
-					refineResources();
+				var c = cell.GetComponent<Cell>();
+				if (c.CellState == Cell.State.Refine) {
+					refineResources(c.Refined);
 				}
 			}
 		}
@@ -55,20 +56,22 @@ using Hive = Colony.Hive.Hive;
 
 	// Convert XXX Pollen (should be Nectar, but unimplemented) to YYY Honey
 	// and WWW Water + ZZZ Pollen to RoyalJelly
-	private void refineResources() {
+	private void refineResources(Cell.RefinedResource what) {
 		// Ensure the player has all the due resources.
-		// TODO: allow player to only convert 1 resource rather than all-or-nothing.
-		if (rm.GetResource(ResourceType.Pollen) < PollenForHoney + PollenForRoyalJelly
-		    || rm.GetResource(ResourceType.Water) < WaterForRoyalJelly) {
-			return;
+
+		bool refiningRJ = (what & Cell.RefinedResource.RoyalJelly) != 0,
+		     refiningHoney = (what & Cell.RefinedResource.Honey) != 0;
+
+		if (refiningHoney && rm.GetResource(ResourceType.Water) >= WaterForRoyalJelly) {
+			rm.RemoveResource(ResourceType.Pollen, PollenForHoney);
+			rm.AddResource(ResourceType.Honey, RefinedHoneyYield);
 		}
 
-		rm.RemoveResource(ResourceType.Pollen, PollenForHoney);
-		rm.AddResource(ResourceType.Honey, RefinedHoneyYield);
-
-		rm.RemoveResource(ResourceType.Pollen, PollenForRoyalJelly);
-		rm.RemoveResource(ResourceType.Water, WaterForRoyalJelly);
-		rm.AddResource(ResourceType.RoyalJelly, RefinedRoyalJellyYield);
+		if (refiningRJ && rm.GetResource(ResourceType.Pollen) >= PollenForHoney + PollenForRoyalJelly) {
+			rm.RemoveResource(ResourceType.Pollen, PollenForRoyalJelly);
+			rm.RemoveResource(ResourceType.Water, WaterForRoyalJelly);
+			rm.AddResource(ResourceType.RoyalJelly, RefinedRoyalJellyYield);
+		}
 	}
     }
 }

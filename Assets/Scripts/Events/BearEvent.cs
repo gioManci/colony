@@ -26,7 +26,7 @@ class BearEvent : Event {
 			EntityManager.Instance.DestroyBee(bee);
 
 		// Steal honey
-		int honeyStolen = (int)Mathf.Clamp(Utils.NextGaussian(200, 40), 1f, 300f);
+		int honeyStolen = Random.Range(50, 500);
 		resourceManager.RemoveResource(ResourceType.Honey, honeyStolen);
 
 		return "The bear killed <b>" + nBees.ToString() + "</b> of your bees " +

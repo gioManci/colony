@@ -27,7 +27,7 @@ namespace Colony.Tasks.BasicTasks
             //TODO: Check if it's possible to build a hive
             EntityManager.Instance.CreateBeehive(agent.transform.position);
 
-            return status;
+            return status = Status.Completed;
         }
 
         public override void Terminate()

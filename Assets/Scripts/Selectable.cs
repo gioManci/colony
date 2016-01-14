@@ -12,6 +12,7 @@ public class Selectable : MonoBehaviour {
 	public GameObject MinimapSprite;
 	// This object can be selected by dragging
 	public bool DragSelectable = true;
+	public bool AlwaysShowSelectionSprite;
 
 	public event Action OnSelect, OnDeselect;
 
@@ -44,10 +45,14 @@ public class Selectable : MonoBehaviour {
 	}
 
 	public void Deselect() {
-		SelectionSprite.SetActive(selected = false);
-		if (MinimapSprite != null) {
+		selected = false;
+
+		if (!AlwaysShowSelectionSprite)
+			SelectionSprite.SetActive(false);
+		
+		if (MinimapSprite != null)
 			minimapSpriteRenderer.color = origMinimapSpriteColor;
-		}
+		
 		if (OnDeselect != null)
 			OnDeselect();
 	}

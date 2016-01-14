@@ -107,7 +107,8 @@ public class MouseActions : MonoBehaviour {
 				}
 				if ("Cell".Equals(obj.tag)) {
 					foreach (var bee in GetSelected<Controllable>()) {
-						if (bee.canBreed && UIController.Instance.resourceManager.RequireResources(Costs.Larva)) {
+						if (bee.canBreed && obj.GetComponent<Cell>().CellState == Cell.State.Storage
+							&& UIController.Instance.resourceManager.RequireResources(Costs.Larva)) {
 							bee.DoBreed(obj);
 						} else if (bee.canMove) {
 							bee.DoMove(click.pos);
@@ -121,7 +122,6 @@ public class MouseActions : MonoBehaviour {
 						}
 					}
 				}
-				//moveSelectedUnits(click.pos);
 			} else {
 				moveSelectedUnits(click.pos);
 			}
@@ -167,7 +167,8 @@ public class MouseActions : MonoBehaviour {
 			GameObject obj = Utils.GetObjectAt(move.pos);
 			if (obj != null) {
 				if (((flags & CanHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null)
-				      || ((flags & CanBreed) != 0 && obj.GetComponent<Cell>() != null)) {
+				      || ((flags & CanBreed) != 0 && obj.GetComponent<Cell>() != null 
+						&& obj.GetComponent<Cell>().CellState == Cell.State.Storage)) {
 					Cursor.Instance.SetCursor(Cursor.Type.Click); 
 					return;
 				} else if ((flags & CanAttack) != 0 && EntityManager.Instance.IsEnemy(obj)) {
@@ -176,6 +177,7 @@ public class MouseActions : MonoBehaviour {
 				}
 			}
 		} 
+
 		if (Cursor.Instance.CursType != Cursor.Type.Normal)
 			Cursor.Instance.SetCursor(Cursor.Type.Normal); 
 	}

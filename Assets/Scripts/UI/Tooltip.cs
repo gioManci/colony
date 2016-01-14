@@ -26,6 +26,10 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 		Debug.Assert(ttText != null && ttPanel != null, "ttText or ttPanel are null!");
 	}
 
+	void OnDisable() {
+		hide();
+	}
+
 	public void OnPointerEnter(PointerEventData data) {
 		var tt = UIController.Instance.TooltipPanel;
 		ttPanel.SetActive(true);
@@ -41,6 +45,10 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	}
 
 	public void OnPointerExit(PointerEventData data) {
+		hide();
+	}
+
+	private void hide() {
 		ttPanel.SetActive(false);
 		ttText.text = "";
 	}

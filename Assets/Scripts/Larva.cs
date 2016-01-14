@@ -19,6 +19,8 @@ public class Larva : MonoBehaviour {
 
 	public GameObject BreedingCell;
 
+	public bool IsGrowing { get { return countdownStarted; } }
+
 	void Awake() {
 		elapsedTime = 0.0f;
 		countdownStarted = false;
@@ -26,7 +28,14 @@ public class Larva : MonoBehaviour {
 
 	void Start() {
 		var sel = GetComponent<Selectable>();
-		sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Larva);
+		sel.OnSelect += () => {
+			if (!countdownStarted)
+				UIController.Instance.SetBottomPanel(UIController.BPType.Larva);
+			else {
+				UIController.Instance.SetBPText("Growing into " + beeType);
+				UIController.Instance.SetBottomPanel(UIController.BPType.Text);
+			}
+		};
 		sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
 		aged = GetComponent<Aged>();
 		aged.Active = false;
@@ -67,7 +76,10 @@ public class Larva : MonoBehaviour {
 			countdownStarted = true;
 			aged.Age = aged.Lifespan = incubationTime;
 			aged.Active = true;
+			GetComponent<Selectable>().AlwaysShowSelectionSprite = true;
 			UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
+			UIController.Instance.SetBPText("Growing into " + beeType);
+			UIController.Instance.SetBottomPanel(UIController.BPType.Text);
 		}
 	}
 

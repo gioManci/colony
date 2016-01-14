@@ -1,6 +1,7 @@
 ﻿using Colony.Resources;
 using System;
 using UnityEngine;
+using Colony.UI;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -9,6 +10,7 @@ namespace Colony.Tasks.BasicTasks
         private HiveWarehouse warehouse;
         private Stats stats;
         private float timeFromLastTheft = 0.0f;
+	private bool warningGiven;
 
         public StealResources(GameObject agent, HiveWarehouse hiveWarehouse) : base(agent, TaskType.StealResources)
         {
@@ -45,7 +47,10 @@ namespace Colony.Tasks.BasicTasks
                     .With(ResourceType.RoyalJelly, 10)
                     .With(ResourceType.Water, 10);
                 warehouse.RemoveResources(toSteal);
-
+                if (!warningGiven) {
+                    TextController.Instance.Add("Your resources are being stolen!");
+                    warningGiven = true;
+                }
                 timeFromLastTheft = 0.0f;
             }
 
