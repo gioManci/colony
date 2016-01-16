@@ -29,6 +29,11 @@ public class KeyboardMonitor : MonoBehaviour {
 				UIController.Instance.MsgPrompt.Show();
 			}
 			IsPromptActive = !IsPromptActive;
+		} else if (Input.GetKeyDown(KeyCode.Space)) {
+			// Center camera on selected unit
+			var sel = MouseActions.Instance.GetSelected<Controllable>();
+			if (sel.Count > 0)
+				Camera.main.transform.position = sel[0].transform.position - new Vector3(0, 0, 1);
 		}
 	}
 }

@@ -27,8 +27,8 @@ public class Minimap : MonoBehaviour, IPointerClickHandler {
 
 		// Don't go past world boundaries
 		var newPos = Camera.main.transform.position + mmPos * mmRatio;
-		if (newPos.x < -bounds.worldSize / 2f || newPos.x > bounds.worldSize / 2f
-		    || newPos.y < -bounds.worldSize / 2f || newPos.y > bounds.worldSize / 2f)
+		if (newPos.x < -bounds.WorldSize / 2f || newPos.x > bounds.WorldSize / 2f
+		    || newPos.y < -bounds.WorldSize / 2f || newPos.y > bounds.WorldSize / 2f)
 			return;
 		
 		Camera.main.transform.Translate(mmPos * mmRatio);

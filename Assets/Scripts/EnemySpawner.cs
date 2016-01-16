@@ -4,23 +4,28 @@ namespace Colony
 {
     public class EnemySpawner : MonoBehaviour
     {
-        public float startSpawning;
-        public float spawnInterval;
-        public float minSpawnRadius;
-        public float maxSpawnRadius;
+        public float StartSpawning;
+        public float SpawnInterval;
+        public float MinSpawnRadius;
+        public float MaxSpawnRadius;
 
         void Start()
         {
-            Invoke("SpawnWasp", startSpawning);
+            Invoke("spawnWaspsLoop", StartSpawning);
         }
 
-        private void SpawnWasp()
+	public GameObject SpawnWasp(float minRadius = -1, float maxRadius = -1)
         {
-            float r = Random.Range(minSpawnRadius, maxSpawnRadius);
+            float r = Random.Range(minRadius >= 0 ? minRadius : MinSpawnRadius, 
+			maxRadius >= 0 ? maxRadius : MaxSpawnRadius);
             float a = Random.Range(0, Mathf.PI * 2);
             Vector2 position = new Vector2(r * Mathf.Cos(a), r * Mathf.Sin(a));
-            EntityManager.Instance.CreateWasp(position);
-            Invoke("SpawnWasp", spawnInterval);
+            return EntityManager.Instance.CreateWasp(position);
         }
+
+	private void spawnWaspsLoop() {
+		SpawnWasp();
+		Invoke("spawnWaspsLoop", SpawnInterval);
+	}
     }
 }

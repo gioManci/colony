@@ -49,8 +49,10 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	}
 
 	private void hide() {
-		ttPanel.SetActive(false);
-		ttText.text = "";
+		if (ttPanel != null) 
+			ttPanel.SetActive(false);
+		if (ttText != null)
+			ttText.text = "";
 	}
 		
 	private string parseSpecial(Match m) {

@@ -6,6 +6,9 @@ using Colony.Hive;
 
 namespace Colony
 {
+
+using Random = UnityEngine.Random;
+
     public class EntityManager : MonoBehaviour
     {
         public static EntityManager Instance { get; private set; }
@@ -316,5 +319,21 @@ namespace Colony
                 && (entity.tag == "Wasp"
                 || entity.tag == "Hornet");
         }
+
+	public List<GameObject> GetRandomBees(int n) {
+		return getRandom(Bees, n);
+	}
+
+
+	public List<GameObject> GetRandomResources(int n) {
+		return getRandom(Resources, n);
+	}
+
+	private List<GameObject> getRandom(List<GameObject> b, int n) {
+		// Shuffle the list of bees to kill random ones
+		var listCopy = new List<GameObject>(b);
+		listCopy.Sort((x, y) => 1 - 2 * Random.Range(0, 1));
+		return listCopy.Take(n).ToList();
+	}
     }
 }
