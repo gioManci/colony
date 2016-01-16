@@ -12,6 +12,8 @@ namespace Colony.Tasks.BasicTasks
         private ResourceYielder yielder;
         private BeeLoad load;
 
+        public static event Action<GameObject, GameObject> ResourceExtracted;
+
         public Extract(GameObject agent, GameObject resource) : base(agent, TaskType.Extract)
         {
             timeFromLastExtraction = 0.0f;
@@ -66,6 +68,11 @@ namespace Colony.Tasks.BasicTasks
                 if (agent.GetComponent<Selectable>().IsSelected)
                     UIController.Instance.SetBeeLoadText(load);
                 timeFromLastExtraction = 0.0f;
+
+                if (ResourceExtracted != null)
+                {
+                    ResourceExtracted(agent, yielder.gameObject);
+                }
             }
 
             return status;

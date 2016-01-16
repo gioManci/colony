@@ -9,6 +9,8 @@ namespace Colony.Tasks.BasicTasks
     {
         private GameObject breedingCell;
 
+        public static event Action<GameObject, GameObject> EggLaid;
+
         public LayEgg(GameObject agent, GameObject breedingCell) : base(agent, TaskType.LayEgg)
         {
             this.breedingCell = breedingCell;
@@ -33,6 +35,10 @@ namespace Colony.Tasks.BasicTasks
 	    UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
             breedingCell.GetComponent<Cell>().CellState = Cell.State.CreateEgg;
             status = Status.Completed;
+            if (EggLaid != null)
+            {
+                EggLaid(agent, larva);
+            }
 
             return status;
         }
