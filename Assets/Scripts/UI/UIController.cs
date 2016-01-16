@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using Colony.Resources;
+using Colony.Input;
 
 namespace Colony.UI {
 
@@ -15,7 +16,8 @@ public class UIController : MonoBehaviour {
 	private GameObject queenButtonsRoot;
 	private GameObject specButtonsRoot;
 	private GameObject bpText;
-    	public GameObject TooltipPanel;
+
+	public Prompt MsgPrompt { get; private set; }
 
 	public enum BPType {
 		None  = 1 << 1,
@@ -62,6 +64,8 @@ public class UIController : MonoBehaviour {
 		TooltipPanel = GameObject.Find("TooltipPanel");
 		specButtonsRoot = GameObject.Find("SpecializationButtons");
 		specButtonsRoot.SetActive(false);
+		MsgPrompt = GameObject.Find("MessagePrompt").GetComponent<Prompt>();
+		MsgPrompt.gameObject.SetActive(false);
 		// Subscribe to ResourceManager's events
 		if (resourceManager == null) {
 			var rm = GameObject.Find("ResourceManager");
@@ -89,7 +93,7 @@ public class UIController : MonoBehaviour {
 			txt += "\r\n" + String.Format("{0,-9} {1,-5:D} ({2:D})", type.ToString() + ":",
 				res.Resources[type], res.YieldAmount(type));
 		}
-		setBPText(txt);
+		SetBPText(txt);
 	}
 
 	public void SetBeeLoadText(BeeLoad load) {
@@ -97,16 +101,25 @@ public class UIController : MonoBehaviour {
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
 			txt += "\r\n" + type.ToString() + ": " + load.Load[type];
 		}
-		setBPText(txt);
+		SetBPText(txt);
 	}
 
-	public void SetBPRefining(bool refining) {
-		SetBottomPanel(BPType.Hive);
+	public void SetBPRefining(Cell.RefinedResource resource) {
+		bool refining = resource != Cell.RefinedResource.None;
+		var what = refining ? BPType.Hive | BPType.Text : BPType.Hive;
+		if (refining) {
+			// /!\ Horrible workaround follows
+			if ((int)resource > 1 << Enum.GetNames(typeof(Cell.RefinedResource)).Length)
+				SetBPText("Refining both");
+			else
+				SetBPText("Refining " + resource);
+		}
+		SetBottomPanel(what);
 		refineButtons.SetActive(!refining);
 		stopRefineButtons.SetActive(refining);
 	}
 
-	private void setBPText(string text) {
+	public void SetBPText(string text) {
 		var txt = bpText.GetComponentInChildren<Text>();
 		Debug.Assert(txt != null, "null");
 		txt.text = text;

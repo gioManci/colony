@@ -38,7 +38,7 @@ class Hive : MonoBehaviour {
 
 		if (r == 0) return;
 		
-		const float celldist = 1.8f;
+		float celldist = c.GetComponent<SpriteRenderer>().bounds.size.x * 0.8f;
 
 		AlgorithmStep step = (j, radius) => {
 			float angle = j * 2 * Mathf.PI / 6f;

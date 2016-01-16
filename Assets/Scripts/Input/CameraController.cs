@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Colony;
+using Colony.UI;
 
 namespace Colony.Input {
 
@@ -27,9 +28,12 @@ public class CameraController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		if (UIController.Instance.MsgPrompt.IsActive)
+			return;
+		
 		/// Arrows movements ///
 		var pos = transform.position;
-		var limit = bounds.worldSize/2f - arrowSpeed * Time.deltaTime * 2;
+		var limit = bounds.WorldSize/2f - arrowSpeed * Time.deltaTime * 2;
 		if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && pos.y < limit) 
 			transform.Translate(Vector2.up * arrowSpeed * Time.deltaTime, Space.World);
 		if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && pos.y > -limit)

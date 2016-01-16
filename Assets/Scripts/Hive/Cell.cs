@@ -8,9 +8,9 @@ public class Cell : MonoBehaviour {
 	public enum State { Storage, CreateEgg, Refine };
 
 	public enum RefinedResource {
-		None,
-		Honey,
-		RoyalJelly
+		None       = 1 << 1,
+		Honey      = 1 << 2,
+		RoyalJelly = 1 << 3
 	}
 
 	public GameObject eggSprite, storageSprite, refineSprite;
@@ -37,7 +37,7 @@ public class Cell : MonoBehaviour {
 		var sel = gameObject.GetComponent<Selectable>();
                 if (sel != null)
                 {
-                    sel.OnSelect += () => UIController.Instance.SetBPRefining(CellState == State.Refine);
+                    sel.OnSelect += () => UIController.Instance.SetBPRefining(Refined);
                     sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
                 }
 		//aged = gameObject.GetComponent<Aged>();

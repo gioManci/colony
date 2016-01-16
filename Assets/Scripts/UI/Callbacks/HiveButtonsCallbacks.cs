@@ -43,16 +43,8 @@ public class HiveButtonsCallbacks : MonoBehaviour {
 				break;
 			default:
 				cell.Refine(what);
-				UIController.Instance.SetBPRefining(what != RefinedResource.None);
+				UIController.Instance.SetBPRefining(what);
 				break;
-//			case Cell.State.Refine:
-//				cell.UseAsStorage();
-//				UIController.Instance.SetBPRefining(false);
-//				break;
-//			case Cell.State.Storage:
-//				cell.Refine();
-//				UIController.Instance.SetBPRefining(true);
-//				break;
 			}
 		}
 
