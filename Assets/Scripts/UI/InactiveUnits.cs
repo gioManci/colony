@@ -8,6 +8,9 @@ namespace Colony.UI {
 public class InactiveUnits : MonoBehaviour {
 
 	private Text inactiveText;
+	private Text guardText;
+	private Text foragerText;
+	private Text inkeeperText;
 	private List<GameObject> inactives = new List<GameObject>();
 	private int inactiveIdx = 0;
 
@@ -25,19 +28,39 @@ public class InactiveUnits : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		inactiveText = GetComponentInChildren<Text>();
+		guardText = GameObject.Find("GuardsText").GetComponent<Text>();
+		foragerText = GameObject.Find("ForagerText").GetComponent<Text>();
+		inkeeperText = GameObject.Find("InkeeperText").GetComponent<Text>();
 		Debug.Assert(inactiveText != null, "Inactive Text is null in InactiveUnits!");
 	}
 
 	void Update() {
-		int count = 0;
+		int count = 0,
+		    guardCount = 0,
+		    foragerCount = 0,
+		    inkeeperCount = 0;
 		inactives.Clear();
 		foreach (GameObject bee in EntityManager.Instance.Bees) {
 			if (bee.GetComponent<Controllable>().IsInactive()) {
 				++count;
 				inactives.Add(bee);
 			}
+			switch (bee.GetComponent<Stats>().Spec.Type) {
+			case Specializations.SpecializationType.Guard:
+				++guardCount;
+				break;
+			case Specializations.SpecializationType.Forager:
+				++foragerCount;
+				break;
+			case Specializations.SpecializationType.Inkeeper:
+				++inkeeperCount;
+				break;
+			}
 		}
 		inactiveText.text = count.ToString();
+		guardText.text = guardCount.ToString();
+		foragerText.text = foragerCount.ToString();
+		inkeeperText.text = inkeeperCount.ToString();
 	}
 
 	public void CycleUnits() {

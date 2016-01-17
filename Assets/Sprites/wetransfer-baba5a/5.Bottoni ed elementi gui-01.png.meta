@@ -1,9 +1,37 @@
 fileFormatVersion: 2
 guid: dfcbb4dd685d9ec4795bf72c90351413
-timeCreated: 1453025881
+timeCreated: 1453044865
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: 5.Bottoni ed elementi gui-01_0
+    21300002: 5.Bottoni ed elementi gui-01_1
+    21300004: 5.Bottoni ed elementi gui-01_2
+    21300006: 5.Bottoni ed elementi gui-01_3
+    21300008: 5.Bottoni ed elementi gui-01_4
+    21300010: 5.Bottoni ed elementi gui-01_5
+    21300012: 5.Bottoni ed elementi gui-01_6
+    21300014: 5.Bottoni ed elementi gui-01_7
+    21300016: 5.Bottoni ed elementi gui-01_8
+    21300018: 5.Bottoni ed elementi gui-01_9
+    21300020: 5.Bottoni ed elementi gui-01_10
+    21300022: 5.Bottoni ed elementi gui-01_11
+    21300024: 5.Bottoni ed elementi gui-01_12
+    21300026: 5.Bottoni ed elementi gui-01_13
+    21300028: 5.Bottoni ed elementi gui-01_14
+    21300030: 5.Bottoni ed elementi gui-01_15
+    21300032: 5.Bottoni ed elementi gui-01_16
+    21300034: 5.Bottoni ed elementi gui-01_17
+    21300036: 5.Bottoni ed elementi gui-01_18
+    21300038: 5.Bottoni ed elementi gui-01_19
+    21300040: 5.Bottoni ed elementi gui-01_20
+    21300042: 5.Bottoni ed elementi gui-01_21
+    21300044: 5.Bottoni ed elementi gui-01_22
+    21300046: 5.Bottoni ed elementi gui-01_23
+    21300048: 5.Bottoni ed elementi gui-01_24
+    21300050: 5.Bottoni ed elementi gui-01_25
+    21300052: 5.Bottoni ed elementi gui-01_26
+    21300054: 5.Bottoni ed elementi gui-01_27
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +66,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +77,590 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: 5.Bottoni ed elementi gui-01_0
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 930
+        width: 269
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -127.5, y: 46}
+        - {x: -134.5, y: 33}
+        - {x: -134.5, y: -37}
+        - {x: -127.5, y: -45}
+        - {x: -119.5, y: -46}
+        - {x: 17.5, y: -46}
+        - {x: 134.5, y: -34}
+        - {x: 134.5, y: 33}
+        - {x: 42.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_1
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 929
+        width: 249
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -86.5, y: 46}
+        - {x: -124.5, y: 43}
+        - {x: -124.5, y: -34}
+        - {x: -8.5, y: -46}
+        - {x: 103.5, y: -46}
+        - {x: 124.5, y: -28}
+        - {x: 124.5, y: 32}
+        - {x: 120.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_2
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 932
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_3
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 929
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_4
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 871
+        width: 112
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 63}
+        - {x: -56, y: -63}
+        - {x: 56, y: -63}
+        - {x: 56, y: 63}
+      - - {x: -49, y: 56}
+        - {x: 49, y: 56}
+        - {x: 49, y: -57}
+        - {x: -49, y: -57}
+    - name: 5.Bottoni ed elementi gui-01_5
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 932
+        width: 112
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 32.5}
+        - {x: -56, y: -32.5}
+        - {x: 56, y: -32.5}
+        - {x: 56, y: 32.5}
+      - - {x: -49, y: 25.5}
+        - {x: 49, y: 25.5}
+        - {x: 49, y: -25.5}
+        - {x: -49, y: -25.5}
+    - name: 5.Bottoni ed elementi gui-01_6
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 807
+        width: 269
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -127.5, y: 46}
+        - {x: -134.5, y: 33}
+        - {x: -134.5, y: -37}
+        - {x: -127.5, y: -45}
+        - {x: -119.5, y: -46}
+        - {x: 17.5, y: -46}
+        - {x: 134.5, y: -34}
+        - {x: 134.5, y: 33}
+        - {x: 42.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_7
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 813
+        width: 249
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -86.5, y: 46}
+        - {x: -124.5, y: 43}
+        - {x: -124.5, y: -34}
+        - {x: -8.5, y: -46}
+        - {x: 103.5, y: -46}
+        - {x: 124.5, y: -28}
+        - {x: 124.5, y: 32}
+        - {x: 120.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_8
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 809
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_9
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 813
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_10
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 692
+        width: 112
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 63}
+        - {x: -56, y: -63}
+        - {x: 56, y: -63}
+        - {x: 56, y: 63}
+    - name: 5.Bottoni ed elementi gui-01_11
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 753
+        width: 112
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 32.5}
+        - {x: -56, y: -32.5}
+        - {x: 56, y: -32.5}
+        - {x: 56, y: 32.5}
+    - name: 5.Bottoni ed elementi gui-01_12
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 688
+        width: 269
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -120.5, y: 46}
+        - {x: -134.5, y: 42}
+        - {x: -134.5, y: -28}
+        - {x: -128.5, y: -46}
+        - {x: 12.5, y: -46}
+        - {x: 134.5, y: -34}
+        - {x: 134.5, y: 34}
+        - {x: 49.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_13
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 685
+        width: 249
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -92.5, y: 46}
+        - {x: -124.5, y: 44}
+        - {x: -124.5, y: -34}
+        - {x: -8.5, y: -46}
+        - {x: 103.5, y: -46}
+        - {x: 124.5, y: -28}
+        - {x: 124.5, y: 32}
+        - {x: 119.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_14
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 691
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_15
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 685
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_16
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 570
+        width: 269
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -127.5, y: 46}
+        - {x: -134.5, y: 33}
+        - {x: -134.5, y: -37}
+        - {x: -127.5, y: -45}
+        - {x: -119.5, y: -46}
+        - {x: 17.5, y: -46}
+        - {x: 134.5, y: -34}
+        - {x: 134.5, y: 33}
+        - {x: 42.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_17
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 563
+        width: 249
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -86.5, y: 46}
+        - {x: -124.5, y: 43}
+        - {x: -124.5, y: -34}
+        - {x: -8.5, y: -46}
+        - {x: 103.5, y: -46}
+        - {x: 124.5, y: -28}
+        - {x: 124.5, y: 32}
+        - {x: 120.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_18
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 572
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_19
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 563
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_20
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 492
+        width: 112
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 63}
+        - {x: -56, y: -63}
+        - {x: 56, y: -63}
+        - {x: 56, y: 63}
+      - - {x: -49, y: 56}
+        - {x: 49, y: 56}
+        - {x: 49, y: -56}
+        - {x: -49, y: -56}
+    - name: 5.Bottoni ed elementi gui-01_21
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 553
+        width: 112
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 32.5}
+        - {x: -56, y: -32.5}
+        - {x: 56, y: -32.5}
+        - {x: 56, y: 32.5}
+      - - {x: -49, y: 25.5}
+        - {x: 49, y: 25.5}
+        - {x: 49, y: -25.5}
+        - {x: -49, y: -25.5}
+    - name: 5.Bottoni ed elementi gui-01_22
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 452
+        width: 269
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -127.5, y: 46}
+        - {x: -134.5, y: 33}
+        - {x: -134.5, y: -37}
+        - {x: -127.5, y: -45}
+        - {x: -119.5, y: -46}
+        - {x: 17.5, y: -46}
+        - {x: 134.5, y: -34}
+        - {x: 134.5, y: 33}
+        - {x: 42.5, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_23
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 454
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27, y: 46}
+        - {x: -46, y: 25}
+        - {x: -46, y: -24}
+        - {x: -39, y: -46}
+        - {x: 37, y: -46}
+        - {x: 46, y: -27}
+        - {x: 46, y: 33}
+        - {x: 30, y: 46}
+    - name: 5.Bottoni ed elementi gui-01_24
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 314
+        width: 112
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 63}
+        - {x: -56, y: -63}
+        - {x: 56, y: -63}
+        - {x: 56, y: 63}
+    - name: 5.Bottoni ed elementi gui-01_25
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 375
+        width: 112
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -56, y: 32.5}
+        - {x: -56, y: -32.5}
+        - {x: 56, y: -32.5}
+        - {x: 56, y: 32.5}
+    - name: 5.Bottoni ed elementi gui-01_26
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 101
+        width: 867
+        height: 228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -301.5, y: 114}
+        - {x: -304.5, y: 109}
+        - {x: -306.5, y: 107}
+        - {x: -307.5, y: 104}
+        - {x: -309.5, y: 102}
+        - {x: -312.5, y: 97}
+        - {x: -314.5, y: 92}
+        - {x: -316.5, y: 90}
+        - {x: -317.5, y: 87}
+        - {x: -319.5, y: 85}
+        - {x: -322.5, y: 80}
+        - {x: -324.5, y: 75}
+        - {x: -326.5, y: 73}
+        - {x: -327.5, y: 70}
+        - {x: -329.5, y: 68}
+        - {x: -332.5, y: 63}
+        - {x: -334.5, y: 58}
+        - {x: -336.5, y: 56}
+        - {x: -337.5, y: 53}
+        - {x: -339.5, y: 51}
+        - {x: -342.5, y: 46}
+        - {x: -344.5, y: 41}
+        - {x: -346.5, y: 39}
+        - {x: -347.5, y: 36}
+        - {x: -349.5, y: 34}
+        - {x: -352.5, y: 29}
+        - {x: -354.5, y: 24}
+        - {x: -356.5, y: 22}
+        - {x: -357.5, y: 19}
+        - {x: -359.5, y: 17}
+        - {x: -362.5, y: 12}
+        - {x: -364.5, y: 7}
+        - {x: -366.5, y: 5}
+        - {x: -367.5, y: 2}
+        - {x: -369.5, y: 0}
+        - {x: -370.5, y: -3}
+        - {x: -372.5, y: -5}
+        - {x: -373.5, y: -8}
+        - {x: -375.5, y: -10}
+        - {x: -377.5, y: -15}
+        - {x: -379.5, y: -17}
+        - {x: -380.5, y: -20}
+        - {x: -382.5, y: -22}
+        - {x: -383.5, y: -25}
+        - {x: -385.5, y: -27}
+        - {x: -387.5, y: -32}
+        - {x: -389.5, y: -34}
+        - {x: -390.5, y: -37}
+        - {x: -392.5, y: -39}
+        - {x: -393.5, y: -42}
+        - {x: -395.5, y: -44}
+        - {x: -397.5, y: -49}
+        - {x: -399.5, y: -51}
+        - {x: -400.5, y: -54}
+        - {x: -402.5, y: -56}
+        - {x: -405.5, y: -61}
+        - {x: -407.5, y: -66}
+        - {x: -409.5, y: -68}
+        - {x: -410.5, y: -71}
+        - {x: -412.5, y: -73}
+        - {x: -413.5, y: -76}
+        - {x: -415.5, y: -78}
+        - {x: -417.5, y: -83}
+        - {x: -419.5, y: -85}
+        - {x: -420.5, y: -88}
+        - {x: -422.5, y: -90}
+        - {x: -423.5, y: -93}
+        - {x: -425.5, y: -95}
+        - {x: -427.5, y: -100}
+        - {x: -429.5, y: -102}
+        - {x: -432.5, y: -107}
+        - {x: -433.5, y: -110}
+        - {x: -433.5, y: -114}
+        - {x: 433.5, y: -114}
+        - {x: 433.5, y: 114}
+    - name: 5.Bottoni ed elementi gui-01_27
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 120
+        width: 180
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -90, y: 31.5}
+        - {x: -90, y: -31.5}
+        - {x: 90, y: -31.5}
+        - {x: 90, y: 31.5}
     outline: []
   spritePackingTag: 
   userData: 
