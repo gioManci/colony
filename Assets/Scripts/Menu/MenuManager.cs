@@ -75,6 +75,11 @@ namespace Colony.Menu
             settings.SetActive(false);
         }
 
+        public void Exit()
+        {
+            Application.Quit();
+        }
+
         IEnumerator ShowSplashScreen()
         {
             splashScreen.SetActive(true);

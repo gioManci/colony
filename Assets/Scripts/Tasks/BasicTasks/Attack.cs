@@ -50,10 +50,16 @@ namespace Colony.Tasks.BasicTasks
                 {
                     enemy.SendMessage("OnHit", agent);
                     remainingCooldownTime = stats.AttackCooldownTime;
-                    if (!warningGiven)
+                    if (!warningGiven && EntityManager.Instance.IsBee(agent))
                     {
                         TextController.Instance.Add("Your bees are being attacked!");
                         warningGiven = true;
+                        GameObject[] neighbors =
+                            EntityManager.Instance.GetNearbyUnits(agent.transform.position, stats.VisualRadius);
+                        foreach (GameObject unit in neighbors)
+                        {
+                            unit.SendMessage("OnHit", enemy);
+                        }
                     }
                 }
             }

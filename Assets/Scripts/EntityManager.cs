@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Colony.Specializations;
+using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ namespace Colony
         public List<GameObject> Enemies { get; private set; }
         public List<GameObject> Resources { get; private set; }
         public List<GameObject> Beehives { get; private set; }
+        public List<GameObject> ForagerBees { get; private set; }
+        public List<GameObject> GuardBees { get; private set; }
+        public List<GameObject> InkeeperBees { get; private set; }
 
         void Start()
         {
@@ -55,6 +59,26 @@ namespace Colony
             InitializeEnemies();
             InitializeResources();
             InitializeLarvae();
+            Stats.BeeSpecialized += OnBeeSpecialized;
+        }
+
+        private void OnBeeSpecialized(GameObject bee)
+        {
+            Stats stats = bee.GetComponent<Stats>();
+            switch (stats.Specialization)
+            {
+                case SpecializationType.Forager:
+                    ForagerBees.Add(bee);
+                    break;
+                case SpecializationType.Guard:
+                    GuardBees.Add(bee);
+                    break;
+                case SpecializationType.Inkeeper:
+                    InkeeperBees.Add(bee);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void InitializeBees()
@@ -235,6 +259,21 @@ namespace Colony
                 DestroyingWorkerBee(worker);
             }
             Bees.Remove(worker);
+            Stats stats = worker.GetComponent<Stats>();
+            switch (stats.Specialization)
+            {
+                case SpecializationType.Forager:
+                    ForagerBees.Remove(worker);
+                    break;
+                case SpecializationType.Guard:
+                    GuardBees.Remove(worker);
+                    break;
+                case SpecializationType.Inkeeper:
+                    InkeeperBees.Remove(worker);
+                    break;
+                default:
+                    break;
+            }
             Destroy(worker);
         }
 
