@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Linq;
 
@@ -8,9 +9,10 @@ using Random = UnityEngine.Random;
 
 public class EventSpawner : MonoBehaviour {
 	
-	public float MinEventDelay;
-	public float MaxEventDelay;
+	public float MinEventDelay = 60;
+	public float MaxEventDelay = 200;
 
+	public Sprite BearImage;
 	public float BearTimeout = 180;
 	public int BearMinHoneyStolen = 100;
 	public int BearMaxHoneyStolen = 500;
@@ -18,10 +20,12 @@ public class EventSpawner : MonoBehaviour {
 	public int BearMaxBeesKilled = 8;
 	public int BearSacrificedBees = 5;
 
+	public Sprite AttackSprite;
 	public float AttackTimeout = 100;
 	public int AttackMinWaspsSpawned = 3;
 	public int AttackMaxWaspsSpawned = 10;
 
+	public Sprite SkunkSprite;
 	public float SkunkTimeout = 60;
 	public int SkunkMinHoneyStolen = 40;
 	public int SkunkMaxHoneyStolen = 350;
@@ -30,6 +34,10 @@ public class EventSpawner : MonoBehaviour {
 	public int SkunkMinBeesKilled = 1;
 	public int SkunkMaxBeesKilled = 6;
 	public int SkunkSacrificedBees = 4;
+
+	public Sprite ToxicPollenSprite;
+
+	public Sprite RainSprite;
 
 	private float curEventDelay;
 	private float curLevelCap = 1;
@@ -65,7 +73,7 @@ public class EventSpawner : MonoBehaviour {
 
 	private Event pickRandomEvent(int levelCap = int.MaxValue) {
 		var e = eventPool.Where(evt => evt.Level <= levelCap)
-			.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+			.OrderBy(x => Guid.NewGuid()).FirstOrDefault().Init();
 		Debug.Assert(e != null, "Event is null in pickRandomEvent(" + levelCap + ")!");
 		return (Event)Activator.CreateInstance(e.GetType());
 	}

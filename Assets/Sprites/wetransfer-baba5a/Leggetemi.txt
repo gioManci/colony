@@ -1,0 +1,22 @@
+Ciao! qui ci sono i parametri che ho usato per l'utilizzo del testo nella GUI, in caso vi possa servire ;)
+
+FONT GUI: 
+Gioco:
+contatori (bianco) - regular / bold 25
+bottoni (bianco) - bold 25, interlinea 35 pt
+
+Eventi:
+cartelli eventi: (nero) -
+TITOLO: bold italic 110 pt
+TESTO: italic 38 pt, interlinea 61 pt
+
+Menu principale: 
+static bold 50 pt (bottoni)
+
+_____________
+Aspetto Bottoni: 
+linea bianca 3 pt spessore
+interno nero opacità 40% (per la selezione/mouseover)
+Nei cartelli linea e testo neri
+
+All'apertura del gioco pensavo di mettere una schermata bianca (o nera) con il logo che duri un secondo o due, prima della comparsa del menu principale

@@ -10,6 +10,13 @@ class BearEvent : Event {
 	public BearEvent() : base() {
 		Text = "A <b>bear</b> is approaching your beehive to <i>steal your honey</i>!" +
 			"\r\nIt will also <i>kill some of your bees</i>.";
+
+		Timeout = spawner.BearTimeout;
+		Image = spawner.BearImage;
+		Level = 3;
+	}
+
+	public override Event Init() {
 		// TODO: check if player has enough guard bees
 		if (true) {
 			Text +=	"\r\nYou may <b>sacrifice " + spawner.BearSacrificedBees + " guard bees</b> to stop it immediately." +
@@ -18,9 +25,8 @@ class BearEvent : Event {
 		} else {
 			Style = EventManager.PopupStyle.Ok;
 		}
-
-		Timeout = spawner.BearTimeout;
-		Level = 3;
+	
+		return this;
 	}
 
 	public override void Yes() {

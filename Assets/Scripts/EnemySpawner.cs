@@ -4,10 +4,10 @@ namespace Colony
 {
     public class EnemySpawner : MonoBehaviour
     {
-        public float StartSpawning;
-        public float SpawnInterval;
-        public float MinSpawnRadius;
-        public float MaxSpawnRadius;
+	public float StartSpawning = 120;
+        public float SpawnInterval = 30;
+        public float MinSpawnRadius = 10;
+        public float MaxSpawnRadius = 49;
 
         void Start()
         {

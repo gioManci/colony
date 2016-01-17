@@ -19,7 +19,7 @@ public class EventManager : MonoBehaviour {
 	// Make this class a singleton
 	public static EventManager Instance { get; private set; }
 
-	public GameObject PopupPanel;
+	private GameObject popupPanel;
 
 	private Dictionary<PopupStyle, GameObject> buttons = new Dictionary<PopupStyle, GameObject>();
 
@@ -32,22 +32,24 @@ public class EventManager : MonoBehaviour {
 	}
 
 	void Start() {
-		buttons[PopupStyle.Ok] = PopupPanel.transform.FindChild("OkButtons").gameObject;
-		buttons[PopupStyle.YesNo] = PopupPanel.transform.FindChild("YesNoButtons").gameObject;
+		popupPanel = GameObject.Find("PopupPanel");
+		buttons[PopupStyle.Ok] = GameObject.Find("OkButtons");
+		buttons[PopupStyle.YesNo] = GameObject.Find("YesNoButtons");
+		popupPanel.SetActive(false);
 	}
 	
 	void Update() {
 		for (int i = ongoing.Count - 1; i >= 0; --i) {
 			var evt = ongoing[i];
 			if (evt.Tick()) {
-				showPopup(evt.Happen(), PopupStyle.Ok);
+				showPopup(evt.Happen(), PopupStyle.Ok, evt.Image);
 				ongoing.RemoveAt(i);
 			}
 		}
 	}
 
 	public void HidePopup() {
-		PopupPanel.SetActive(false);
+		popupPanel.SetActive(false);
 		// unpause the game
 		Time.timeScale = 1f;
 	}
@@ -56,9 +58,10 @@ public class EventManager : MonoBehaviour {
 		if (evt.Style == PopupStyle.YesNo)
 			bindYesNo(evt.Yes, evt.No);
 		if (evt.IsImmediate) {
-			showPopup(evt.Happen(), evt.Style);
+			showPopup(evt.Happen(), evt.Style, evt.Image);
 		} else {
-			showPopup(evt.Text + "\r\n\r\n(This will happen in: " + toReadable((int)evt.Timeout) + ")", evt.Style);
+			showPopup(evt.Text + "\r\n\r\n(This will happen in: " + toReadable((int)evt.Timeout) + ")",
+				evt.Style, evt.Image);
 			if (!evt.Canceled)
 				ongoing.Add(evt);
 		}
@@ -78,16 +81,17 @@ public class EventManager : MonoBehaviour {
 		}
 	}
 
-	private void showPopup(string text, PopupStyle style) {
+	private void showPopup(string text, PopupStyle style, Sprite image) {
 		// pause the game
 		Time.timeScale = 0f;
 		foreach (var pair in buttons) {
 			pair.Value.SetActive(pair.Key == style);
 		}
-		PopupPanel.SetActive(true);
-		Text t = PopupPanel.GetComponentInChildren<Text>();
+		popupPanel.SetActive(true);
+		Text t = popupPanel.GetComponentInChildren<Text>();
 		Debug.Assert(t != null, "text is null!");
 		t.text = text;
+		popupPanel.transform.FindChild("EventImage").GetComponent<Image>().overrideSprite = image;
 	}
 
 	private string toReadable(int f) {

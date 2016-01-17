@@ -11,6 +11,11 @@ public class SkunkEvent : Event {
 		Text = "A <b>skunk</b> is going to attack our hive and <i>steal your resources</i>!" +
 			"\r\nIt'll probably <i>kill some bees</i> too.";
 
+		Timeout = GameObject.FindObjectOfType<EventSpawner>().SkunkTimeout;
+		Level = 2;
+	}
+
+	public override Event Init() {
 		// Check if player has enough bees to sacrifice
 		if (EntityManager.Instance.Bees.Count >= spawner.SkunkSacrificedBees) {
 			Text +=	"\r\nYou may <b>sacrifice " + spawner.SkunkSacrificedBees + " bees</b> to stop it immediately." +
@@ -20,8 +25,7 @@ public class SkunkEvent : Event {
 			Style = EventManager.PopupStyle.Ok;
 		}
 
-		Timeout = GameObject.FindObjectOfType<EventSpawner>().SkunkTimeout;
-		Level = 2;
+		return this;
 	}
 
 	public override void Yes() {

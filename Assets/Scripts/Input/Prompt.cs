@@ -14,6 +14,7 @@ public class Prompt : MonoBehaviour {
 
 	void Start() {
 		input = GetComponent<InputField>();
+		Debug.Assert(input != null, "input is null!");
 	}
 
 	public bool IsActive {
@@ -22,6 +23,7 @@ public class Prompt : MonoBehaviour {
 
 	public void Show() {
 		gameObject.SetActive(true);
+		input = GetComponent<InputField>();
 		EventSystem.current.SetSelectedGameObject(gameObject, null);
 		input.OnPointerClick(new PointerEventData(EventSystem.current));
 	}

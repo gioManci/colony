@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour {
 	private GameObject specButtonsRoot;
 	private GameObject bpText;
 
+	public GameObject TooltipPanel;
 	public Prompt MsgPrompt { get; private set; }
 
 	public enum BPType {
