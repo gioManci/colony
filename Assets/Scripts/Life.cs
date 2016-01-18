@@ -21,7 +21,8 @@ namespace Colony
             CurrentLife -= enemyStats.Damage;
             if (onHit != null)
             {
-                onHit.Play();
+                onHit.gameObject.SetActive(false);
+                onHit.gameObject.SetActive(true);
             }
             if (CurrentLife <= 0)
             {
