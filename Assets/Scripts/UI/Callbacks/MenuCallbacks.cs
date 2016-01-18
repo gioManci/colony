@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MenuCallbacks : MonoBehaviour {
@@ -9,6 +10,7 @@ public class MenuCallbacks : MonoBehaviour {
 	}
 
 	public void ExitGame() {
-		Application.Quit();
-	}
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("menu");
+    }
 }

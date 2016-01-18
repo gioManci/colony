@@ -25,6 +25,7 @@ namespace Colony.Menu
             }
             else
             {
+                background.SetActive(true);
                 ShowMenu();
             }
         }
