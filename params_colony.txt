@@ -1,0 +1,35 @@
+balanced
+ 1000 poll
+ 1000 wat
+ 10 / 10
+balancedlowy
+ 1800 poll
+ 1800 w
+ 5/5
+highpollen
+ 1600 poll
+ 20
+pollen
+ 1200 poll
+ 800 wat
+ 12 / 8
+water
+ 800 poll
+ 1200 wat
+ 8 / 12
+
+hivewarehouse
+ 3 poll for h
+ 5 poll for rj
+ 5 wat for rj
+ 2 hon y
+ 1 rj y
+
+enemyspawner
+ 240 start
+ 45
+ 10
+ 50
+
+work bee
+ 60 load size

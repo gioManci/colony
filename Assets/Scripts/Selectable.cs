@@ -32,7 +32,8 @@ public class Selectable : MonoBehaviour {
 	}
 
 	void OnDestroy() {
-		MouseActions.Instance.RemoveSelected(this);
+		if (this != null)
+			MouseActions.Instance.RemoveSelected(this);
 	}
 
 	public void Select() {

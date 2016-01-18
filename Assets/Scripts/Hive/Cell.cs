@@ -55,13 +55,13 @@ public class Cell : MonoBehaviour {
 	}
 
 	public void Refine(RefinedResource what) {
+		RefineHoneySprite.SetActive((what & RefinedResource.Honey) != 0);
+		RefineRoyalJellySprite.SetActive((what & RefinedResource.RoyalJelly) != 0);
 		if (what == RefinedResource.None) {
 			UseAsStorage();
 			return;
 		}
 		RefineSprite.SetActive(true);
-		RefineHoneySprite.SetActive((what & RefinedResource.Honey) != 0);
-		RefineRoyalJellySprite.SetActive((what & RefinedResource.RoyalJelly) != 0);
 		state = State.Refine;
 		refined = what;
 	}

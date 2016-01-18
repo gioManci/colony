@@ -89,8 +89,10 @@ public class UIController : MonoBehaviour {
 	}
 
 	public void SetResourceBPText(ResourceYielder res) {
-		string txt = "Resources left: (yield amount)";
+		string txt = "Resources left: (yield)";
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
+			if (type > ResourceType.Water)
+				break;
 			txt += "\r\n" + String.Format("{0,-9} {1,-5:D} ({2:D})", type.ToString() + ":",
 				res.Resources[type], res.YieldAmount(type));
 		}

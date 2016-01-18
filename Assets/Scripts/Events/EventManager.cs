@@ -60,7 +60,8 @@ public class EventManager : MonoBehaviour {
 		if (evt.IsImmediate) {
 			showPopup(evt.Happen(), evt.Style, evt.Image);
 		} else {
-			showPopup(evt.Text + "\r\n\r\n(This will happen in: " + toReadable((int)evt.Timeout) + ")",
+			TimeSpan dur = TimeSpan.FromSeconds((int)evt.Timeout);
+			showPopup(evt.Text + "\r\n\r\n(This will happen in: " + String.Format("{0:D2}:{1:D2}", dur.Minutes, dur.Seconds) + ")",
 				evt.Style, evt.Image);
 			if (!evt.Canceled)
 				ongoing.Add(evt);
@@ -92,19 +93,6 @@ public class EventManager : MonoBehaviour {
 		Debug.Assert(t != null, "text is null!");
 		t.text = text;
 		popupPanel.transform.FindChild("EventImage").GetComponent<Image>().overrideSprite = image;
-	}
-
-	private string toReadable(int f) {
-		string r = "";
-		int i = f / 60;
-		r += i + ":";
-		f -= i * 60;
-		if (f > 9)
-			r += f.ToString();
-		else
-			r += "0" + f.ToString();
-		r += " m";
-		return r;
 	}
 }
 
