@@ -39,35 +39,70 @@ namespace Colony.Specializations
         {
             public None() : base(
                 SpecializationType.None,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f) { }
+			speedMultiplier: 1.0f,
+			visualRadiusMultiplier: 1.0f,
+			damageMultiplier: 1.0f,
+			attackRangeMultiplier: 1.0f,
+			cooldownTimeMultiplier: 1.0f,
+			loadSizeMultiplier: 1.0f,
+			loadTimeMultiplier: 1.0f,
+			reactionTimeMultiplier: 1.0f) { }
         }
 
         private class Guard : Specialization
         {
             public Guard() : base(
                 SpecializationType.Guard,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f) { }
+                	speedMultiplier: 1.0f,
+			visualRadiusMultiplier: 2.0f,
+			damageMultiplier: 1.5f,
+			attackRangeMultiplier: 1.0f,
+			cooldownTimeMultiplier: 0.8f,
+			loadSizeMultiplier: 0.5f,
+			loadTimeMultiplier: 2f,
+			reactionTimeMultiplier: 1.0f) { }
         }
 
         private class Forager : Specialization
         {
             public Forager() : base(
                 SpecializationType.Forager,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f) { }
+			speedMultiplier: 1.5f,
+			visualRadiusMultiplier: 1.0f,
+			damageMultiplier: 0.5f,
+			attackRangeMultiplier: 1.0f,
+			cooldownTimeMultiplier: 1.0f,
+			loadSizeMultiplier: 2.0f,
+			loadTimeMultiplier: 0.8f,
+			reactionTimeMultiplier: 1.0f) { }
         }
 
         private class Inkeeper : Specialization
         {
             public Inkeeper() : base(
                 SpecializationType.Inkeeper,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f) { }
+			speedMultiplier: 0.5f,
+			visualRadiusMultiplier: 2.0f,
+			damageMultiplier: 0.75f,
+			attackRangeMultiplier: 1.0f,
+			cooldownTimeMultiplier: 1.0f,
+			loadSizeMultiplier: 0.75f,
+			loadTimeMultiplier: 1.0f,
+			reactionTimeMultiplier: 1.0f) { }
         }
 
         private class Scout : Specialization
         {
             public Scout() : base(
                 SpecializationType.Scout,
-                1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f) { }
+			speedMultiplier: 1.0f,
+			visualRadiusMultiplier: 1.0f,
+			damageMultiplier: 1.0f,
+			attackRangeMultiplier: 1.0f,
+			cooldownTimeMultiplier: 1.0f,
+			loadSizeMultiplier: 1.0f,
+			loadTimeMultiplier: 1.0f,
+			reactionTimeMultiplier: 1.0f) { }
         }
     }
 }
