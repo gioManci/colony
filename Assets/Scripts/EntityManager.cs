@@ -91,6 +91,9 @@ using Random = UnityEngine.Random;
         private void InitializeBees()
         {
             Bees = new List<GameObject>();
+            ForagerBees = new List<GameObject>();
+            GuardBees = new List<GameObject>();
+            InkeeperBees = new List<GameObject>();
             GameObject[] workers = GameObject.FindGameObjectsWithTag("WorkerBee");
             Bees.AddRange(workers);
             GameObject[] drones = GameObject.FindGameObjectsWithTag("DroneBee");

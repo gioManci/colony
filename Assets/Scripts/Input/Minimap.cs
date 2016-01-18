@@ -4,15 +4,25 @@ using System.Collections;
 
 namespace Colony.Input {
 
-public class Minimap : MonoBehaviour, IPointerClickHandler {
+public class Minimap : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
 	public Camera MMCamera;
 	public Texture MMTexture;
+
+	public bool HasMouseOver { get; private set; }
 
 	private Boundaries bounds;
 
 	void Start() {
 		bounds = GameObject.FindWithTag("Ground").GetComponent<Boundaries>();
+	}
+
+	public void OnPointerEnter(PointerEventData data) {
+		HasMouseOver = true;
+	}
+
+	public void OnPointerExit(PointerEventData data) {
+		HasMouseOver = false;
 	}
 
 	public void OnPointerClick(PointerEventData data) {

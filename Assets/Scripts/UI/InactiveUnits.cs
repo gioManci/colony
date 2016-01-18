@@ -12,7 +12,7 @@ public class InactiveUnits : MonoBehaviour {
 	private Text foragerText;
 	private Text inkeeperText;
 	private List<GameObject> inactives = new List<GameObject>();
-	private int inactiveIdx = 0;
+	private int cycleIdx = 0;
 
 	// Make this class a singleton
 	public static InactiveUnits Instance { get; private set; }
@@ -27,7 +27,7 @@ public class InactiveUnits : MonoBehaviour {
 		
 	// Use this for initialization
 	void Start() {
-		inactiveText = GetComponentInChildren<Text>();
+		inactiveText = GameObject.Find("InactiveText").GetComponent<Text>();
 		guardText = GameObject.Find("GuardsText").GetComponent<Text>();
 		foragerText = GameObject.Find("ForagerText").GetComponent<Text>();
 		inkeeperText = GameObject.Find("InkeeperText").GetComponent<Text>();
@@ -63,11 +63,30 @@ public class InactiveUnits : MonoBehaviour {
 		inkeeperText.text = inkeeperCount.ToString();
 	}
 
-	public void CycleUnits() {
-		if (inactiveIdx >= inactives.Count)
-			inactiveIdx = 0;
+	public void CycleInactives() {
+		cycleUnits(inactives);
+	}
 
-		var unit = inactives[inactiveIdx++];
+	public void CycleGuards() {
+		cycleUnits(EntityManager.Instance.GuardBees);
+	}
+
+	public void CycleForagers() {
+		cycleUnits(EntityManager.Instance.ForagerBees);
+	}
+
+	public void CycleInkeepers() {
+		cycleUnits(EntityManager.Instance.InkeeperBees);
+	}
+
+	private void cycleUnits(List<GameObject> lst) {
+		if (lst.Count == 0)
+			return;
+		
+		if (cycleIdx >= lst.Count)
+			cycleIdx = 0;
+
+		var unit = lst[cycleIdx++];
 		var pos = unit.transform.position;
 		MouseActions.Instance.DeselectAll();
 		unit.GetComponent<Selectable>().Select();
