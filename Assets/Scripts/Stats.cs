@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Colony.Specializations;
 
 namespace Colony
@@ -15,6 +16,8 @@ namespace Colony
         public float initialLoadSize;
         public float initialLoadTime;
         public float initialReactionTime;
+
+        public static event Action<GameObject> BeeSpecialized;
 
         private float speed;
         private float visualRadius;
@@ -94,6 +97,16 @@ namespace Colony
             }
         }
 
+        public bool IsSpecialized
+        {
+            get
+            {
+                return spec != null && spec.Type != SpecializationType.None;
+            }
+        }
+
+        public SpecializationType Specialization { get { return spec.Type; } }
+
         void Awake()
         {
             spec = SpecializationFactory.GetSpecialization(SpecializationType.None);
@@ -110,14 +123,24 @@ namespace Colony
 
         public void Specialize(SpecializationType type)
         {
-            spec = SpecializationFactory.GetSpecialization(type);
-            GetComponent<Animator>().SetInteger("Specialization", (int)type);
+            if (type != SpecializationType.None)
+            {
+                spec = SpecializationFactory.GetSpecialization(type);
+                GetComponent<Animator>().SetInteger("Specialization", (int)type);
+                if (BeeSpecialized != null)
+                {
+                    BeeSpecialized(gameObject);
+                }
+            }
         }
 
         public void Unspecialize()
         {
-            spec = SpecializationFactory.GetSpecialization(SpecializationType.None);
-            GetComponent<Animator>().SetInteger("Specialization", (int)SpecializationType.None);
+            if (IsSpecialized)
+            {
+                spec = SpecializationFactory.GetSpecialization(SpecializationType.None);
+                GetComponent<Animator>().SetInteger("Specialization", (int)SpecializationType.None);
+            }
         }
     }
 }

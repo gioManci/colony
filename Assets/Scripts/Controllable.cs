@@ -7,8 +7,6 @@ using Colony.Resources;
 
 namespace Colony
 {
-    using Move = Colony.Tasks.BasicTasks.Move;
-
     [RequireComponent(typeof(Selectable))]
     public class Controllable : MonoBehaviour
     {

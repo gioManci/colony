@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using Colony.Specializations;
+using UnityEngine;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Colony.Hive;
 
 namespace Colony
 {
@@ -25,13 +25,26 @@ using Random = UnityEngine.Random;
         public GameObject tree;
         public GameObject beehive;
 
-        public event Action OnAllBeeDead;
+        public event Action<GameObject> BeeCreated;
+        public event Action<GameObject> WorkerBeeCreated;
+        public event Action<GameObject> QueenBeeCreated;
+        public event Action<GameObject> DroneBeeCreated;
+        public event Action<GameObject> DestroyingBee;
+        public event Action<GameObject> DestroyingWorkerBee;
+        public event Action<GameObject> DestroyingQueenBee;
+        public event Action<GameObject> DestroyingDroneBee;
+        public event Action<GameObject> DestroyingEnemy;
+        public event Action<GameObject> DestroyingWasp;
+        public event Action<GameObject> DestroyingHornet;
 
         public List<GameObject> Bees { get; private set; }
         public List<GameObject> Larvae { get; private set; }
         public List<GameObject> Enemies { get; private set; }
         public List<GameObject> Resources { get; private set; }
         public List<GameObject> Beehives { get; private set; }
+        public List<GameObject> ForagerBees { get; private set; }
+        public List<GameObject> GuardBees { get; private set; }
+        public List<GameObject> InkeeperBees { get; private set; }
 
 	private Canvas worldCanvas;
 
@@ -52,7 +65,27 @@ using Random = UnityEngine.Random;
             InitializeBees();
             InitializeEnemies();
             InitializeResources();
-	    InitializeLarvae();
+            InitializeLarvae();
+            Stats.BeeSpecialized += OnBeeSpecialized;
+        }
+
+        private void OnBeeSpecialized(GameObject bee)
+        {
+            Stats stats = bee.GetComponent<Stats>();
+            switch (stats.Specialization)
+            {
+                case SpecializationType.Forager:
+                    ForagerBees.Add(bee);
+                    break;
+                case SpecializationType.Guard:
+                    GuardBees.Add(bee);
+                    break;
+                case SpecializationType.Inkeeper:
+                    InkeeperBees.Add(bee);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void InitializeBees()
@@ -103,6 +136,15 @@ using Random = UnityEngine.Random;
             GameObject newBee = (GameObject)Instantiate(workerBee, position, Quaternion.identity);
             Bees.Add(newBee);
             newBee.transform.SetParent(worldCanvas.transform);
+
+            if (BeeCreated != null)
+            {
+                BeeCreated(newBee);
+            }
+            if (WorkerBeeCreated != null)
+            {
+                WorkerBeeCreated(newBee);
+            }
             return newBee;
         }
 
@@ -111,6 +153,15 @@ using Random = UnityEngine.Random;
             GameObject newBee = (GameObject)Instantiate(queenBee, position, Quaternion.identity);
             Bees.Add(newBee);
             newBee.transform.SetParent(worldCanvas.transform);
+
+            if (BeeCreated != null)
+            {
+                BeeCreated(newBee);
+            }
+            if (QueenBeeCreated != null)
+            {
+                QueenBeeCreated(newBee);
+            }
             return newBee;
         }
 
@@ -119,6 +170,15 @@ using Random = UnityEngine.Random;
             GameObject newBee = (GameObject)Instantiate(droneBee, position, Quaternion.identity);
             Bees.Add(newBee);
             newBee.transform.SetParent(worldCanvas.transform);
+
+            if (BeeCreated != null)
+            {
+                BeeCreated(newBee);
+            }
+            if (DroneBeeCreated != null)
+            {
+                DroneBeeCreated(newBee);
+            }
             return newBee;
         }
 
@@ -171,9 +231,9 @@ using Random = UnityEngine.Random;
                     case "Beehive":
                         DestroyBeehive(entity);
                         break;
-		    case "Larva":
-			DestroyLarva(entity);
-			break;
+                    case "Larva":
+                        DestroyLarva(entity);
+                        break;
                     default:
                         Destroy(entity);
                         break;
@@ -183,18 +243,126 @@ using Random = UnityEngine.Random;
 
         public void DestroyBee(GameObject deadBee)
         {
-            Bees.Remove(deadBee);
-            Destroy(deadBee);
-            if (Bees.Count == 0 && OnAllBeeDead != null)
+            if (deadBee != null)
             {
-                OnAllBeeDead();
+                switch (deadBee.tag)
+                {
+                    case "WorkerBee":
+                        DestroyWorker(deadBee);
+                        break;
+                    case "QueenBee":
+                        DestroyQueen(deadBee);
+                        break;
+                    case "DroneBee":
+                        DestroyDrone(deadBee);
+                        break;
+                    default:
+                        throw new Exception("The object to destroy is not a bee");
+                }
             }
+        }
+
+        private void DestroyWorker(GameObject worker)
+        {
+            if (DestroyingBee != null)
+            {
+                DestroyingBee(worker);
+            }
+            if (DestroyingWorkerBee != null)
+            {
+                DestroyingWorkerBee(worker);
+            }
+            Bees.Remove(worker);
+            Stats stats = worker.GetComponent<Stats>();
+            switch (stats.Specialization)
+            {
+                case SpecializationType.Forager:
+                    ForagerBees.Remove(worker);
+                    break;
+                case SpecializationType.Guard:
+                    GuardBees.Remove(worker);
+                    break;
+                case SpecializationType.Inkeeper:
+                    InkeeperBees.Remove(worker);
+                    break;
+                default:
+                    break;
+            }
+            Destroy(worker);
+        }
+
+        private void DestroyQueen(GameObject queen)
+        {
+            if (DestroyingBee != null)
+            {
+                DestroyingBee(queen);
+            }
+            if (DestroyingQueenBee != null)
+            {
+                DestroyingQueenBee(queen);
+            }
+            Bees.Remove(queen);
+            Destroy(queen);
+        }
+
+        private void DestroyDrone(GameObject drone)
+        {
+            if (DestroyingBee != null)
+            {
+                DestroyingBee(drone);
+            }
+            if (DestroyingDroneBee != null)
+            {
+                DestroyingDroneBee(drone);
+            }
+            Bees.Remove(drone);
+            Destroy(drone);
         }
 
         public void DestroyEnemy(GameObject deadEnemy)
         {
-            Enemies.Remove(deadEnemy);
-            Destroy(deadEnemy);
+            if (deadEnemy != null)
+            {
+                switch(deadEnemy.tag)
+                {
+                    case "Wasp":
+                        DestroyWasp(deadEnemy);
+                        break;
+                    case "Hornet":
+                        DestroyHornet(deadEnemy);
+                        break;
+                    default:
+                        throw new Exception("The object to destroy is not an enemy.");
+                }
+            }
+        }
+
+        private void DestroyWasp(GameObject deadWasp)
+        {
+            if (DestroyingEnemy != null)
+            {
+                DestroyingEnemy(deadWasp);
+            }
+            if (DestroyingWasp != null)
+            {
+                DestroyingWasp(deadWasp);
+            }
+            Enemies.Remove(deadWasp);
+            Destroy(deadWasp);
+        }
+
+        private void DestroyHornet(GameObject deadHornet)
+        {
+            if (DestroyingEnemy != null)
+            {
+                DestroyingEnemy(deadHornet);
+            }
+            if (DestroyingHornet != null)
+            {
+                DestroyingHornet(deadHornet);
+            }
+            Enemies.Remove(deadHornet);
+            Destroy(deadHornet);
         }
 
         public void DestroyResource(GameObject deadResource)
@@ -289,21 +457,22 @@ using Random = UnityEngine.Random;
             }
         }
 
-	private delegate IEnumerable<Selectable> SelectableFilter(List<GameObject> lst);
+        private delegate IEnumerable<Selectable> SelectableFilter(List<GameObject> lst);
 
-	public List<Selectable> GetSelectablesIn(Rect rect) {
+        public List<Selectable> GetSelectablesIn(Rect rect)
+        {
 
-		SelectableFilter selectables = (lst) => lst.Select(x => x.GetComponent<Selectable>()).Where(x => x != null);
+            SelectableFilter selectables = (lst) => lst.Select(x => x.GetComponent<Selectable>()).Where(x => x != null);
 
-		List<Selectable> sel = new List<Selectable>(selectables(Bees));
-		sel.AddRange(selectables(Resources));
-		/*foreach (var beehive in Beehives) 
-			sel.AddRange(beehive.GetComponent<Hive.Hive>().Cells.Select(x => 
-				x.GetComponent<Selectable>()).Where(x => x != null));*/
-		sel.AddRange(selectables(Enemies));
-		sel.AddRange(selectables(Larvae));
-		return sel.Where(x => rect.Contains(x.transform.position)).ToList();
-	}
+            List<Selectable> sel = new List<Selectable>(selectables(Bees));
+            sel.AddRange(selectables(Resources));
+            /*foreach (var beehive in Beehives) 
+                sel.AddRange(beehive.GetComponent<Hive.Hive>().Cells.Select(x => 
+                    x.GetComponent<Selectable>()).Where(x => x != null));*/
+            sel.AddRange(selectables(Enemies));
+            sel.AddRange(selectables(Larvae));
+            return sel.Where(x => rect.Contains(x.transform.position)).ToList();
+        }
 
         public bool IsBee(GameObject entity)
         {

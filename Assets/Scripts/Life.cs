@@ -23,7 +23,7 @@ namespace Colony
             {
                 onHit.Play();
             }
-            if (CurrentLife < 0)
+            if (CurrentLife <= 0)
             {
                 EntityManager.Instance.DestroyEntity(gameObject);
             }
