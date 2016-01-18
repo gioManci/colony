@@ -13,10 +13,12 @@ public class Cell : MonoBehaviour {
 		RoyalJelly = 1 << 3
 	}
 
-	public GameObject eggSprite, storageSprite, refineSprite;
+	public GameObject RefineSprite, RefineHoneySprite, RefineRoyalJellySprite;
 
 	private State state = State.Storage;
 	private RefinedResource refined;
+
+	public GameObject Inkeeper { get; set; }
 
 	public State CellState {
 		get { return state; }
@@ -40,21 +42,15 @@ public class Cell : MonoBehaviour {
                     sel.OnSelect += () => UIController.Instance.SetBPRefining(Refined);
                     sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
                 }
-		//aged = gameObject.GetComponent<Aged>();
-		//aged.DestroyOnExpire = false;
 	}
 
 	public void CreateEgg() {
-		storageSprite.SetActive(false);
-		refineSprite.SetActive(false);
-		eggSprite.SetActive(true);
+		RefineSprite.SetActive(false);
 		state = State.CreateEgg;
 	}
 
 	public void UseAsStorage() {
-		storageSprite.SetActive(true);
-		refineSprite.SetActive(false);
-		eggSprite.SetActive(false);
+		RefineSprite.SetActive(false);
 		state = State.Storage;
 	}
 
@@ -63,9 +59,9 @@ public class Cell : MonoBehaviour {
 			UseAsStorage();
 			return;
 		}
-		storageSprite.SetActive(false);
-		refineSprite.SetActive(true);
-		eggSprite.SetActive(false);
+		RefineSprite.SetActive(true);
+		RefineHoneySprite.SetActive((what & RefinedResource.Honey) != 0);
+		RefineRoyalJellySprite.SetActive((what & RefinedResource.RoyalJelly) != 0);
 		state = State.Refine;
 		refined = what;
 	}

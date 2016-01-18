@@ -17,6 +17,7 @@ namespace Colony
         public bool canRepair;
         public bool canMove;
         public bool canColonize;
+	public bool canInkeep;
 
         private ComplexTask brain;
 
@@ -100,6 +101,12 @@ namespace Colony
             brain.RemoveAllSubtasks();
             brain.AddSubtask(new Colonize(gameObject));
         }
+
+	public void DoInkeep(GameObject cell)
+	{
+		brain.RemoveAllSubtasks();
+//		brain.AddSubtask(new Inkeep(gameObject, cell));
+	}
 
         public void OnHit(GameObject enemy)
         {

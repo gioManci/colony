@@ -18,7 +18,8 @@ namespace Colony.Tasks
         Explore,
         Loot,
         StealResources,
-        Colonize
+        Colonize,
+	Inkeep
     }
 
 }

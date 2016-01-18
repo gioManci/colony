@@ -5,22 +5,20 @@ namespace Colony.Events {
 
 public class ToxicPollenEvent : Event {
 
-	public float MinPercBeesInvolved = 0.1f;
-	public float MaxPercBeesInvolved = 0.5f;
-
 	public ToxicPollenEvent() : base() {
 		IsImmediate = true;
 		Level = 2;
 	}
 
 	public override string Happen() {
-		float perc = Random.Range(MinPercBeesInvolved, MaxPercBeesInvolved);
+		float perc = Random.Range(spawner.ToxicPollenMinPercBeesInvolved, spawner.ToxicPollenMaxPercBeesInvolved);
 		int nBees = Mathf.Clamp((int)(perc * EntityManager.Instance.Bees.Count), 1, EntityManager.Instance.Bees.Count);
 
 		// Shuffle the list of bees to kill random ones
 		foreach (GameObject beeObj in EntityManager.Instance.GetRandomBees(nBees)) {
 			var aged = beeObj.GetComponent<Aged>();
-			aged.Age -= (int)(Random.Range(0.2f, 0.8f) * aged.Lifespan);
+			aged.Age -= (int)(Random.Range(spawner.ToxicPollenMinLifespanDecreased,
+				spawner.ToxicPollenMaxLifespanDecreased) * aged.Lifespan);
 		}
 
 		return "The pollen of the flowers was intoxicated by pollution!" +

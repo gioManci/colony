@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Colony.Specializations;
+using Colony.Resources;
 
 namespace Colony.UI {
 
@@ -26,8 +27,11 @@ public class SpecializationButtonsCallbacks : MonoBehaviour {
 					continue;
 
 				// TODO: check resources
-				spec.Specialize(type);
-				Debug.Log("specializing in " + type);
+				if (UIController.Instance.resourceManager.RequireResources(Costs.Get("Spec" + type))) {
+					spec.Specialize(type);
+					UIController.Instance.resourceManager.RemoveResources(Costs.Get("Spec" + type));
+				} else
+					TextController.Instance.Add("Not enough resource to evolve into " + type + "!");
 				UIController.Instance.SetBottomPanel(UIController.BPType.Text);
 			}
 		}

@@ -492,10 +492,17 @@ using Random = UnityEngine.Random;
                 || entity.tag == "Hornet");
         }
 
-	public List<GameObject> GetRandomBees(int n) {
+	public List<GameObject> GetRandomBees(int n, SpecializationType type = SpecializationType.None) {
+		switch (type) {
+		case SpecializationType.Guard:
+			return getRandom(GuardBees, n);
+		case SpecializationType.Forager:
+			return getRandom(ForagerBees, n);
+		case SpecializationType.Inkeeper:
+			return getRandom(InkeeperBees, n);
+		}
 		return getRandom(Bees, n);
 	}
-
 
 	public List<GameObject> GetRandomResources(int n) {
 		return getRandom(Resources, n);
@@ -503,9 +510,7 @@ using Random = UnityEngine.Random;
 
 	private List<GameObject> getRandom(List<GameObject> b, int n) {
 		// Shuffle the list of bees to kill random ones
-		var listCopy = new List<GameObject>(b);
-		listCopy.Sort((x, y) => 1 - 2 * Random.Range(0, 1));
-		return listCopy.Take(n).ToList();
+		return new List<GameObject>(b).OrderBy(x => Guid.NewGuid()).Take(n).ToList();
 	}
     }
 }

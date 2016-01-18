@@ -114,8 +114,13 @@ public class MouseActions : MonoBehaviour {
 				}
 				if ("Cell".Equals(obj.tag)) {
 					foreach (var bee in GetSelected<Controllable>()) {
-						if (bee.canBreed && UIController.Instance.resourceManager.RequireResources(Costs.Larva)) {
-							bee.DoBreed(obj);
+						if (bee.canBreed && obj.GetComponent<Cell>().CellState == Cell.State.Storage) {
+							if (UIController.Instance.resourceManager.RequireResources(Costs.Larva))
+								bee.DoBreed(obj);
+							else
+								TextController.Instance.Add("Not enough resources to breed!");
+						} else if (bee.canInkeep) {
+							bee.DoInkeep(obj);
 						} else if (bee.canMove) {
 							bee.DoMove(click.pos);
 						}
@@ -174,7 +179,8 @@ public class MouseActions : MonoBehaviour {
 			GameObject obj = Utils.GetObjectAt(move.pos);
 			if (obj != null) {
 				if (((flags & CanHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null)
-				                    || ((flags & CanBreed) != 0 && obj.GetComponent<Cell>() != null)) {
+				    || ((flags & CanBreed) != 0 && obj.GetComponent<Cell>() != null
+				    && obj.GetComponent<Cell>().CellState == Cell.State.Storage)) {
 					Cursor.Instance.SetCursor(Cursor.Type.Click);
 					return;
 				} else if ((flags & CanAttack) != 0 && EntityManager.Instance.IsEnemy(obj)) {

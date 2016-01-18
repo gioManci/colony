@@ -4,14 +4,18 @@ using Colony.Hive;
 
 namespace Colony.Resources
 {
+
 using Hive = Colony.Hive.Hive;
+
     public class HiveWarehouse : MonoBehaviour
     {
 	// Rate at which resources are converted by cells used for refining
-	private const float REFINE_INTERVAL = 8f; // seconds
+	public float RefineInterval = 6f; // seconds
+	public float InkeeperMultiplier = 2f;
 
 	// Conversion rate for resource refining
 	public int PollenForHoney;
+	public int WaterForHoney;	
 	public int PollenForRoyalJelly;
 	public int WaterForRoyalJelly;
 	public int RefinedHoneyYield;
@@ -19,7 +23,7 @@ using Hive = Colony.Hive.Hive;
 
         private ResourceManager rm;
 	private Hive hive;
-	private float refineTimer = REFINE_INTERVAL;
+	private float refineTimer;
 
         public bool IsEmpty { get { return rm.IsEmpty; } }
 
@@ -28,17 +32,21 @@ using Hive = Colony.Hive.Hive;
             rm = FindObjectOfType<ResourceManager>();
             hive = gameObject.GetComponent<Hive>();
             Debug.Assert(hive != null, "Hive is null for this HiveWarehouse!");
+            refineTimer = RefineInterval;
         }
 		
 	void Update() {
 		// Refine resources
 		refineTimer -= Time.deltaTime;
 		if (refineTimer <= 0) {
-			refineTimer = REFINE_INTERVAL;
+			refineTimer = RefineInterval;
 			foreach (GameObject cell in hive.Cells) {
 				var c = cell.GetComponent<Cell>();
 				if (c.CellState == Cell.State.Refine) {
-					refineResources(c.Refined);
+					if (c.Inkeeper == null)
+						rm.AddResources(refineResources(c.Refined));
+					else
+						rm.AddResources(refineResources(c.Refined) * InkeeperMultiplier);
 				}
 			}
 		}
@@ -56,22 +64,30 @@ using Hive = Colony.Hive.Hive;
 
 	// Convert XXX Pollen (should be Nectar, but unimplemented) to YYY Honey
 	// and WWW Water + ZZZ Pollen to RoyalJelly
-	private void refineResources(Cell.RefinedResource what) {
+	private ResourceSet refineResources(Cell.RefinedResource what) {
+		var res = new ResourceSet();
+
 		// Ensure the player has all the due resources.
 
 		bool refiningRJ = (what & Cell.RefinedResource.RoyalJelly) != 0,
 		     refiningHoney = (what & Cell.RefinedResource.Honey) != 0;
 
-		if (refiningHoney && rm.GetResource(ResourceType.Water) >= WaterForRoyalJelly) {
+		int pollen = rm.GetResource(ResourceType.Pollen),
+		    water = rm.GetResource(ResourceType.Water);
+
+		if (refiningHoney && pollen >= PollenForHoney && water >= WaterForHoney) {
 			rm.RemoveResource(ResourceType.Pollen, PollenForHoney);
-			rm.AddResource(ResourceType.Honey, RefinedHoneyYield);
+			rm.RemoveResource(ResourceType.Water, WaterForHoney);
+			res += new ResourceSet().With(ResourceType.Honey, RefinedHoneyYield);
 		}
 
-		if (refiningRJ && rm.GetResource(ResourceType.Pollen) >= PollenForHoney + PollenForRoyalJelly) {
+		if (refiningRJ && pollen >= PollenForRoyalJelly && water >= WaterForRoyalJelly) {
 			rm.RemoveResource(ResourceType.Pollen, PollenForRoyalJelly);
 			rm.RemoveResource(ResourceType.Water, WaterForRoyalJelly);
-			rm.AddResource(ResourceType.RoyalJelly, RefinedRoyalJellyYield);
+			res += new ResourceSet().With(ResourceType.RoyalJelly, RefinedRoyalJellyYield);
 		}
+
+		return res;
 	}
     }
 }

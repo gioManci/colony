@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using Colony;
 using Colony.Resources;
+using Colony.Specializations;
+using Colony.UI;
 
 namespace Colony.Events {
 
@@ -18,7 +20,7 @@ class BearEvent : Event {
 
 	public override Event Init() {
 		// TODO: check if player has enough guard bees
-		if (true) {
+		if (EntityManager.Instance.GuardBees.Count >= spawner.BearSacrificedBees) {
 			Text +=	"\r\nYou may <b>sacrifice " + spawner.BearSacrificedBees + " guard bees</b> to stop it immediately." +
 				"\r\n\r\nSacrifice guard bees?";
 			Style = EventManager.PopupStyle.YesNo;
@@ -30,7 +32,9 @@ class BearEvent : Event {
 	}
 
 	public override void Yes() {
-		Debug.Log("sacrificed bees.");
+		foreach (var bee in EntityManager.Instance.GetRandomBees(spawner.BearSacrificedBees, SpecializationType.Guard))
+			EntityManager.Instance.DestroyBee(bee);
+		TextController.Instance.Add("You sacrificed " + spawner.SkunkSacrificedBees + " bees to scare away the bear.");
 		Canceled = true;
 		base.Yes();
 	}
@@ -41,7 +45,6 @@ class BearEvent : Event {
 		// for now, just kill a random number of bees.
 		int nBees = Random.Range(spawner.BearMinBeesKilled, spawner.BearMaxBeesKilled);
 
-		// Shuffle the list of bees to kill random ones
 		foreach (GameObject bee in EntityManager.Instance.GetRandomBees(nBees))
 			EntityManager.Instance.DestroyBee(bee);
 

@@ -17,12 +17,25 @@ public static class Costs {
 	public static ResourceSet Larva = new ResourceSet()
 						.With(ResourceType.Pollen, 5)
 						.With(ResourceType.Honey, 2)
-						.With(ResourceType.Water, 5);
+						.With(ResourceType.Water, 5)
+						.With(ResourceType.RoyalJelly, 1);
 	public static ResourceSet NewHive = new ResourceSet()
 						.With(ResourceType.Pollen, 2000)
 						.With(ResourceType.Honey, 1000)
 						.With(ResourceType.RoyalJelly, 1000)
 						.With(ResourceType.Water, 750);
+	public static ResourceSet SpecGuard = new ResourceSet()
+						.With(ResourceType.Pollen, 25)
+						.With(ResourceType.Honey, 15)
+						.With(ResourceType.Water, 25);
+	public static ResourceSet SpecForager = new ResourceSet()
+						.With(ResourceType.Pollen, 25)
+						.With(ResourceType.Honey, 15)
+						.With(ResourceType.Water, 25);
+	public static ResourceSet SpecInkeeper = new ResourceSet()
+						.With(ResourceType.Pollen, 25)
+						.With(ResourceType.Honey, 15)
+						.With(ResourceType.Water, 25);
 
 	public static ResourceSet Get(string key) {
 		switch (key) {
@@ -31,6 +44,9 @@ public static class Costs {
 		case "DroneBee": return DroneBee;
 		case "Larva": return Larva;
 		case "NewHive": return NewHive;
+		case "SpecGuard": return SpecGuard;
+		case "SpecForager": return SpecForager;
+		case "SpecInkeeper": return SpecInkeeper;
 		}
 		return null;
 	}

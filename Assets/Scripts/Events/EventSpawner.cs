@@ -36,8 +36,16 @@ public class EventSpawner : MonoBehaviour {
 	public int SkunkSacrificedBees = 4;
 
 	public Sprite ToxicPollenSprite;
+	public float ToxicPollenMinPercBeesInvolved = 0.1f;
+	public float ToxicPollenMaxPercBeesInvolved = 0.5f;
+	public float ToxicPollenMinLifespanDecreased = 0.2f;
+	public float ToxicPollenMaxLifespanDecreased = 0.8f;
 
 	public Sprite RainSprite;
+	public int RainMinFlowersInvolved = 5;
+	public int RainMaxFlowersInvolved = 20;
+	public float RainMinPercPollenDecreased = 0.2f;
+	public float RainMaxPercPollenDecreased = 0.9f;
 
 	private float curEventDelay;
 	private float curLevelCap = 1;
@@ -65,7 +73,7 @@ public class EventSpawner : MonoBehaviour {
 			EventManager.Instance.LaunchEvent(evt);
 			evt = pickRandomEvent((int)curLevelCap);
 			Debug.Assert(evt != null, "picked event is null!");
-			curLevelCap += Random.Range(0.2f, 1f);
+			curLevelCap += Random.Range(0.3f, 1f);
 			curEventDelay = Mathf.Clamp(Random.Range(MinEventDelay, MaxEventDelay) * evt.Level,
 				MinEventDelay, MaxEventDelay);
 		}

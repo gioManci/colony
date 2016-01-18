@@ -22,6 +22,7 @@ public class Prompt : MonoBehaviour {
 	}
 
 	public void Show() {
+		Time.timeScale = 0f;
 		gameObject.SetActive(true);
 		input = GetComponent<InputField>();
 		EventSystem.current.SetSelectedGameObject(gameObject, null);
@@ -29,6 +30,7 @@ public class Prompt : MonoBehaviour {
 	}
 
 	public void Close(bool process) {
+		Time.timeScale = 1f;
 		gameObject.SetActive(false);
 		if (process) {
 			processCommand(input.text);
@@ -63,6 +65,9 @@ public class Prompt : MonoBehaviour {
 		case "n":
 		case "nectar":
 			type = (int)ResourceType.Nectar;
+			break;
+		case "a":
+		case "all":
 			break;
 		}
 

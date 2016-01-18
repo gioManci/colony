@@ -25,6 +25,19 @@ public static class Utils {
 		// random normal(mean, stdDev)
 		return mean + stdDev * randStdNormal;
 	}
+
+	// Returns true if the circle centered in c with radius r contains
+	// position pos
+//	public static bool CircleContains(Vector2 c, float r, Vector2 pos) {
+//		Debug.Assert(r >= 0f, "Negative radius for CircleContains!");
+//		return (c - pos).magnitude <= r;
+//	}
+
+	public static bool CircleIntersectsCircle(Vector2 c1, float r1, Vector2 c2, float r2) {
+		Debug.Assert(r1 >= 0f && r2 >= 0f, "Invalid parameters for CircleIntersectsCircle! (negative radii)");
+		var m = (c1 - c2).magnitude;
+		return Mathf.Abs(r1 - r2) <= m && m <= r1 + r2;
+	}
 }
 
 }

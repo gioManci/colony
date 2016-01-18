@@ -28,6 +28,14 @@ public class ResourceSet {
 		return result;
 	}
 
+	public static ResourceSet operator *(ResourceSet rs1, float mult) {
+		ResourceSet result = new ResourceSet();
+		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
+			result[type] = (int)(result[type] * mult);
+		}
+		return result;
+	}
+
 	public int this[ResourceType i] {
 		get { return resources[(int)i]; }
 		set { resources[(int)i] = Mathf.Max(0, value); }
