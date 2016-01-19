@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using Colony.UI;
+using Colony.Sounds;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -41,14 +42,15 @@ namespace Colony.Tasks.BasicTasks
             {
                 ResourceSet toSteal = new ResourceSet()
                     .With(ResourceType.Beeswax, 10)
-                    .With(ResourceType.Honey, 10)
+                    .With(ResourceType.Honey, 5)
                     .With(ResourceType.Nectar, 10)
                     .With(ResourceType.Pollen, 10)
-                    .With(ResourceType.RoyalJelly, 10)
+                    .With(ResourceType.RoyalJelly, 2)
                     .With(ResourceType.Water, 10);
                 warehouse.RemoveResources(toSteal);
                 if (!warningGiven) {
                     TextController.Instance.Add("Your resources are being stolen!");
+                    SoundEffects.Instance.Play(SoundEffects.Sound.Attacked);
                     warningGiven = true;
                 }
                 timeFromLastTheft = 0.0f;

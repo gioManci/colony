@@ -1,6 +1,7 @@
 ﻿using Colony.Tasks.BasicTasks;
 using Colony.Behaviour;
 using Colony.UI;
+using Colony.Sounds;
 using System;
 using UnityEngine;
 
@@ -53,6 +54,7 @@ namespace Colony.Tasks.BasicTasks
                     if (!warningGiven && EntityManager.Instance.IsBee(agent))
                     {
                         TextController.Instance.Add("Your bees are being attacked!");
+                        SoundEffects.Instance.Play(SoundEffects.Sound.Attacked);
                         warningGiven = true;
                         GameObject[] neighbors =
                             EntityManager.Instance.GetNearbyUnits(agent.transform.position, stats.VisualRadius);

@@ -4,6 +4,7 @@ using Colony.Tasks.ComplexTasks;
 using Colony.Tasks.BasicTasks;
 using Colony.UI;
 using Colony.Resources;
+using Colony.Sounds;
 
 namespace Colony
 {
@@ -34,7 +35,7 @@ namespace Colony
 		} else if (gameObject.tag == "WorkerBee") {
 			var sel = GetComponent<Selectable>();
 			sel.OnSelect += () => {
-				UIController.Instance.SetBeeLoadText(GetComponent<BeeLoad>());
+				UIController.Instance.SetBeeLoadText(gameObject);
 				var type = UIController.BPType.Text;
 				if (GetComponent<Stats>().Spec.Type == Colony.Specializations.SpecializationType.None)
 					type |= UIController.BPType.Spec;
@@ -64,6 +65,7 @@ namespace Colony
         {
             brain.RemoveAllSubtasks();
             brain.AddSubtask(new Move(gameObject, position, 0.5f));
+            SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
         }
 
         /// <summary>

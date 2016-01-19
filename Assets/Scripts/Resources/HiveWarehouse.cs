@@ -14,12 +14,12 @@ using Hive = Colony.Hive.Hive;
 	public float InkeeperMultiplier = 2f;
 
 	// Conversion rate for resource refining
-	public int PollenForHoney;
-	public int WaterForHoney;	
-	public int PollenForRoyalJelly;
-	public int WaterForRoyalJelly;
-	public int RefinedHoneyYield;
-	public int RefinedRoyalJellyYield;
+	public int PollenForHoney = 4;
+	public int WaterForHoney = 4;	
+	public int PollenForRoyalJelly = 5;
+	public int WaterForRoyalJelly = 5;
+	public int RefinedHoneyYield = 2;
+	public int RefinedRoyalJellyYield = 1;
 
         private ResourceManager rm;
 	private Hive hive;

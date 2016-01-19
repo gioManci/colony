@@ -99,8 +99,11 @@ public class UIController : MonoBehaviour {
 		SetBPText(txt);
 	}
 
-	public void SetBeeLoadText(BeeLoad load) {
-		string txt = "Load:";
+	public void SetBeeLoadText(GameObject bee) {
+		var spec = bee.GetComponent<Stats>().Specialization;
+		string txt = (spec == Specializations.SpecializationType.None ? "Worker" : spec.ToString())
+			+ " Bee\r\n\r\nLoad:";
+		var load = bee.GetComponent<BeeLoad>();
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
 			txt += "\r\n" + type.ToString() + ": " + load.Load[type];
 		}

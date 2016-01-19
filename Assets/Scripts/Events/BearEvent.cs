@@ -19,7 +19,6 @@ class BearEvent : Event {
 	}
 
 	public override Event Init() {
-		// TODO: check if player has enough guard bees
 		if (EntityManager.Instance.GuardBees.Count >= spawner.BearSacrificedBees) {
 			Text +=	"\r\nYou may <b>sacrifice " + spawner.BearSacrificedBees + " guard bees</b> to stop it immediately." +
 				"\r\n\r\nSacrifice guard bees?";
@@ -40,9 +39,6 @@ class BearEvent : Event {
 	}
 
 	public override string Happen() {
-		// FIXME: when we have specializations, this will
-		// depend on number of warrior bees in the hive;
-		// for now, just kill a random number of bees.
 		int nBees = Random.Range(spawner.BearMinBeesKilled, spawner.BearMaxBeesKilled);
 
 		foreach (GameObject bee in EntityManager.Instance.GetRandomBees(nBees))

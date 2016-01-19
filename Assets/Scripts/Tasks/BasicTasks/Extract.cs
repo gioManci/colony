@@ -66,7 +66,7 @@ namespace Colony.Tasks.BasicTasks
 
                 load.AddResources(result);
                 if (agent.GetComponent<Selectable>().IsSelected)
-                    UIController.Instance.SetBeeLoadText(load);
+                    UIController.Instance.SetBeeLoadText(agent);
                 timeFromLastExtraction = 0.0f;
 
                 if (ResourceExtracted != null)

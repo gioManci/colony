@@ -26,10 +26,10 @@ public class SpecializationButtonsCallbacks : MonoBehaviour {
 				if (spec.Spec.Type != SpecializationType.None)
 					continue;
 
-				// TODO: check resources
 				if (UIController.Instance.resourceManager.RequireResources(Costs.Get("Spec" + type))) {
 					spec.Specialize(type);
 					UIController.Instance.resourceManager.RemoveResources(Costs.Get("Spec" + type));
+					UIController.Instance.SetBeeLoadText(bee);
 				} else
 					TextController.Instance.Add("Not enough resource to evolve into " + type + "!");
 				UIController.Instance.SetBottomPanel(UIController.BPType.Text);

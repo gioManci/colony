@@ -35,7 +35,7 @@ namespace Colony.Tasks.BasicTasks
             // FIXME: this is not very nice: it'd be better if UIController
             	// updated by itself (maybe via an event?)
             if (agent.GetComponent<Selectable>().IsSelected)
-                UIController.Instance.SetBeeLoadText(load);
+                UIController.Instance.SetBeeLoadText(agent);
             status = Status.Completed;
 
             return status;
