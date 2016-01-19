@@ -7,6 +7,8 @@ namespace Colony
 {
     public class GameManager : MonoBehaviour
     {
+	public const string SceneName = "beta";
+
         public GameObject endGameScreen;
         public GameObject forceToCreateScreen;
 

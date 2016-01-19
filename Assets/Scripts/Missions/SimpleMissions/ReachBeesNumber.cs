@@ -13,11 +13,6 @@ namespace Colony.Missions.SimpleMissions
             beesNumberToReach = beesNumber;
         }
 
-        public override void OnAccomplished()
-        {
-            
-        }
-
         public override void OnActivate()
         {
             if (EntityManager.Instance.Bees.Count >= beesNumberToReach)

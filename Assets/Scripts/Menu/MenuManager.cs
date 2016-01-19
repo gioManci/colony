@@ -32,7 +32,7 @@ namespace Colony.Menu
 
         public void Play()
         {
-            SceneManager.LoadScene("dev");
+            SceneManager.LoadScene(GameManager.SceneName);
         }
 
         public void ShowMenu()

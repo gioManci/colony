@@ -17,11 +17,6 @@ namespace Colony.Missions.SimpleMissions
             targetAmount = amount;
         }
 
-        public override void OnAccomplished()
-        {
-            
-        }
-
         public override void OnActivate()
         {
             EntityManager.Instance.BeeCreated += OnBeeCreated;

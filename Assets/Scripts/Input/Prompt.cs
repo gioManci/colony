@@ -69,6 +69,9 @@ public class Prompt : MonoBehaviour {
 		case "a":
 		case "all":
 			break;
+		case "quit":
+			Application.Quit();
+			return;
 		}
 
 		int amount = 1000;

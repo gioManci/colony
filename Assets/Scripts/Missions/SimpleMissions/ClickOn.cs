@@ -13,12 +13,7 @@ namespace Colony.Missions.SimpleMissions
         {
             this.tag = tag;
         }
-
-        public override void OnAccomplished()
-        {
-            
-        }
-
+		
         public override void OnActivate()
         {
             MouseActions.Instance.ObjectSelected += OnClick;

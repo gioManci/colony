@@ -22,7 +22,7 @@ namespace Colony.Missions
 
         public abstract void OnActivate();
 
-        public abstract void OnAccomplished();
+	public virtual void OnAccomplished() {}
 
         protected void NotifyCompletion(Mission completedMission)
         {

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Colony;
 using Colony.UI;
@@ -17,6 +18,8 @@ public class Cell : MonoBehaviour {
 
 	private State state = State.Storage;
 	private RefinedResource refined;
+
+	public static event Action<GameObject> OnStateChange;
 
 	public GameObject Inkeeper { get; set; }
 
@@ -45,16 +48,22 @@ public class Cell : MonoBehaviour {
 	}
 
 	public void CreateEgg() {
+		if (OnStateChange != null)
+			OnStateChange(gameObject);
 		RefineSprite.SetActive(false);
 		state = State.CreateEgg;
 	}
 
 	public void UseAsStorage() {
+		if (OnStateChange != null)
+			OnStateChange(gameObject);
 		RefineSprite.SetActive(false);
 		state = State.Storage;
 	}
 
 	public void Refine(RefinedResource what) {
+		if (OnStateChange != null)
+			OnStateChange(gameObject);
 		RefineHoneySprite.SetActive((what & RefinedResource.Honey) != 0);
 		RefineRoyalJellySprite.SetActive((what & RefinedResource.RoyalJelly) != 0);
 		if (what == RefinedResource.None) {

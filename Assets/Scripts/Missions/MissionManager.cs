@@ -64,12 +64,16 @@ namespace Colony.Missions
         {
             CurrentMission = mission;
             mission.OnActivate();
-            if (!missionPanel.activeSelf)
-            {
-                missionPanel.SetActive(true);
+	
+            // NOTE: if mission.Title is "", it's a "fake mission", i.e. some event
+            // which needs to be triggered during the tutorial (e.g. ActivateObject)
+            if (mission.Title.Length > 0) {
+                if (!missionPanel.activeSelf)
+                    missionPanel.SetActive(true);
+  
+                missionPanel.SendMessage("SetTitle", mission.Title);
+                missionPanel.SendMessage("SetDescription", mission.Description);
             }
-            missionPanel.SendMessage("SetTitle", mission.Title);
-            missionPanel.SendMessage("SetDescription", mission.Description);
         }
     }
 }

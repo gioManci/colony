@@ -13,11 +13,6 @@ namespace Colony.Missions.SimpleMissions
 
         }
 
-        public override void OnAccomplished()
-        {
-            
-        }
-
         public override void OnActivate()
         {
             LayEgg.EggLaid += OnEggLaid;

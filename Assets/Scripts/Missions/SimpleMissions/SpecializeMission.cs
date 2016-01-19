@@ -18,11 +18,6 @@ namespace Colony.Missions.SimpleMissions
             count = 0;
         }
 
-        public override void OnAccomplished()
-        {
-            
-        }
-
         public override void OnActivate()
         {
             Stats.BeeSpecialized += OnBeeSpecialized;

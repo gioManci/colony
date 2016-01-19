@@ -16,11 +16,6 @@ namespace Colony.Missions.SimpleMissions
             this.enemyTag = enemyTag;
         }
 
-        public override void OnAccomplished()
-        {
-            
-        }
-
         public override void OnActivate()
         {
             EntityManager.Instance.DestroyingEnemy += OnEnemyDestroyed;
