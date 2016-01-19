@@ -29,6 +29,10 @@ namespace Colony
             if (noQueen)
             {
                 noQueen = false;
+                CounterController cc = counterPanel.GetComponent<CounterController>();
+                cc.TimeExpired -= OnTimeExpired;
+                cc.Stop();
+                counterPanel.SetActive(false);
             }
         }
 
@@ -112,7 +116,7 @@ namespace Colony
                     }
                     break;
                 case "QueenBee":
-                    if (noQueen)
+                    if (noQueen || noWorker)
                     {
                         return;
                     }
