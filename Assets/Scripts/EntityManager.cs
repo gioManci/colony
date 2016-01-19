@@ -212,6 +212,13 @@ namespace Colony
             return enemy;
         }
 
+	public GameObject CreateHornet(Vector2 position)
+	{
+		GameObject enemy = (GameObject)Instantiate(hornet, position, Quaternion.identity);
+		Enemies.Add(enemy);
+		return enemy;
+	}
+
         public void DestroyEntity(GameObject entity)
         {
             if (entity != null)
