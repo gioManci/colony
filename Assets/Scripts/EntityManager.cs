@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Colony
 {
 
-using Random = UnityEngine.Random;
+    using Random = UnityEngine.Random;
 
     public class EntityManager : MonoBehaviour
     {
@@ -46,7 +46,7 @@ using Random = UnityEngine.Random;
         public List<GameObject> GuardBees { get; private set; }
         public List<GameObject> InkeeperBees { get; private set; }
 
-	private Canvas worldCanvas;
+        private Canvas worldCanvas;
 
         void Start()
         {
@@ -58,7 +58,7 @@ using Random = UnityEngine.Random;
             {
                 Destroy(gameObject);
             }
-	
+
             worldCanvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
 
             InitializeBeehives();
@@ -267,14 +267,6 @@ using Random = UnityEngine.Random;
 
         private void DestroyWorker(GameObject worker)
         {
-            if (DestroyingBee != null)
-            {
-                DestroyingBee(worker);
-            }
-            if (DestroyingWorkerBee != null)
-            {
-                DestroyingWorkerBee(worker);
-            }
             Bees.Remove(worker);
             Stats stats = worker.GetComponent<Stats>();
             switch (stats.Specialization)
@@ -291,11 +283,20 @@ using Random = UnityEngine.Random;
                 default:
                     break;
             }
+            if (DestroyingBee != null)
+            {
+                DestroyingBee(worker);
+            }
+            if (DestroyingWorkerBee != null)
+            {
+                DestroyingWorkerBee(worker);
+            }
             Destroy(worker);
         }
 
         private void DestroyQueen(GameObject queen)
         {
+            Bees.Remove(queen);
             if (DestroyingBee != null)
             {
                 DestroyingBee(queen);
@@ -304,12 +305,12 @@ using Random = UnityEngine.Random;
             {
                 DestroyingQueenBee(queen);
             }
-            Bees.Remove(queen);
             Destroy(queen);
         }
 
         private void DestroyDrone(GameObject drone)
         {
+            Bees.Remove(drone);
             if (DestroyingBee != null)
             {
                 DestroyingBee(drone);
@@ -318,7 +319,6 @@ using Random = UnityEngine.Random;
             {
                 DestroyingDroneBee(drone);
             }
-            Bees.Remove(drone);
             Destroy(drone);
         }
 
@@ -326,7 +326,7 @@ using Random = UnityEngine.Random;
         {
             if (deadEnemy != null)
             {
-                switch(deadEnemy.tag)
+                switch (deadEnemy.tag)
                 {
                     case "Wasp":
                         DestroyWasp(deadEnemy);
@@ -342,6 +342,7 @@ using Random = UnityEngine.Random;
 
         private void DestroyWasp(GameObject deadWasp)
         {
+            Enemies.Remove(deadWasp);
             if (DestroyingEnemy != null)
             {
                 DestroyingEnemy(deadWasp);
@@ -350,12 +351,12 @@ using Random = UnityEngine.Random;
             {
                 DestroyingWasp(deadWasp);
             }
-            Enemies.Remove(deadWasp);
             Destroy(deadWasp);
         }
 
         private void DestroyHornet(GameObject deadHornet)
         {
+            Enemies.Remove(deadHornet);
             if (DestroyingEnemy != null)
             {
                 DestroyingEnemy(deadHornet);
@@ -364,7 +365,6 @@ using Random = UnityEngine.Random;
             {
                 DestroyingHornet(deadHornet);
             }
-            Enemies.Remove(deadHornet);
             Destroy(deadHornet);
         }
 
@@ -492,20 +492,41 @@ using Random = UnityEngine.Random;
                 || entity.tag == "Hornet");
         }
 
-	public List<GameObject> GetRandomBees(int n) {
-		return getRandom(Bees, n);
-	}
+        public List<GameObject> GetRandomBees(int n)
+        {
+            return getRandom(Bees, n);
+        }
 
 
-	public List<GameObject> GetRandomResources(int n) {
-		return getRandom(Resources, n);
-	}
+        public List<GameObject> GetRandomResources(int n)
+        {
+            return getRandom(Resources, n);
+        }
 
-	private List<GameObject> getRandom(List<GameObject> b, int n) {
-		// Shuffle the list of bees to kill random ones
-		var listCopy = new List<GameObject>(b);
-		listCopy.Sort((x, y) => 1 - 2 * Random.Range(0, 1));
-		return listCopy.Take(n).ToList();
-	}
+        private List<GameObject> getRandom(List<GameObject> b, int n)
+        {
+            // Shuffle the list of bees to kill random ones
+            var listCopy = new List<GameObject>(b);
+            listCopy.Sort((x, y) => 1 - 2 * Random.Range(0, 1));
+            return listCopy.Take(n).ToList();
+        }
+
+        public int GetBeeCount(string tag = null)
+        {
+            if (tag == null)
+            {
+                return Bees.Count;
+            }
+
+            int count = 0;
+            foreach (GameObject bee in Bees)
+            {
+                if (bee.tag == tag)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }
