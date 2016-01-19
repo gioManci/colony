@@ -20,12 +20,11 @@ namespace Colony.Missions
 
 
             //Very, very bad hardcoding
-//            tutorialMissions.Enqueue(new ClickOn("Click on a Worker Bee", "Left-click on a bee to select it.", "WorkerBee"));
-//		tutorialMissions.Enqueue(new HarvestMission("Harvest a flower", "With a selected bee, right-click on a flower to harvest it"));
-//		tutorialMissions.Enqueue(new ClickOn("Click on a Queen Bee", "Left-click on a Queen Bee to select it", "QueenBee"));
-//		tutorialMissions.Enqueue(new BreedMission("Lay an egg", "With a selected Queen Bee, right-click on a hive cell to lay an egg"));
-//		tutorialMissions.Enqueue(new GrowSpecificBees("Grow 2 Worker Bees", "Left-click on a larva to select it, then right-click on \"Worker Bee\" button in the new menu opened", "WorkerBee", 2));
-//            tutorialMissions.Enqueue(new GrowSpecificBees("Grow a Drone Bee", "", "DroneBee", 1));
+		tutorialMissions.Enqueue(new ClickOn("Click on a Worker Bee", "Left-click on a bee to select it (or drag to select a group of bees).", "WorkerBee"));
+		tutorialMissions.Enqueue(new HarvestMission("Harvest a flower", "With a selected bee, right-click on a flower to harvest it"));
+		tutorialMissions.Enqueue(new ClickOn("Click on a Queen Bee", "Left-click on a Queen Bee to select it", "QueenBee"));
+		tutorialMissions.Enqueue(new BreedMission("Lay an egg", "With a selected Queen Bee, right-click on a hive cell to lay an egg"));
+		tutorialMissions.Enqueue(new GrowSpecificBees("Grow 2 Worker Bees", "Left-click on a larva to select it, then right-click on \"Worker Bee\" button in the new menu opened", "WorkerBee", 2));
 		tutorialMissions.Enqueue(new RefineMission("Refine some Honey",
 			"Left-click on a free hive cell to select it, then left-click on \"Refine Honey\" button in the new menu opened", 
 			Cell.RefinedResource.Honey));
