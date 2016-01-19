@@ -70,10 +70,10 @@ public class ResourceSet {
 		string s = "";
 		for (int i = 0; i < resources.Length; ++i) {
 			if (resources[i] > 0) {
-				s += ((ResourceType)i).ToString() + ": " + resources[i] + " ";
+				s += resources[i] + " " + ((ResourceType)i).ToBrief() + " / ";
 			}
 		}
-		return s;
+		return s.Length >= 3 ? s.Substring(0, s.Length - 3) : s;
 	}
 
 	private int[] resources = new int[Enum.GetNames(typeof(ResourceType)).Length];

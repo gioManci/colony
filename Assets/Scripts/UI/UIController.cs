@@ -89,9 +89,12 @@ public class UIController : MonoBehaviour {
 	}
 
 	public void SetResourceBPText(ResourceYielder res) {
-		string txt = "Resources left: (yield)";
+		string txt = "Resources left: (yield)\r\n";
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
-			if (type > ResourceType.Water)
+			// The following line is painful to watch; should've been a
+			// !type.IsRaw, but we haven't implemented Nectar yet, so 
+			// this is a quick way to discard it too.
+			if (type == ResourceType.Nectar)
 				break;
 			txt += "\r\n" + String.Format("{0,-9} {1,-5:D} ({2:D})", type.ToString() + ":",
 				res.Resources[type], res.YieldAmount(type));
@@ -105,6 +108,9 @@ public class UIController : MonoBehaviour {
 			+ " Bee\r\n\r\nLoad:";
 		var load = bee.GetComponent<BeeLoad>();
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
+			// See comment in SetResourceBPText
+			if (type == ResourceType.Nectar)
+				break;
 			txt += "\r\n" + type.ToString() + ": " + load.Load[type];
 		}
 		SetBPText(txt);

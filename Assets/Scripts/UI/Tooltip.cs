@@ -57,11 +57,13 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 		
 	private string parseSpecial(Match m) {
 		string txt = m.ToString();
-		if (txt.Length > 4) {
-			switch (txt[1]) {
-			case 'r':
+		switch (txt[1]) {
+		case 'r':
+			if (txt.Length > 4)
 				return Costs.Get(txt.Substring(2, txt.Length - 3)).ToString();
-			}
+			break;
+		case 'n':
+			return "\r\n";	
 		}
 		return txt;
 	}

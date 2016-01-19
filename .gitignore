@@ -26,6 +26,6 @@ compilation\ log.txt
 
 Assets/Scenes
 *.mp3
-*.prefab
+#*.prefab
 ProjectSettings/
 *.unity
