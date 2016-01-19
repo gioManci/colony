@@ -8,7 +8,9 @@ public class RefineMission : Mission {
 
 	Cell.RefinedResource refined;
 
-	public RefineMission(string title, string description, Cell.RefinedResource refined) : base(title, description) {}
+	public RefineMission(string title, string description, Cell.RefinedResource refined) : base(title, description) {
+		this.refined = refined;
+	}
 	
 	public override void OnActivate() {
 		Cell.OnStateChange += checkCellRefining;

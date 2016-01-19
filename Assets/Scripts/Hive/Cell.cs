@@ -62,8 +62,6 @@ public class Cell : MonoBehaviour {
 	}
 
 	public void Refine(RefinedResource what) {
-		if (OnStateChange != null)
-			OnStateChange(gameObject);
 		RefineHoneySprite.SetActive((what & RefinedResource.Honey) != 0);
 		RefineRoyalJellySprite.SetActive((what & RefinedResource.RoyalJelly) != 0);
 		if (what == RefinedResource.None) {
@@ -73,5 +71,7 @@ public class Cell : MonoBehaviour {
 		RefineSprite.SetActive(true);
 		state = State.Refine;
 		refined = what;
+		if (OnStateChange != null)
+			OnStateChange(gameObject);
 	}
 }

@@ -12,7 +12,7 @@ public class EventSpawner : MonoBehaviour {
 	public float MinEventDelay = 60;
 	public float MaxEventDelay = 200;
 
-	public Sprite BearImage;
+	public Sprite BearSprite;
 	public float BearTimeout = 180;
 	public int BearMinHoneyStolen = 100;
 	public int BearMaxHoneyStolen = 500;

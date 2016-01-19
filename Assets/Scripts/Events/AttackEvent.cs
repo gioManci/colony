@@ -13,6 +13,7 @@ public class AttackEvent : Event {
 		Text = "A horde of <b>Wasps</b> is going to attack our beehive!";
 		Timeout = GameObject.FindObjectOfType<EventSpawner>().AttackTimeout;
 		Level = 3;
+		Image = spawner.AttackSprite;
 		bounds = GameObject.Find("Ground").GetComponent<Boundaries>();
 	}
 

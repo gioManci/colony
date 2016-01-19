@@ -7,6 +7,7 @@ public class ToxicPollenEvent : Event {
 
 	public ToxicPollenEvent() : base() {
 		IsImmediate = true;
+		Image = spawner.ToxicPollenSprite;
 		Level = 2;
 	}
 

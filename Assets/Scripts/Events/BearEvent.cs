@@ -14,7 +14,7 @@ class BearEvent : Event {
 			"\r\nIt will also <i>kill some of your bees</i>.";
 
 		Timeout = spawner.BearTimeout;
-		Image = spawner.BearImage;
+		Image = spawner.BearSprite;
 		Level = 3;
 	}
 

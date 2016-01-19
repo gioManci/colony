@@ -12,6 +12,7 @@ public class SkunkEvent : Event {
 			"\r\nIt'll probably <i>kill some bees</i> too.";
 
 		Timeout = GameObject.FindObjectOfType<EventSpawner>().SkunkTimeout;
+		Image = spawner.SkunkSprite;
 		Level = 2;
 	}
 

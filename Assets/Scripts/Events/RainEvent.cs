@@ -9,6 +9,7 @@ public class RainEvent : Event {
 	// Use this for initialization
 	void Start() {
 		IsImmediate = true;
+		Image = spawner.RainSprite;
 		Level = 1;
 	}
 
