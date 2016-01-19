@@ -48,7 +48,7 @@ namespace Colony
 
         private Canvas worldCanvas;
 
-        void Start()
+        void Awake()
         {
             if (Instance == null)
             {
@@ -58,7 +58,10 @@ namespace Colony
             {
                 Destroy(gameObject);
             }
+        }
 
+        void Start()
+        {
             worldCanvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
 
             InitializeBeehives();
