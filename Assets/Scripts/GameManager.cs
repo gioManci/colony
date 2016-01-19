@@ -11,16 +11,40 @@ namespace Colony
 
         public GameObject endGameScreen;
         public GameObject forceToCreateScreen;
+        public GameObject counterPanel;
+
+        private bool noQueen = false;
+        private bool noWorker = false;
 
         void Start()
         {
             EntityManager.Instance.DestroyingQueenBee += OnQueenBeeDead;
             EntityManager.Instance.DestroyingWorkerBee += OnWorkerBeeDead;
+            EntityManager.Instance.QueenBeeCreated += OnQueenCreated;
+            EntityManager.Instance.WorkerBeeCreated += OnWorkerCreated;
+        }
+
+        private void OnQueenCreated(GameObject queen)
+        {
+            if (noQueen)
+            {
+                noQueen = false;
+            }
+        }
+
+        private void OnWorkerCreated(GameObject queen)
+        {
+            if (noWorker)
+            {
+                noWorker = false;
+            }
         }
 
         private void OnWorkerBeeDead(GameObject obj)
         {
-            if (EntityManager.Instance.GetBeeCount("WorkerBee") == 0)
+            bool hasWorkers = EntityManager.Instance.GetBeeCount("WorkerBee") > 0;
+
+            if (!hasWorkers)
             {
                 ShowForceCreateScreen("WorkerBee", 60.0f);
             }
@@ -54,7 +78,7 @@ namespace Colony
                     }
                     else
                     {
-                        ShowForceCreateScreen("QueenBee", 60.0f);
+                        ShowForceCreateScreen("QueenBee", 90.0f);
                     }
                 }
             }
@@ -63,7 +87,7 @@ namespace Colony
         private void ShowEndGameScreen()
         {
             TimeSpan survivalTime = TimeSpan.FromSeconds(Time.time);
-            string message = "You outlasted " + string.Format("{0}h:{1}m:{2}s",
+            string message = "You survived " + string.Format("{0:00}h:{1:00}m:{2:00}s",
                 survivalTime.Hours,
                 survivalTime.Minutes,
                 survivalTime.Seconds);
@@ -74,17 +98,55 @@ namespace Colony
 
         private void ShowForceCreateScreen(string beeTag, float createWithinTime)
         {
+            //Warning: Bad coding ahead
+            switch (beeTag)
+            {
+                case "WorkerBee":
+                    if (noWorker || noQueen)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        noWorker = true;
+                    }
+                    break;
+                case "QueenBee":
+                    if (noQueen)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        noQueen = true;
+                    }
+                    break;
+            }
             forceToCreateScreen.SetActive(true);
             switch (beeTag)
             {
                 case "WorkerBee":
-                    forceToCreateScreen.SendMessage("SetMessage", "");
+                    forceToCreateScreen.SendMessage("SetMessage", "Create a worker bee or the colony won't survive!");
                     break;
                 case "QueenBee":
-                    forceToCreateScreen.SendMessage("SetMessage", "");
+                    forceToCreateScreen.SendMessage("SetMessage", "Create a queen bee or the colony won't survive!");
                     break;
             }
             forceToCreateScreen.SendMessage("SetCreateWithinTime", createWithinTime);
+
+            counterPanel.SetActive(true);
+            CounterController cc = counterPanel.GetComponent<CounterController>();
+            cc.StartTime = createWithinTime;
+            cc.TimeExpired += OnTimeExpired;
+            cc.StartCountdown();
+        }
+
+        private void OnTimeExpired(CounterController cc)
+        {
+            cc.TimeExpired -= OnTimeExpired;
+            cc.Stop();
+            counterPanel.SetActive(false);
+            ShowEndGameScreen();
         }
     }
 }

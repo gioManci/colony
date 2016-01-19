@@ -5,6 +5,8 @@ namespace Colony.UI
 {
     public class ForceCreatePanelController : MonoBehaviour
     {
+        public GameObject counterPanel;
+
         private Text messageBox;
         private float createWithinTime;
 
@@ -18,6 +20,7 @@ namespace Colony.UI
                     messageBox = child.GetComponent<Text>();
                 }
             }
+            Time.timeScale = 0.0f;
         }
 
         public void SetMessage(string message)
@@ -32,7 +35,8 @@ namespace Colony.UI
 
         public void OnButtonClick()
         {
-            //Spawn countdown
+            Time.timeScale = 1.0f;
+            gameObject.SetActive(false);
         }
     }
 }
