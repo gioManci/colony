@@ -60,7 +60,7 @@ namespace Colony.Tasks.BasicTasks
                             EntityManager.Instance.GetNearbyUnits(agent.transform.position, stats.VisualRadius);
                         foreach (GameObject unit in neighbors)
                         {
-                            unit.SendMessage("OnHit", enemy);
+                            unit.SendMessage("OnHelp", enemy);
                         }
                     }
                 }

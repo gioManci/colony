@@ -8,7 +8,6 @@ namespace Colony.UI
         public GameObject counterPanel;
 
         private Text messageBox;
-        private float createWithinTime;
 
         void Awake()
         {
@@ -26,11 +25,6 @@ namespace Colony.UI
         public void SetMessage(string message)
         {
             messageBox.text = message;
-        }
-
-        public void SetCreateWithinTime(float time)
-        {
-            createWithinTime = time;
         }
 
         public void OnButtonClick()

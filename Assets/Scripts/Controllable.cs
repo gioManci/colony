@@ -124,5 +124,20 @@ namespace Colony
                 //Runaway!!!
             }
         }
+
+	public void OnHelp(GameObject enemy)
+	{
+		if (canAttack)
+		{
+			if (!brain.IsCurrentSubtask(TaskType.Attack))
+			{
+				brain.AddSubtask(new Attack(gameObject, enemy));
+			}
+		}
+		else
+		{
+			//Runaway!!!
+		}
+	}
     }
 }

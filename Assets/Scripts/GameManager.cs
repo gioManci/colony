@@ -41,6 +41,10 @@ namespace Colony
             if (noWorker)
             {
                 noWorker = false;
+			CounterController cc = counterPanel.GetComponent<CounterController>();
+			cc.TimeExpired -= OnTimeExpired;
+			cc.Stop();
+			counterPanel.SetActive(false);
             }
         }
 
@@ -130,10 +134,10 @@ namespace Colony
             switch (beeTag)
             {
                 case "WorkerBee":
-                    forceToCreateScreen.SendMessage("SetMessage", "Create a worker bee or the colony won't survive!");
+			forceToCreateScreen.SendMessage("SetMessage", "Create a worker bee within " + createWithinTime + " seconds or the colony won't survive!");
                     break;
                 case "QueenBee":
-                    forceToCreateScreen.SendMessage("SetMessage", "Create a queen bee or the colony won't survive!");
+			forceToCreateScreen.SendMessage("SetMessage", "Create a queen bee within " + createWithinTime + " seconds or the colony won't survive!");
                     break;
             }
             forceToCreateScreen.SendMessage("SetCreateWithinTime", createWithinTime);

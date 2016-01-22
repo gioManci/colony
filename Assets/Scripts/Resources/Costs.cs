@@ -20,10 +20,10 @@ public static class Costs {
 						.With(ResourceType.Water, 5)
 						.With(ResourceType.RoyalJelly, 1);
 	public static ResourceSet NewHive = new ResourceSet()
-						.With(ResourceType.Pollen, 2000)
-						.With(ResourceType.Honey, 1000)
-						.With(ResourceType.RoyalJelly, 1000)
-						.With(ResourceType.Water, 750);
+						.With(ResourceType.Pollen, 1500)
+						.With(ResourceType.Honey, 700)
+						.With(ResourceType.RoyalJelly, 300)
+						.With(ResourceType.Water, 1000);
 	public static ResourceSet SpecGuard = new ResourceSet()
 						.With(ResourceType.Pollen, 25)
 						.With(ResourceType.Honey, 15)

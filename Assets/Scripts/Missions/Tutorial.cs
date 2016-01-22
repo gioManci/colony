@@ -16,7 +16,7 @@ namespace Colony.Missions
 
             wasps = GameObject.Find("Wasps");
             wasps.SetActive(false);
-		Invoke("eventuallyActivateWasps", 240f);
+//		Invoke("eventuallyActivateWasps", 240f);
 
 
             //Very, very bad hardcoding
@@ -28,7 +28,7 @@ namespace Colony.Missions
 		tutorialMissions.Enqueue(new RefineMission("Refine some Honey",
 			"Left-click on a free hive cell to select it, then left-click on \"Refine Honey\" button in the new menu opened", 
 			Cell.RefinedResource.Honey));
-            tutorialMissions.Enqueue(new ReachBeesNumber("Reach 20 bees", "", 20));
+            tutorialMissions.Enqueue(new ReachBeesNumber("Reach 10 bees", "", 10));
             tutorialMissions.Enqueue(new ActivateObject(wasps));
 		tutorialMissions.Enqueue(new KillEnemies("Kill a wasp", "Left-click and hold to select a group of Worker Bees, then left-click on a wasp to attack it ", "Wasp", 1));
 		tutorialMissions.Enqueue(new SpecializeMission("Specialize a Worker Bee into a Forager.", "Left-click on Worker Bee to select it, then right-click on \"Forager\" button in the new menu opened", Specializations.SpecializationType.Forager, 1));
