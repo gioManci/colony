@@ -39,8 +39,7 @@ public class Larva : MonoBehaviour {
 		sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
 		aged = GetComponent<Aged>();
 		aged.Active = false;
-		// This is to prioritize clicks on larvae rather than cells
-		transform.Translate(new Vector3(0, 0, -1));
+		transform.Translate(new Vector3(0, 0, -Units.ZIndex.Larva));
 	}
 
 	void Update() {

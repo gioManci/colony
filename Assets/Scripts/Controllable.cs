@@ -32,6 +32,7 @@ namespace Colony
 			var sel = GetComponent<Selectable>();
 			sel.OnSelect += () => UIController.Instance.SetBottomPanel(UIController.BPType.Queen);
 			sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
+			transform.Translate(new Vector3(0, 0, -Units.ZIndex.Queen));
 		} else if (gameObject.tag == "WorkerBee") {
 			var sel = GetComponent<Selectable>();
 			sel.OnSelect += () => {
@@ -42,6 +43,7 @@ namespace Colony
 				UIController.Instance.SetBottomPanel(type);
 			};
 			sel.OnDeselect += () => UIController.Instance.SetBottomPanel(UIController.BPType.None);
+			transform.Translate(new Vector3(0, 0, -Units.ZIndex.Worker));
 		}
 	}
 

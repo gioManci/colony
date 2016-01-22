@@ -105,14 +105,15 @@ public class MouseActions : MonoBehaviour {
 			// Check if click was on an interactable unit (resource, etc)
 			GameObject obj = Utils.GetObjectAt(click.pos);
 			if (obj != null) {
-				if ("Flower".Equals(obj.tag)) {
+				switch (obj.tag) {
+				case "Flower":
 					foreach (var bee in GetSelected<Controllable>()) {
 						if (bee.canHarvest) {
 							bee.DoHarvest(obj);
 						}
 					}
-				}
-				if ("Cell".Equals(obj.tag)) {
+					break;
+				case "Cell":
 					foreach (var bee in GetSelected<Controllable>()) {
 						if (bee.canBreed && obj.GetComponent<Cell>().CellState == Cell.State.Storage) {
 							if (UIController.Instance.resourceManager.RequireResources(Costs.Larva))
@@ -123,17 +124,21 @@ public class MouseActions : MonoBehaviour {
 							bee.DoInkeep(obj);
 						} else if (bee.canMove) {
 							bee.DoMove(click.pos);
-						}
+						} 
 					}
-				}
-				if (EntityManager.Instance.IsEnemy(obj)) {
-					foreach (var bee in GetSelected<Controllable>()) {
-						if (bee.canAttack) {
-							bee.DoAttack(obj);
+					break;
+				default:
+					if (EntityManager.Instance.IsEnemy(obj)) {
+						foreach (var bee in GetSelected<Controllable>()) {
+							if (bee.canAttack) {
+								bee.DoAttack(obj);
+							}
 						}
+					} else {
+						moveSelectedUnits(click.pos);
 					}
+					break;
 				}
-				//moveSelectedUnits(click.pos);
 			} else {
 				moveSelectedUnits(click.pos);
 			}
