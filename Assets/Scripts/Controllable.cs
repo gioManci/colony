@@ -112,7 +112,7 @@ namespace Colony
 	public void DoInkeep(GameObject cell)
 	{
 		brain.RemoveAllSubtasks();
-		//		brain.AddSubtask(new Inkeep(gameObject, cell));
+		brain.AddSubtask(new Refine(gameObject, cell));
 		SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
 	}
 

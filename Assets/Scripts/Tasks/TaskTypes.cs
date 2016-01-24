@@ -19,7 +19,8 @@ namespace Colony.Tasks
         Loot,
         StealResources,
         Colonize,
-	Inkeep
+	Inkeep,
+        Produce
     }
 
 }
