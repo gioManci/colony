@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using Colony.Resources;
 using Colony.UI;
+using Colony.Events;
 
 namespace Colony.Input {
 
@@ -46,34 +47,47 @@ public class Prompt : MonoBehaviour {
 		int type = -1;
 
 		switch (tokens[0].ToLower()) {
+		case "help":
+			TextController.Instance.Add("Cheats:");
+			TextController.Instance.Add("Resources: w|h|rj|p|a [amount]");
+			TextController.Instance.Add("Events: event <event>");
+			break;
 		case "h":
 		case "honey":
-			type = (int)ResourceType.Honey;
+			cheatAddResource((int)ResourceType.Honey, tokens);
 			break;
 		case "w":
 		case "water":
-			type = (int)ResourceType.Water;
+			cheatAddResource((int)ResourceType.Water, tokens);
 			break;
 		case "rj":
 		case "royaljelly":
-			type = (int)ResourceType.RoyalJelly;
+			cheatAddResource((int)ResourceType.RoyalJelly, tokens);
 			break;
 		case "p":
 		case "pollen":
-			type = (int)ResourceType.Pollen;
+			cheatAddResource((int)ResourceType.Pollen, tokens);
 			break;
 		case "n":
 		case "nectar":
-			type = (int)ResourceType.Nectar;
+			cheatAddResource((int)ResourceType.Nectar, tokens);
 			break;
 		case "a":
 		case "all":
+			cheatAddResource(-1, tokens);
+			break;
+		case "e":
+		case "event":
+			cheatSpawnEvent(tokens);
 			break;
 		case "quit":
 			Application.Quit();
 			return;
 		}
 
+	}
+
+	private void cheatAddResource(int type, string[] tokens) {
 		int amount = 1000;
 		if (tokens.Length > 1) {
 			try {
@@ -84,13 +98,39 @@ public class Prompt : MonoBehaviour {
 		if (type < 0) {
 			UIController.Instance.resourceManager.AddResources(
 				new ResourceSet()
-					.With(ResourceType.Honey, amount)
-					.With(ResourceType.Water, amount)
-					.With(ResourceType.Pollen, amount)
-					.With(ResourceType.RoyalJelly, amount)
-					.With(ResourceType.Nectar, amount));
+				.With(ResourceType.Honey, amount)
+				.With(ResourceType.Water, amount)
+				.With(ResourceType.Pollen, amount)
+				.With(ResourceType.RoyalJelly, amount)
+				.With(ResourceType.Nectar, amount));
 		} else {
 			UIController.Instance.resourceManager.AddResource((ResourceType)type, amount);
+		}
+	}
+
+	private void cheatSpawnEvent(string[] tokens) {
+		if (tokens.Length < 2) {
+			TextController.Instance.Add("Available events: bear, skunk, attack, rain, toxic");
+			return;
+		}
+		
+		switch (tokens[1].ToLower()) {
+		case "bear":
+			EventManager.Instance.LaunchEvent(new BearEvent());
+			break;
+		case "skunk":
+			EventManager.Instance.LaunchEvent(new SkunkEvent());
+			break;
+		case "attack":
+			EventManager.Instance.LaunchEvent(new AttackEvent());
+			break;
+		case "rain":
+			EventManager.Instance.LaunchEvent(new RainEvent());
+			break;
+		case "toxic":
+		case "toxicpollen":
+			EventManager.Instance.LaunchEvent(new ToxicPollenEvent());
+			break;
 		}
 	}
 }
