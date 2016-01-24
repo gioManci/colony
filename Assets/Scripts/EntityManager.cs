@@ -193,6 +193,7 @@ namespace Colony
             GameObject newLarva = (GameObject)Instantiate(larva, position, Quaternion.identity);
             Larvae.Add(newLarva);
             newLarva.transform.SetParent(worldCanvas.transform);
+            newLarva.transform.SetAsFirstSibling();
             return newLarva;
         }
 

@@ -77,7 +77,8 @@ namespace Colony
         public void DoHarvest(GameObject resource)
         {
             brain.RemoveAllSubtasks();
-            brain.AddSubtask(new Harvest(gameObject, resource));
+		brain.AddSubtask(new Harvest(gameObject, resource));
+		SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
         }
 
         public void DoBuild()
@@ -91,13 +92,15 @@ namespace Colony
         public void DoAttack(GameObject enemy)
         {
             brain.RemoveAllSubtasks();
-            brain.AddSubtask(new Attack(gameObject, enemy));
+		brain.AddSubtask(new Attack(gameObject, enemy));
+		SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
         }
 
         public void DoBreed(GameObject breedingCell)
         {
             brain.RemoveAllSubtasks();
-            brain.AddSubtask(new Breed(gameObject, breedingCell));
+		brain.AddSubtask(new Breed(gameObject, breedingCell));
+		SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
         }
 
         public void DoColonize()
@@ -109,7 +112,8 @@ namespace Colony
 	public void DoInkeep(GameObject cell)
 	{
 		brain.RemoveAllSubtasks();
-//		brain.AddSubtask(new Inkeep(gameObject, cell));
+		//		brain.AddSubtask(new Inkeep(gameObject, cell));
+		SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
 	}
 
         public void OnHit(GameObject enemy)
