@@ -125,6 +125,12 @@ namespace Colony
         {
             if (type != SpecializationType.None)
             {
+                //This should be changed
+                if (type == SpecializationType.Inkeeper)
+                {
+                    gameObject.GetComponent<Controllable>().canInkeep = true;
+                }
+
                 spec = SpecializationFactory.GetSpecialization(type);
                 GetComponent<Animator>().SetInteger("Specialization", (int)type);
                 if (BeeSpecialized != null)

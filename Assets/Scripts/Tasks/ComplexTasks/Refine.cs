@@ -7,7 +7,6 @@ namespace Colony.Tasks.ComplexTasks
     public class Refine : ComplexTask
     {
         private Cell refiningCell;
-        private bool failedOnActivate = false;
 
         public Refine(GameObject agent, GameObject refiningCell) : base(agent, TaskType.Inkeep)
         {
