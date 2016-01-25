@@ -24,11 +24,11 @@ namespace Colony.Missions
 		tutorialMissions.Enqueue(new HarvestMission("Harvest a flower", "With a selected bee, right-click on a flower to harvest it"));
 		tutorialMissions.Enqueue(new ClickOn("Click on a Queen Bee", "Left-click on a Queen Bee to select it", "QueenBee"));
 		tutorialMissions.Enqueue(new BreedMission("Lay an egg", "With a selected Queen Bee, right-click on a hive cell to lay an egg"));
-		tutorialMissions.Enqueue(new GrowSpecificBees("Grow 2 Worker Bees", "Left-click on a larva to select it, then right-click on \"Worker Bee\" button in the new menu opened", "WorkerBee", 2));
+		tutorialMissions.Enqueue(new GrowSpecificBees("Grow 2 Worker Bees", "Left-click on a larva to select it, then left-click on \"Grow Worker Bee\" button in the new menu opened", "WorkerBee", 2));
 		tutorialMissions.Enqueue(new RefineMission("Refine some Honey",
-			"Left-click on a free hive cell to select it, then left-click on \"Refine Honey\" button in the new menu opened", 
+			"Left-click on a free hive cell to select it, then left-click on \"Refine Honey\" button in the new menu opened. While a cell is refining, it continuously converts Pollen and Water into refined resources, like Honey and Royal Jelly.", 
 			Cell.RefinedResource.Honey));
-            tutorialMissions.Enqueue(new ReachBeesNumber("Reach 10 bees", "", 10));
+            tutorialMissions.Enqueue(new ReachBeesNumber("Reach 10 bees", "Great job! Now go on growing Worker Bees until you have 10 of them. Remember that bees have a limited lifespan and die after some time.", 10));
             tutorialMissions.Enqueue(new ActivateObject(wasps));
 		tutorialMissions.Enqueue(new KillEnemies("Kill a wasp", "Left-click and hold to select a group of Worker Bees, then left-click on a wasp to attack it ", "Wasp", 1));
 		tutorialMissions.Enqueue(new SpecializeMission("Specialize a Worker Bee into a Forager.", "Left-click on Worker Bee to select it, then right-click on \"Forager\" button in the new menu opened", Specializations.SpecializationType.Forager, 1));
