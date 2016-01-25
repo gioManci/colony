@@ -9,7 +9,7 @@ namespace Colony.Missions
     {
         private List<Mission> missions;
 
-        public GameObject missionPanel;
+        private GameObject missionPanel;
 
         public Mission CurrentMission { get; private set; }
         public bool HasActiveMission { get { return CurrentMission != null; } }
@@ -31,6 +31,16 @@ namespace Colony.Missions
             else
             {
                 Destroy(gameObject);
+            }
+
+            Transform canvasTransform = GameObject.Find("Canvas").transform;
+            for (int i=0;i<canvasTransform.childCount;i++)
+            {
+                GameObject child = canvasTransform.GetChild(i).gameObject;
+                if (child.name == "MissionPanel")
+                {
+                    missionPanel = child;
+                }
             }
         }
 
@@ -74,6 +84,14 @@ namespace Colony.Missions
   
                 missionPanel.SendMessage("SetTitle", mission.Title);
                 missionPanel.SendMessage("SetDescription", mission.Description);
+            }
+        }
+
+        void OnDestroy()
+        {
+            foreach (Mission mission in missions)
+            {
+                mission.Dispose();
             }
         }
     }

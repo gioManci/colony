@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Colony.Missions;
+using System;
 
 namespace Colony.Missions.SimpleMissions {
 
@@ -11,8 +12,13 @@ public class RefineMission : Mission {
 	public RefineMission(string title, string description, Cell.RefinedResource refined) : base(title, description) {
 		this.refined = refined;
 	}
-	
-	public override void OnActivate() {
+
+        public override void Dispose()
+        {
+            Cell.OnStateChange -= checkCellRefining;
+        }
+
+        public override void OnActivate() {
 		Cell.OnStateChange += checkCellRefining;
 	}
 

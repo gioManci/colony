@@ -13,6 +13,13 @@ namespace Colony.Missions.SimpleMissions
             beesNumberToReach = beesNumber;
         }
 
+        public override void Dispose()
+        {
+            EntityManager.Instance.WorkerBeeCreated -= OnBeeCreated;
+            EntityManager.Instance.QueenBeeCreated -= OnBeeCreated;
+            EntityManager.Instance.DroneBeeCreated -= OnBeeCreated;
+        }
+
         public override void OnActivate()
         {
             if (EntityManager.Instance.Bees.Count >= beesNumberToReach)

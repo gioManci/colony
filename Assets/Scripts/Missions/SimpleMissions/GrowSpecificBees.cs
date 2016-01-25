@@ -33,5 +33,10 @@ namespace Colony.Missions.SimpleMissions
                 }
             }
         }
+
+        public override void Dispose()
+        {
+            EntityManager.Instance.BeeCreated -= OnBeeCreated;
+        }
     }
 }

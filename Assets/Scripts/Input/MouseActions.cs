@@ -27,14 +27,19 @@ public class MouseActions : MonoBehaviour {
 	void Awake() {
 		if (Instance == null) {
 			Instance = this;
-			MouseMonitor.OnLeftClick += clickSelect;
-			MouseMonitor.OnDrag += dragSelect;
-			MouseMonitor.OnRightClick += dispatchRightClick;
-			MouseMonitor.OnMove += changeCursor;
+			
 		} else {
 			GameObject.Destroy(this);
 		}
 	}
+
+        void Start()
+        {
+            MouseMonitor.Instance.OnLeftClick += clickSelect;
+            MouseMonitor.Instance.OnDrag += dragSelect;
+            MouseMonitor.Instance.OnRightClick += dispatchRightClick;
+            MouseMonitor.Instance.OnMove += changeCursor;
+        }
 
 	public void RemoveSelected(Selectable sel) {
 		selected.Remove(sel);

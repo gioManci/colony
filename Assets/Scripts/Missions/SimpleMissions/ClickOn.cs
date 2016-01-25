@@ -13,7 +13,12 @@ namespace Colony.Missions.SimpleMissions
         {
             this.tag = tag;
         }
-		
+
+        public override void Dispose()
+        {
+            MouseActions.Instance.ObjectSelected -= OnClick;
+        }
+
         public override void OnActivate()
         {
             MouseActions.Instance.ObjectSelected += OnClick;
