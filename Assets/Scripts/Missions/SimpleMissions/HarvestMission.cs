@@ -13,6 +13,11 @@ namespace Colony.Missions.SimpleMissions
 
         }
 
+        public override void Dispose()
+        {
+            Extract.ResourceExtracted -= OnResourceExtracted;
+        }
+
         public override void OnActivate()
         {
             Extract.ResourceExtracted += OnResourceExtracted;

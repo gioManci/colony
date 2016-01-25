@@ -22,9 +22,9 @@ public class MouseMonitor : MonoBehaviour {
 	private Minimap minimap;
 
 	// Callbacks
-	public static event Action<Click> OnLeftClick, OnRightClick;
-	public static event Action<Drag> OnDrag, OnDragEnd;
-	public static event Action<Move> OnMove; 
+	public  event Action<Click> OnLeftClick, OnRightClick;
+	public  event Action<Drag> OnDrag, OnDragEnd;
+	public  event Action<Move> OnMove; 
 
 	// Make this class a singleton
 	public static MouseMonitor Instance { get; private set; }

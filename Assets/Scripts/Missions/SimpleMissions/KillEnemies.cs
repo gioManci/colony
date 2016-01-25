@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Colony.Missions.SimpleMissions
 {
@@ -32,6 +33,11 @@ namespace Colony.Missions.SimpleMissions
                 EntityManager.Instance.DestroyingEnemy -= OnEnemyDestroyed;
                 NotifyCompletion(this);
             }
+        }
+
+        public override void Dispose()
+        {
+            EntityManager.Instance.DestroyingEnemy -= OnEnemyDestroyed;
         }
     }
 }

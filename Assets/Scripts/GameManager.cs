@@ -9,15 +9,36 @@ namespace Colony
     {
 	public const string SceneName = "beta";
 
-        public GameObject endGameScreen;
-        public GameObject forceToCreateScreen;
-        public GameObject counterPanel;
+        private GameObject endGameScreen;
+        private GameObject forceToCreateScreen;
+        private GameObject counterPanel;
 
         private bool noQueen = false;
         private bool noWorker = false;
 
         void Start()
         {
+            Transform canvasTransform = GameObject.Find("Canvas").transform;
+
+            for (int i = 0; i < canvasTransform.childCount; i++)
+            {
+                GameObject child = canvasTransform.GetChild(i).gameObject;
+                switch (child.name)
+                {
+                    case "EndOfGamePanel":
+                        endGameScreen = child;
+                        break;
+                    case "ForceCreatePanel":
+                        forceToCreateScreen = child;
+                        break;
+                    case "CounterPanel":
+                        counterPanel = child;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             EntityManager.Instance.DestroyingQueenBee += OnQueenBeeDead;
             EntityManager.Instance.DestroyingWorkerBee += OnWorkerBeeDead;
             EntityManager.Instance.QueenBeeCreated += OnQueenCreated;

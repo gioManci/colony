@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Colony.Missions
 {
-    public abstract class Mission
+    public abstract class Mission : IDisposable
     {
         private string title;
         private string description;
@@ -31,5 +31,7 @@ namespace Colony.Missions
                 MissionComplete(completedMission);
             }
         }
+
+        public abstract void Dispose();
     }
 }

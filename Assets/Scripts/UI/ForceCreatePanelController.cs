@@ -5,8 +5,6 @@ namespace Colony.UI
 {
     public class ForceCreatePanelController : MonoBehaviour
     {
-        public GameObject counterPanel;
-
         private Text messageBox;
 
         void Awake()

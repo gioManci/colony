@@ -1,4 +1,5 @@
-﻿using Colony.Specializations;
+﻿using System;
+using Colony.Specializations;
 using UnityEngine;
 
 namespace Colony.Missions.SimpleMissions
@@ -33,6 +34,11 @@ namespace Colony.Missions.SimpleMissions
                     NotifyCompletion(this);
                 }
             }
+        }
+
+        public override void Dispose()
+        {
+            Stats.BeeSpecialized -= OnBeeSpecialized;
         }
     }
 }

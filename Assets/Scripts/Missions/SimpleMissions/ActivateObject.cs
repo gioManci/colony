@@ -15,7 +15,12 @@ public class ActivateObject : Mission {
 		this.activate = activate;
 	}
 
-	public override void OnActivate() {
+        public override void Dispose()
+        {
+            
+        }
+
+        public override void OnActivate() {
 		obj.SetActive(activate);
 		NotifyCompletion(this);
 	}

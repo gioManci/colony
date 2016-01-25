@@ -23,5 +23,11 @@ namespace Colony.Missions.SimpleMissions
             LayEgg.EggLaid -= OnEggLaid;
             NotifyCompletion(this);
         }
+
+        public override void Dispose()
+        {
+            LayEgg.EggLaid -= OnEggLaid;
+        }
+
     }
 }
