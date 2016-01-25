@@ -29,16 +29,19 @@ namespace Colony.Tasks.BasicTasks
         public override Status Process()
         {
             ActivateIfInactive();
-
-            GameObject larva = EntityManager.Instance.CreateLarva(breedingCell.transform.position);
-            larva.GetComponent<Larva>().BreedingCell = breedingCell;
-	    UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
-            breedingCell.GetComponent<Cell>().CellState = Cell.State.CreateEgg;
-            status = Status.Completed;
-            if (EggLaid != null)
-            {
-                EggLaid(agent, larva);
-            }
+	
+		if (breedingCell.GetComponent<Cell>().CellState == Cell.State.Storage) {
+			GameObject larva = EntityManager.Instance.CreateLarva(breedingCell.transform.position);
+			larva.GetComponent<Larva>().BreedingCell = breedingCell;
+			UIController.Instance.resourceManager.RemoveResources(Costs.Larva);
+			breedingCell.GetComponent<Cell>().CellState = Cell.State.CreateEgg;
+			status = Status.Completed;
+			if (EggLaid != null) {
+				EggLaid(agent, larva);
+			}
+		} else {
+			status = Status.Failed;
+		}
 
             return status;
         }

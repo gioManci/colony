@@ -1,5 +1,6 @@
 ﻿using Colony.Behaviour;
 using UnityEngine;
+using Colony.UI;
 
 namespace Colony.Tasks.BasicTasks
 {
@@ -25,6 +26,8 @@ namespace Colony.Tasks.BasicTasks
             else
             {
                 refiningCell.Inkeeper = agent;
+                agent.GetComponent<Controllable>().InkeptCell = refiningCell;
+                UIController.Instance.SetBeeLoadText(agent);
                 behaviour.StopFlocking();
             }
         }
@@ -49,6 +52,8 @@ namespace Colony.Tasks.BasicTasks
             if (!failedOnActivate)
             {
                 refiningCell.Inkeeper = null;
+                agent.GetComponent<Controllable>().InkeptCell = null;
+                UIController.Instance.SetBeeLoadText(agent);
                 behaviour.StartFlocking();
             }
         }

@@ -50,10 +50,5 @@ namespace Colony.Tasks.ComplexTasks
 
             return status;
         }
-
-        public override void Terminate()
-        {
-
-        }
     }
 }

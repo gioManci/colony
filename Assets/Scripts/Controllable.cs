@@ -20,6 +20,8 @@ namespace Colony
         public bool canColonize;
 	public bool canInkeep;
 
+	public Cell InkeptCell { get; set; }
+
         private ComplexTask brain;
 
         void Awake()
@@ -77,10 +79,10 @@ namespace Colony
         public void DoHarvest(GameObject resource)
         {
             brain.RemoveAllSubtasks();
-		brain.AddSubtask(new Harvest(gameObject, resource));
-		SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
+            brain.AddSubtask(new Harvest(gameObject, resource));
+            SoundEffects.Instance.Play(SoundEffects.Sound.BeeMove, 3f);
         }
-
+		
         public void DoBuild()
         {
         }

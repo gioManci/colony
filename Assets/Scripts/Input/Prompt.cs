@@ -9,6 +9,8 @@ using Colony.Events;
 
 namespace Colony.Input {
 
+using Event = Colony.Events.Event;
+
 public class Prompt : MonoBehaviour {
 
 	private InputField input;
@@ -47,11 +49,6 @@ public class Prompt : MonoBehaviour {
 		int type = -1;
 
 		switch (tokens[0].ToLower()) {
-		case "help":
-			TextController.Instance.Add("Cheats:");
-			TextController.Instance.Add("Resources: w|h|rj|p|a [amount]");
-			TextController.Instance.Add("Events: event <event>");
-			break;
 		case "h":
 		case "honey":
 			cheatAddResource((int)ResourceType.Honey, tokens);
@@ -83,8 +80,12 @@ public class Prompt : MonoBehaviour {
 		case "quit":
 			Application.Quit();
 			return;
+		default:
+			TextController.Instance.Add("Cheats:");
+			TextController.Instance.Add("Resources: w|h|rj|p|a [amount]");
+			TextController.Instance.Add("Events: event <event> [timeout]");
+			break;
 		}
-
 	}
 
 	private void cheatAddResource(int type, string[] tokens) {
@@ -113,25 +114,38 @@ public class Prompt : MonoBehaviour {
 			TextController.Instance.Add("Available events: bear, skunk, attack, rain, toxic");
 			return;
 		}
-		
+
+		float timeout = -1;
+		if (tokens.Length > 2) {
+			try {
+				timeout = float.Parse(tokens[2]);
+			} catch {}
+		}
+
+		Event evt = null;
 		switch (tokens[1].ToLower()) {
 		case "bear":
-			EventManager.Instance.LaunchEvent(new BearEvent());
+			evt = new BearEvent();
 			break;
 		case "skunk":
-			EventManager.Instance.LaunchEvent(new SkunkEvent());
+			evt = new SkunkEvent();
 			break;
 		case "attack":
-			EventManager.Instance.LaunchEvent(new AttackEvent());
+			evt = new AttackEvent();
 			break;
 		case "rain":
-			EventManager.Instance.LaunchEvent(new RainEvent());
+			evt = new RainEvent();
 			break;
 		case "toxic":
 		case "toxicpollen":
-			EventManager.Instance.LaunchEvent(new ToxicPollenEvent());
+			evt = new ToxicPollenEvent();
 			break;
 		}
+
+		if (timeout >= 0)
+			evt.Timeout = timeout;
+
+		EventManager.Instance.LaunchEvent(evt);
 	}
 }
 

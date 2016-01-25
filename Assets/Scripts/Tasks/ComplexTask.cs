@@ -85,5 +85,9 @@ namespace Colony.Tasks
         {
             return (CurrentSubtask == null) ? false : CurrentSubtask.Type == type;
         }
+
+	public override void Terminate() {
+		RemoveAllSubtasks();
+	}
     }
 }

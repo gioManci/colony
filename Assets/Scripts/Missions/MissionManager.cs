@@ -56,7 +56,8 @@ namespace Colony.Missions
             else
             {
                 CurrentMission = null;
-                missionPanel.SetActive(false);
+                if (missionPanel != null)
+               	    missionPanel.SetActive(false);
             }
         }
 

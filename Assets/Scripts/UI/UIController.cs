@@ -105,7 +105,7 @@ public class UIController : MonoBehaviour {
 	public void SetBeeLoadText(GameObject bee) {
 		var spec = bee.GetComponent<Stats>().Specialization;
 		string txt = (spec == Specializations.SpecializationType.None ? "Worker" : spec.ToString())
-			+ " Bee\r\n\r\nLoad:";
+			+ " Bee" + (bee.GetComponent<Controllable>().InkeptCell != null ? " (inkeeping)" : "") + "\r\n\r\nLoad:";
 		var load = bee.GetComponent<BeeLoad>();
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
 			// See comment in SetResourceBPText

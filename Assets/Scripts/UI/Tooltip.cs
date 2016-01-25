@@ -17,38 +17,51 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 	private Text ttText;
 	private GameObject ttPanel;
 
+	private bool initialized;
+
 	void Start() {
-		Debug.Assert(UIController.Instance.TooltipPanel != null, "Tooltip Panel is null!");
-		Regex rgx = new Regex(@"{\w+}", RegexOptions.IgnoreCase);
-		Txt = rgx.Replace(Txt, new MatchEvaluator(parseSpecial));
-		ttText = UIController.Instance.TooltipPanel.GetComponentInChildren<Text>();
-		ttPanel = UIController.Instance.TooltipPanel.transform.FindChild("Panel").gameObject;
-		Debug.Assert(ttText != null && ttPanel != null, "ttText or ttPanel are null!");
+		initialize();
+	}
+
+	protected void initialize() {
+		if (!initialized) {
+			Debug.Assert(UIController.Instance.TooltipPanel != null, "Tooltip Panel is null!");
+			Regex rgx = new Regex(@"{\w+}", RegexOptions.IgnoreCase);
+			Txt = rgx.Replace(Txt, new MatchEvaluator(parseSpecial));
+			ttText = UIController.Instance.TooltipPanel.GetComponentInChildren<Text>();
+			ttPanel = UIController.Instance.TooltipPanel.transform.FindChild("Panel").gameObject;
+			Debug.Assert(ttText != null && ttPanel != null, "ttText or ttPanel are null!");
+			initialized = true;
+		}
 	}
 
 	void OnDisable() {
 		hide();
 	}
 
-	public void OnPointerEnter(PointerEventData data) {
-		var tt = UIController.Instance.TooltipPanel;
-		ttPanel.SetActive(true);
-		tt.transform.position = transform.position;
-		ttText.text = Txt;
-		// Prevent overflowing from screen
-		var transf = tt.transform.position;
-		float diffx = Screen.width - ttText.rectTransform.rect.width,
-		      diffy = Screen.height  - ttText.rectTransform.rect.height;
-		float newx = transf.x >= diffx ? diffx : transf.x,
-		      newy = transf.y >= diffy ? diffy : transf.y;
-		tt.transform.position = new Vector3(newx, newy, transf.z);
+	public virtual void OnPointerEnter(PointerEventData data) {
+		show(transform.position);
 	}
 
 	public void OnPointerExit(PointerEventData data) {
 		hide();
 	}
 
-	private void hide() {
+	protected void show(Vector2 pos) {
+		var tt = UIController.Instance.TooltipPanel;
+		ttPanel.SetActive(true);
+		tt.transform.position = pos;
+		ttText.text = Txt;
+		// Prevent overflowing from screen
+		var transf = tt.transform.position;
+		float diffx = Screen.width - ttText.rectTransform.rect.width,
+		diffy = Screen.height  - ttText.rectTransform.rect.height;
+		float newx = transf.x >= diffx ? diffx : transf.x,
+		newy = transf.y >= diffy ? diffy : transf.y;
+		tt.transform.position = new Vector3(newx, newy, transf.z);
+	}
+
+	protected void hide() {
 		if (ttPanel != null) 
 			ttPanel.SetActive(false);
 		if (ttText != null)

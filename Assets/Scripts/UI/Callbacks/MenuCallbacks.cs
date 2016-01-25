@@ -10,7 +10,7 @@ public class MenuCallbacks : MonoBehaviour {
 	}
 
 	public void ExitGame() {
-        Time.timeScale = 1.0f;
-        SceneManager.LoadScene("menu");
-    }
+		Time.timeScale = 1.0f;
+		SceneManager.LoadScene("menu");
+	}
 }

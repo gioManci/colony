@@ -85,7 +85,7 @@ namespace Colony.Tasks
         /// <summary>
         /// Function that is called when the task is terminated.
         /// </summary>
-        public abstract void Terminate();
+	public virtual void Terminate() {}
 
         public abstract void OnMessage();
 

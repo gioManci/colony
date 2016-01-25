@@ -40,10 +40,5 @@ namespace Colony.Tasks.ComplexTasks
 
             return status;
         }
-
-        /// <summary>
-        /// Terminates this task [Has no effect on this task]
-        /// </summary>
-        public override void Terminate() { }
     }
 }

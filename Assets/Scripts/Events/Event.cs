@@ -7,7 +7,7 @@ namespace Colony.Events {
 
 public abstract class Event {
 	public string Text { get; protected set; }
-	public float Timeout { get; protected set; }
+	public float Timeout { get; set; }
 	// The seriousness of the Event
 	public int Level { get; protected set; }
 	public EventManager.PopupStyle Style { get; protected set; }

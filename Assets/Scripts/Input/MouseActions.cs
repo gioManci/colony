@@ -114,19 +114,22 @@ public class MouseActions : MonoBehaviour {
 					}
 					break;
 				case "Cell":
-					foreach (var bee in GetSelected<Controllable>()) {
-						if (bee.canBreed && obj.GetComponent<Cell>().CellState == Cell.State.Storage) {
-							if (UIController.Instance.resourceManager.RequireResources(Costs.Larva))
-								bee.DoBreed(obj);
-							else
-								TextController.Instance.Add("Not enough resources to breed!");
-						} else if (bee.canInkeep) {
-							bee.DoInkeep(obj);
-						} else if (bee.canMove) {
-							bee.DoMove(click.pos);
-						} 
+					{
+						var cell = obj.GetComponent<Cell>();
+						foreach (var bee in GetSelected<Controllable>()) {
+							if (bee.canBreed && cell.CellState == Cell.State.Storage) {
+								if (UIController.Instance.resourceManager.RequireResources(Costs.Larva))
+									bee.DoBreed(obj);
+								else
+									TextController.Instance.Add("Not enough resources to breed!");
+							} else if (bee.canInkeep && cell.CellState == Cell.State.Refine) {
+								bee.DoInkeep(obj);
+							} else if (bee.canMove) {
+								bee.DoMove(click.pos);
+							} 
+						}
+						break;
 					}
-					break;
 				default:
 					if (EntityManager.Instance.IsEnemy(obj)) {
 						foreach (var bee in GetSelected<Controllable>()) {
@@ -164,17 +167,20 @@ public class MouseActions : MonoBehaviour {
 	}
 
 	private void changeCursor(Move move) {
-		uint CanHarvest = 1,
-		CanAttack = 1 << 1,
-		CanBreed = 1 << 2;
+		uint canHarvest = 1,
+		     canAttack  = 1 << 1,
+		     canBreed   = 1 << 2,
+		     canInkeep  = 1 << 3;
 		uint flags = 0;
 		foreach (Controllable bee in GetSelected<Controllable>()) {
 			if (bee.canHarvest)
-				flags |= CanHarvest;
+				flags |= canHarvest;
 			if (bee.canAttack)
-				flags |= CanAttack;
+				flags |= canAttack;
 			if (bee.canBreed)
-				flags |= CanBreed;
+				flags |= canBreed;
+			if (bee.canInkeep)
+				flags |= canInkeep;
 
 			if (~flags == 0)
 				break;
@@ -183,12 +189,16 @@ public class MouseActions : MonoBehaviour {
 		if (flags != 0) {
 			GameObject obj = Utils.GetObjectAt(move.pos);
 			if (obj != null) {
-				if (((flags & CanHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null)
-				    || ((flags & CanBreed) != 0 && obj.GetComponent<Cell>() != null
-				    && obj.GetComponent<Cell>().CellState == Cell.State.Storage)) {
+				var cell = obj.GetComponent<Cell>();
+				bool harvestable = (flags & canHarvest) != 0 && obj.GetComponentInChildren<ResourceYielder>() != null,
+				     breedable   = (flags & canBreed)  != 0 && cell != null && cell.CellState == Cell.State.Storage,
+				     inkeepable  = (flags & canInkeep) != 0 && cell != null && cell.CellState == Cell.State.Refine,
+				     attackable  = (flags & canAttack) != 0 && EntityManager.Instance.IsEnemy(obj);
+
+				if (harvestable || breedable || inkeepable) {
 					Cursor.Instance.SetCursor(Cursor.Type.Click);
 					return;
-				} else if ((flags & CanAttack) != 0 && EntityManager.Instance.IsEnemy(obj)) {
+				} else if (attackable) {
 					Cursor.Instance.SetCursor(Cursor.Type.Attack);
 					return;
 				}

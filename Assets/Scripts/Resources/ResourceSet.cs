@@ -31,7 +31,7 @@ public class ResourceSet {
 	public static ResourceSet operator *(ResourceSet rs1, float mult) {
 		ResourceSet result = new ResourceSet();
 		foreach (ResourceType type in Enum.GetValues(typeof(ResourceType))) {
-			result[type] = (int)(result[type] * mult);
+			result[type] = (int)(rs1[type] * mult);
 		}
 		return result;
 	}
