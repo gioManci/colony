@@ -140,6 +140,8 @@ public class Prompt : MonoBehaviour {
 		case "toxicpollen":
 			evt = new ToxicPollenEvent();
 			break;
+                default:
+                    return;
 		}
 
 		if (timeout >= 0)
