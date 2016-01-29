@@ -94,13 +94,19 @@ public class MouseActions : MonoBehaviour {
 		if (!Input.GetKey(KeyCode.LeftShift))
 			DeselectAll();
 
+		bool selectedBee = false;
 		foreach (Selectable obj in EntityManager.Instance.GetSelectablesIn(drag.spanRect)) {
 			if (obj.DragSelectable) {
+				var contr = obj.GetComponent<Controllable>();
+				if (selectedBee && contr == null)
+					continue;
 				obj.Select();
 				UpdateSelected(obj);
 				if (ObjectSelected != null) {
 					ObjectSelected(obj.gameObject);
 				}
+				if (contr != null)
+					selectedBee = true;
 			}
 		}
 	}
