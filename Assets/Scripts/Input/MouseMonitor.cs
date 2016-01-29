@@ -12,8 +12,10 @@ public class MouseMonitor : MonoBehaviour {
 	public Texture2D selectTexture;
 	public static Rect selection = new Rect();
 
-	// Threshold above which the mouse input is considered
-	// a "drag" rather than a "click"
+	/// <summary>
+	/// Threshold above which the mouse input is considered
+	/// a "drag" rather than a "click"
+	/// </summary>
 	private const float MinDragSpan = 2f;
 
 	private bool dragging = false;

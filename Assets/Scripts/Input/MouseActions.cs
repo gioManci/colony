@@ -9,8 +9,10 @@ namespace Colony.Input {
 using Cursor = Colony.UI.Cursor;
 using Input = UnityEngine.Input;
 
-// Implements all the actions performed when an event is caught
-// by MouseMonitor.
+/// <summary>
+/// Implements all the actions performed when an event is caught
+/// by MouseMonitor.
+/// </summary>
 public class MouseActions : MonoBehaviour {
 	private HashSet<Selectable> selected = new HashSet<Selectable>();
 
@@ -45,6 +47,9 @@ public class MouseActions : MonoBehaviour {
 		selected.Remove(sel);
 	}
 
+	/// <summary>
+	/// Returns all the selected Selectables for which <code>GetComponentInChildren&lt;T&gt;() is non-null</code>
+	/// </summary>
 	public List<T> GetSelected<T>() {
 		List<T> list = new List<T>();
 		foreach (Selectable s in selected) {
@@ -62,6 +67,10 @@ public class MouseActions : MonoBehaviour {
 		selected.Clear();
 	}
 
+	/// <summary>
+	/// If <code>sel</code> is selected, adds it to <code>selected</code>, else
+	/// removes it if necessary.
+	/// </summary>
 	public void UpdateSelected(Selectable sel) {
 		if (sel.IsSelected)
 			selected.Add(sel);
@@ -111,6 +120,11 @@ public class MouseActions : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Figures out the action to perform accordingly to the currently selected
+	/// units and the clicked object, if any.
+	/// </summary>
+	/// <param name="click">A struct containing the click parameters</param>
 	private void dispatchRightClick(Click click) {
 		if (selected.Count > 0) {
 			// Check if click was on an interactable unit (resource, etc)
@@ -176,6 +190,10 @@ public class MouseActions : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Updates the cursor sprite according to the object the cursor is over, if any.
+	/// </summary>
+	/// <param name="move">A struct containing the mouse motion parameters</param>
 	private void changeCursor(Move move) {
 		uint canHarvest = 1,
 		     canAttack  = 1 << 1,

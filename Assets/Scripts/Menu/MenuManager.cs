@@ -6,7 +6,7 @@ namespace Colony.Menu
 {
     public class MenuManager : MonoBehaviour
     {
-        public GameObject splashScreen;
+        public GameObject splashScreen, poliImg;
         public GameObject background;
         public GameObject menu;
         public GameObject credits;
@@ -85,7 +85,9 @@ namespace Colony.Menu
         {
             splashScreen.SetActive(true);
             yield return new WaitForSeconds(2.0f);
-            splashScreen.SetActive(false);
+		poliImg.SetActive(false);
+		yield return new WaitForSeconds(2.0f);
+		splashScreen.SetActive(false);
             background.SetActive(true);
             ShowMenu();
             yield return null;

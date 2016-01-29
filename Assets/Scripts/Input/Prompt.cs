@@ -11,6 +11,40 @@ namespace Colony.Input {
 
 using Event = Colony.Events.Event;
 
+/// <summary>
+/// This class handles the cheats input prompt.
+/// Available cheats are:
+/// Resources:
+/// <list type="bullet">
+/// <item>
+///   <term>w [amount]</term>
+///   <description>Gives [amount] units of Water (default: 1000)</description>
+/// </item>
+/// <item>
+///   <term>h [amount]</term>
+///   <description>Gives [amount] units of Honey (default: 1000)</description>
+/// </item>
+/// <item>
+///   <term>p [amount]</term>
+///   <description>Gives [amount] units of Pollen (default: 1000)</description>
+/// </item>
+/// <item>
+///   <term>rj [amount]</term>
+///   <description>Gives [amount] units of Royal Jelly (default: 1000)</description>
+/// </item>
+/// <item>
+///   <term>a [amount]</term>
+///   <description>Gives [amount] units of all resources (default: 1000)</description>
+/// </item>
+/// </list>
+/// Events
+/// <list type="bullet"> 
+/// <item>
+///   <term>event [event]</term>
+///   <description>Lanches event [event] (available: toxic, rain, bear, attack, skunk)</description>
+/// </item>
+/// </list>
+/// </summary>
 public class Prompt : MonoBehaviour {
 
 	private InputField input;

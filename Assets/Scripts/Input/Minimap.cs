@@ -53,7 +53,7 @@ public class Minimap : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 			}
 		}
 	}
-
+		
 	private Vector3? convertCoords(Vector3 pos) {
 		// Convert main screen coordinates to minimap relative
 		// screen coordinates: x_rel_mm = x_orig - minimap.x
