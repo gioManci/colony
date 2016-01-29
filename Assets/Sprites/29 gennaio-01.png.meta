@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 9ac6a73756c93cc488029bddf9f17d34
 timeCreated: 1454057591
 licenseType: Free
@@ -16,6 +17,13 @@ TextureImporter:
     21300018: 29 gennaio-01_9
     21300020: 29 gennaio-01_10
     21300022: 29 gennaio-01_11
+=======
+guid: dec9cf304ea289248bb99454cd53d066
+timeCreated: 1454056823
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName: {}
+>>>>>>> 2d198f097a29bc31b987dc1babc8344cc734a134
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -42,7 +50,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
+<<<<<<< HEAD
     aniso: 16
+=======
+    aniso: -1
+>>>>>>> 2d198f097a29bc31b987dc1babc8344cc734a134
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -50,7 +62,11 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
+<<<<<<< HEAD
   spriteMode: 2
+=======
+  spriteMode: 1
+>>>>>>> 2d198f097a29bc31b987dc1babc8344cc734a134
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -61,6 +77,7 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+<<<<<<< HEAD
     sprites:
     - name: 29 gennaio-01_0
       rect:
@@ -412,6 +429,9 @@ TextureImporter:
         - {x: -139, y: -236}
         - {x: 140, y: -236}
         - {x: 146, y: -226}
+=======
+    sprites: []
+>>>>>>> 2d198f097a29bc31b987dc1babc8344cc734a134
     outline: []
   spritePackingTag: 
   userData: 
