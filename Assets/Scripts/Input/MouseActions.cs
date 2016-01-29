@@ -14,7 +14,7 @@ using Input = UnityEngine.Input;
 public class MouseActions : MonoBehaviour {
 	private HashSet<Selectable> selected = new HashSet<Selectable>();
 
-	private GameObject moveTarget;
+	public GameObject MoveTarget;
 
 	public event Action<GameObject> ObjectSelected;
 
@@ -157,11 +157,10 @@ public class MouseActions : MonoBehaviour {
 
 	private void moveSelectedUnits(Vector2 pos) {
 		// Draw a point on move target
-		if (moveTarget != null)
-			GameObject.Destroy(moveTarget);
-		moveTarget = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		moveTarget.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-		moveTarget.transform.position = pos;
+		if (MoveTarget != null) {
+			MoveTarget.transform.position = pos;
+			MoveTarget.GetComponent<Animator>().SetTrigger("start");
+		}
 
 		// Move each selected moveable object
 		foreach (Controllable obj in GetSelected<Controllable>()) {
